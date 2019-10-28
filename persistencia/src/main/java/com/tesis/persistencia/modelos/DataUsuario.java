@@ -8,7 +8,7 @@ public class DataUsuario {
 
     @Id
     private String id;
-    private String nombreDeUsuario;
+    private String nombre;
     private String password;
     private String correoElectronico;
     private String numeroDeTelefono;
@@ -16,9 +16,16 @@ public class DataUsuario {
     public DataUsuario() {
     }
 
-    public DataUsuario(String id, String nombreDeUsuario, String password, String correoElectronico, String numeroDeTelefono) {
+    public DataUsuario(String id, String nombre, String password, String correoElectronico, String numeroDeTelefono) {
         this.id = id;
-        this.nombreDeUsuario = nombreDeUsuario;
+        this.nombre = nombre;
+        this.password = password;
+        this.correoElectronico = correoElectronico;
+        this.numeroDeTelefono = numeroDeTelefono;
+    }
+
+    public DataUsuario(String nombre, String password, String correoElectronico, String numeroDeTelefono) {
+        this.nombre = nombre;
         this.password = password;
         this.correoElectronico = correoElectronico;
         this.numeroDeTelefono = numeroDeTelefono;
@@ -32,12 +39,12 @@ public class DataUsuario {
         this.id = id;
     }
 
-    public String getNombreDeUsuario() {
-        return nombreDeUsuario;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreDeUsuario(String nombreDeUsuario) {
-        this.nombreDeUsuario = nombreDeUsuario;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getPassword() {

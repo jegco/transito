@@ -1,8 +1,12 @@
 package com.tesis.persistencia.modelos;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.List;
 
 public class DataGuiaDeTramite {
+
+    @Id
     private String id;
     private String titulo;
     private String descripcion;
@@ -11,6 +15,13 @@ public class DataGuiaDeTramite {
 
     public DataGuiaDeTramite(String id, String titulo, String descripcion, List<DataDocumento> formularios, List<DataPaso> dataPasos) {
         this.id = id;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.formularios = formularios;
+        this.dataPasos = dataPasos;
+    }
+
+    public DataGuiaDeTramite(String titulo, String descripcion, List<DataDocumento> formularios, List<DataPaso> dataPasos) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.formularios = formularios;

@@ -6,21 +6,18 @@ import com.tesis.dominio.modelos.Usuario;
 import com.tesis.persistencia.repositorios.UsuarioRepositorio;
 import com.tesis.persistencia.utils.DataUsuarioUsuarioMapper;
 import com.tesis.persistencia.utils.UsuarioDataUsuarioMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-@Transactional
 public class UsuarioDelegado implements Delegado<LoginParam, Usuario> {
 
-    private final UsuarioRepositorio repositorio;
-    @Autowired private DataUsuarioUsuarioMapper dataUsuarioUsuarioMapper;
-    @Autowired private UsuarioDataUsuarioMapper usuarioDataUsuarioMapper;
+    private UsuarioRepositorio repositorio;
+    private DataUsuarioUsuarioMapper dataUsuarioUsuarioMapper;
+    private UsuarioDataUsuarioMapper usuarioDataUsuarioMapper;
 
-    @Autowired
     public UsuarioDelegado(UsuarioRepositorio repositorio,
                            DataUsuarioUsuarioMapper dataUsuarioUsuarioMapper,
                            UsuarioDataUsuarioMapper usuarioDataUsuarioMapper) {
@@ -42,8 +39,9 @@ public class UsuarioDelegado implements Delegado<LoginParam, Usuario> {
 
     @Override
     public Flux<Usuario> buscar(LoginParam param) {
-        return param == null ? repositorio.findAll().map(dataUsuarioUsuarioMapper):
-                repositorio.findDataUsuarioByNombreDeUsuarioAndPassword(param.getNombreUsuario(), param.getContrasena());
+        return param == null ? repositorio.findAll().map(dataUsuarioUsuarioMapper) :
+                repositorio.findDataUsuarioByNombreAndAndPassword(param.getNombreUsuario(), param.getPassword())
+                        .map(dataUsuarioUsuarioMapper);
     }
 
     @Override

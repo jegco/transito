@@ -1,7 +1,11 @@
 package com.tesis.persistencia.modelos;
 
+import org.springframework.data.annotation.Id;
+
 public class DataPreferenciasDeUsuario {
 
+    @Id
+    private String id;
     private String colorPrimario;
     private String colorSeoundario;
     private DataDocumento icono;
@@ -12,6 +16,22 @@ public class DataPreferenciasDeUsuario {
         this.colorSeoundario = colorSeoundario;
         this.icono = icono;
         this.dataMenuDeNav = dataMenuDeNav;
+    }
+
+    public DataPreferenciasDeUsuario(String id, String colorPrimario, String colorSeoundario, DataDocumento icono, DataMenu dataMenuDeNav) {
+        this.id = id;
+        this.colorPrimario = colorPrimario;
+        this.colorSeoundario = colorSeoundario;
+        this.icono = icono;
+        this.dataMenuDeNav = dataMenuDeNav;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getColorPrimario() {

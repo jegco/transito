@@ -2,11 +2,15 @@ package com.tesis.dominio.casosdeuso.params;
 
 public class LoginParam {
     private String nombreUsuario;
-    private String contrasena;
+    private String password;
 
-    public LoginParam(String nombreUsuario, String contrasena) {
+    public LoginParam() {
+
+    }
+
+    public LoginParam(String nombreUsuario, String password) {
         this.nombreUsuario = nombreUsuario;
-        this.contrasena = contrasena;
+        this.password = password;
     }
 
     public String getNombreUsuario() {
@@ -17,11 +21,11 @@ public class LoginParam {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public String getContrasena() {
-        return contrasena;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -12,7 +12,7 @@ public class DataUsuarioUsuarioMapper implements Function<DataUsuario, Usuario> 
     @Override
     public Usuario apply(DataUsuario dataUsuario) {
         return new Usuario(dataUsuario.getId(),
-                dataUsuario.getNombreDeUsuario(),
+                dataUsuario.getNombre(),
                 dataUsuario.getPassword(),
                 dataUsuario.getCorreoElectronico(),
                 dataUsuario.getNumeroDeTelefono());

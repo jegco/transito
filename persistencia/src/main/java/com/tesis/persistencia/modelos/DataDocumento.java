@@ -1,9 +1,12 @@
 package com.tesis.persistencia.modelos;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.Date;
 
 public class DataDocumento {
     private String nombre;
+    @Id
     private String id;
     private String archivo;
     private Date fechaCreacion;
@@ -12,6 +15,13 @@ public class DataDocumento {
     public DataDocumento(String nombre, String id, String archivo, Date fechaCreacion, Date fechaActualizacion) {
         this.nombre = nombre;
         this.id = id;
+        this.archivo = archivo;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizacion = fechaActualizacion;
+    }
+
+    public DataDocumento(String nombre, String archivo, Date fechaCreacion, Date fechaActualizacion) {
+        this.nombre = nombre;
         this.archivo = archivo;
         this.fechaCreacion = fechaCreacion;
         this.fechaActualizacion = fechaActualizacion;
