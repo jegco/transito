@@ -2,16 +2,26 @@ package com.tesis.dominio.modelos;
 
 public class PreferenciasDeUsuario {
 
+    private String id;
     private String colorPrimario;
     private String colorSeoundario;
     private Documento icono;
     private Menu menuDeNav;
 
-    public PreferenciasDeUsuario(String colorPrimario, String colorSeoundario, Documento icono, Menu menuDeNav) {
+    public PreferenciasDeUsuario(String id, String colorPrimario, String colorSeoundario, Documento icono, Menu menuDeNav) {
+        this.id = id;
         this.colorPrimario = colorPrimario;
         this.colorSeoundario = colorSeoundario;
         this.icono = icono;
         this.menuDeNav = menuDeNav;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getColorPrimario() {

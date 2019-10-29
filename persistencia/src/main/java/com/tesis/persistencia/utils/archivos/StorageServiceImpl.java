@@ -1,66 +1,55 @@
-package com.tesis.transito.controladores;
+package com.tesis.persistencia.utils.archivos;
 
-import com.tesis.dominio.casosdeuso.base.CasoDeUso;
-import com.tesis.dominio.casosdeuso.params.ArchivoParam;
-import com.tesis.dominio.modelos.Documento;
+import com.tesis.dominio.utils.StorageService;
+import com.tesis.persistencia.utils.archivos.excepciones.FileNotFoundException;
+import com.tesis.persistencia.utils.archivos.excepciones.FileStorageException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.codec.multipart.FilePart;
-import org.springframework.http.codec.multipart.Part;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.core.io.UrlResource;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousFileChannel;
+import java.nio.channels.CompletionHandler;
+import java.nio.file.*;
+import java.nio.file.attribute.FileAttribute;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
-@RestController
-@RequestMapping(path = "/documentos")
-public class DocumentoControlador {
+@Service
+public class StorageServiceImpl implements StorageService {
 
-    private final CasoDeUso<ArchivoParam, Documento> casoDeUsoGuardarDocumentos;
-    private final CasoDeUso<String, Resource> casoDeUsoBuscarDocumentos;
+    private final Path fileStorageLocation;
 
-    public DocumentoControlador(CasoDeUso<ArchivoParam, Documento> casoDeUsoGuardarDocumento,
-                                CasoDeUso<String, Resource> casoDeUsoBuscarDocumentos) {
-        this.casoDeUsoGuardarDocumentos = casoDeUsoGuardarDocumento;
-        this.casoDeUsoBuscarDocumentos = casoDeUsoBuscarDocumentos;
+    @Autowired
+    public StorageServiceImpl(FileStorageProperties fileStorageProperties) {
+
+        try {
+            this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
+                    .toAbsolutePath().normalize();
+            Files.createDirectories(this.fileStorageLocation);
+        } catch (Exception ex) {
+            throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
+        }
     }
 
-    @PostMapping()
-    @ResponseStatus(HttpStatus.OK)
-    public Flux<Documento> guardarArchivos(@RequestBody Flux<Part> archivos) throws IOException {
-        return archivos
-                .filter(archivo -> archivo instanceof FilePart)
-                .ofType(FilePart.class)
-                .flatMap(archivo -> casoDeUsoGuardarDocumentos.ejecutar(new ArchivoParam(archivo.filename(), archivo.content())));
-    }
 
-    @GetMapping("/{nombre}")
-    public Flux<Resource> buscarDocumentos(@PathVariable String nombre) {
-        return casoDeUsoBuscarDocumentos.
-                ejecutar(nombre);
-    }
-
-    /*@PostMapping("test")
-    public Flux<String> test(@RequestBody Flux<Part> parts) {
-        return parts
-                .filter(part -> part instanceof FilePart) // only retain file parts
-                .ofType(FilePart.class) // convert the flux to FilePart
-                .flatMap(this::saveFile); // save each file and flatmap it to a flux of results
-    }*/
-
-    /**
-     * tske a {@link FilePart}, transfer it to disk using {@link AsynchronousFileChannel}s and return a {@link Mono} representing the result
-     *
-     * @param filePart - the request part containing the file to be saved
-     * @return a {@link Mono} representing the result of the operation
-     */
-    /*private Mono<String> saveFile(FilePart filePart) {
-
-        // if a file with the same name already exists in a repository, delete and recreate it
-        final String filename = filePart.filename();
-        File file = new File(filename);
+    @Override
+    public Mono<String> guardarDocumento(Flux<DataBuffer> archivo, String nombreOriginalArchivo) {
+        final String filename = nombreOriginalArchivo;
+        File file = new File(fileStorageLocation.toString()+ "/" + filename);
         if (file.exists())
             file.delete();
         try {
@@ -81,7 +70,7 @@ public class DocumentoControlador {
             AtomicBoolean errorFlag = new AtomicBoolean(false);
 
             // FilePart.content produces a flux of data buffers, each need to be written to the file
-            return filePart.content().doOnEach(dataBufferSignal -> {
+            return archivo.doOnEach(dataBufferSignal -> {
                 if (dataBufferSignal.hasValue() && !errorFlag.get()) {
                     // read data from the incoming data buffer into a file array
                     DataBuffer dataBuffer = dataBufferSignal.get();
@@ -137,11 +126,52 @@ public class DocumentoControlador {
                 } catch (IOException ignored) {
                 }
                 // take last, map to a status string
-            }).last().map(dataBuffer -> filePart.filename() + " " + (errorFlag.get() ? "error" : "uploaded"));
+            }).last().map(dataBuffer -> file.getPath() + " " + (errorFlag.get() ? "error" : "uploaded"));
         } catch (IOException e) {
             // unable to open the file channel, return an error
 
             return Mono.error(e);
         }
-    }*/
+    }
+
+    @Override
+    public Mono<Resource> cargarDocumento(String nombre) {
+        return Mono.just(cargar(nombre));
+    }
+
+    @Override
+    public Mono<Void> eliminarArchivo(File archivo) {
+        return null;
+    }
+
+    private String guardar(InputStream archivo, String nombreOriginalArchivo) {
+        String fileName = StringUtils.cleanPath(nombreOriginalArchivo);
+
+        try {
+            if(fileName.contains("..")) {
+                throw new FileStorageException("El archivo no contiene un nombre apropiado " + fileName);
+            }
+            Path targetLocation = this.fileStorageLocation.resolve(fileName);
+            Files.copy(archivo, targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+            return fileName;
+        } catch (IOException ex) {
+            throw new FileStorageException("No se pudo guardar el archivo con el nombre " + fileName, ex);
+        }
+    }
+
+    private Resource cargar(String nombre) {
+        try {
+            Path filePath = this.fileStorageLocation.resolve(nombre).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if(resource.exists()) {
+                return resource;
+            } else {
+                throw new FileNotFoundException("Archivo no encontrado " + nombre);
+            }
+        } catch (MalformedURLException ex) {
+            throw new FileNotFoundException("Arcchivo no encontrado " + nombre, ex);
+        }
+    }
+
 }

@@ -5,26 +5,37 @@ import org.springframework.data.annotation.Id;
 import java.util.Date;
 
 public class DataDocumento {
-    private String nombre;
     @Id
     private String id;
+    private String nombre;
     private String archivo;
     private Date fechaCreacion;
     private Date fechaActualizacion;
+    private String rutaDeDescarga;
 
-    public DataDocumento(String nombre, String id, String archivo, Date fechaCreacion, Date fechaActualizacion) {
-        this.nombre = nombre;
+    public DataDocumento(String id, String nombre, String archivo, Date fechaCreacion, Date fechaActualizacion, String rutaDeDescarga) {
         this.id = id;
+        this.nombre = nombre;
         this.archivo = archivo;
         this.fechaCreacion = fechaCreacion;
         this.fechaActualizacion = fechaActualizacion;
+        this.rutaDeDescarga = rutaDeDescarga;
     }
 
-    public DataDocumento(String nombre, String archivo, Date fechaCreacion, Date fechaActualizacion) {
+    public DataDocumento(String nombre, String archivo, Date fechaCreacion, Date fechaActualizacion, String rutaDeDescarga) {
         this.nombre = nombre;
         this.archivo = archivo;
         this.fechaCreacion = fechaCreacion;
         this.fechaActualizacion = fechaActualizacion;
+        this.rutaDeDescarga = rutaDeDescarga;
+    }
+
+    public String getRutaDeDescarga() {
+        return rutaDeDescarga;
+    }
+
+    public void setRutaDeDescarga(String rutaDeDescarga) {
+        this.rutaDeDescarga = rutaDeDescarga;
     }
 
     public String getNombre() {
