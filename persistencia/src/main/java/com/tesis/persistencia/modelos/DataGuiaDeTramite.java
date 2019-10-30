@@ -12,8 +12,9 @@ public class DataGuiaDeTramite {
     private String descripcion;
     private List<DataDocumento> formularios;
     private List<DataPaso> dataPasos;
+    private String tipo;
 
-    public DataGuiaDeTramite(String id, String titulo, String descripcion, List<DataDocumento> formularios, List<DataPaso> dataPasos) {
+    public DataGuiaDeTramite(String id, String titulo, String descripcion, List<DataDocumento> formularios, List<DataPaso> dataPasos, String tipo) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -21,7 +22,7 @@ public class DataGuiaDeTramite {
         this.dataPasos = dataPasos;
     }
 
-    public DataGuiaDeTramite(String titulo, String descripcion, List<DataDocumento> formularios, List<DataPaso> dataPasos) {
+    public DataGuiaDeTramite(String titulo, String descripcion, List<DataDocumento> formularios, List<DataPaso> dataPasos, String tipo) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.formularios = formularios;
@@ -34,6 +35,14 @@ public class DataGuiaDeTramite {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getTitulo() {

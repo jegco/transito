@@ -1,16 +1,18 @@
-package com.tesis.persistencia.modelos;
+package com.tesis.dominio.casosdeuso.params;
 
-import java.util.List;
-
-public class DataPaso {
+public class GuiaDeTramiteParams {
     private String titulo;
     private String descripcion;
-    private List<DataDocumento> anexos;
+    private String tipo;
 
-    public DataPaso(String titulo, String descripcion, List<DataDocumento> anexos) {
+    public GuiaDeTramiteParams(String titulo, String descripcion, String tipo) {
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.anexos = anexos;
+        this.tipo = tipo;
+    }
+
+    public GuiaDeTramiteParams(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getTitulo() {
@@ -29,11 +31,11 @@ public class DataPaso {
         this.descripcion = descripcion;
     }
 
-    public List<DataDocumento> getAnexos() {
-        return anexos;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setAnexos(List<DataDocumento> anexos) {
-        this.anexos = anexos;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

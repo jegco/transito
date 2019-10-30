@@ -8,8 +8,9 @@ public class GuiaDeTramite {
     private String descripcion;
     private List<Documento> formularios;
     private List<Paso> pasos;
+    private String tipo;
 
-    public GuiaDeTramite(String id, String titulo, String descripcion, List<Documento> formularios, List<Paso> pasos) {
+    public GuiaDeTramite(String id, String titulo, String descripcion, List<Documento> formularios, List<Paso> pasos, String tipo) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -23,6 +24,14 @@ public class GuiaDeTramite {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getTitulo() {
