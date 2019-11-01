@@ -26,6 +26,10 @@ public class DataPreferenciasDeUsuario {
         this.dataMenuDeNav = dataMenuDeNav;
     }
 
+    public DataPreferenciasDeUsuario() {
+
+    }
+
     public String getId() {
         return id;
     }

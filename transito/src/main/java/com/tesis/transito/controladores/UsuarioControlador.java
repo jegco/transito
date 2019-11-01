@@ -5,19 +5,18 @@ import com.tesis.dominio.casosdeuso.params.LoginParam;
 import com.tesis.dominio.modelos.Usuario;
 import com.tesis.transito.mappers.UsuarioVistaUsuarioMapper;
 import com.tesis.transito.mappers.VistaUsuarioUsuarioMapper;
+import com.tesis.transito.modelos.AuthResponse;
 import com.tesis.transito.modelos.VistaUsuario;
 import com.tesis.transito.seguridad.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/usuarios")
+@CrossOrigin(value = { "http://localhost:4200" })
 public class UsuarioControlador {
 
     private final CasoDeUso<LoginParam, Usuario> casoDeUsoLogin;
@@ -37,10 +36,10 @@ public class UsuarioControlador {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Mono<ResponseEntity<String>> login(@RequestBody LoginParam param) {
+    public Mono<ResponseEntity<AuthResponse>> login(@RequestBody LoginParam param) {
         return Mono.from(casoDeUsoLogin.ejecutar(param)
                 .map(usuarioVistaUsuarioMapper))
-                .map(usuario -> ResponseEntity.ok(jwtUtil.generateToken(usuario)))
+                .map(usuario -> ResponseEntity.ok(new AuthResponse(jwtUtil.generateToken(usuario))))
                 .defaultIfEmpty(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 

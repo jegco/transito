@@ -16,6 +16,11 @@ public class GuiaDeTramite {
         this.descripcion = descripcion;
         this.formularios = formularios;
         this.pasos = pasos;
+        this.tipo = tipo;
+    }
+
+    public GuiaDeTramite() {
+
     }
 
     public String getId() {

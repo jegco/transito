@@ -30,6 +30,10 @@ public class DataDocumento {
         this.rutaDeDescarga = rutaDeDescarga;
     }
 
+    public DataDocumento() {
+
+    }
+
     public String getRutaDeDescarga() {
         return rutaDeDescarga;
     }

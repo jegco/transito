@@ -37,17 +37,17 @@ public class GuiasDeTramiteDelegado implements Delegado<GuiaDeTramiteParams, Gui
 
     @Override
     public Flux<GuiaDeTramite> buscar(GuiaDeTramiteParams parametroDeBusqueda) {
-        if (parametroDeBusqueda != null) {
-            if (parametroDeBusqueda.getDescripcion() != null && parametroDeBusqueda.getTitulo() != null) {
-                return repositorio.findAllByTituloContainsOrDescripcionContainsOrTipoContains(
-                        parametroDeBusqueda.getTitulo(), parametroDeBusqueda.getDescripcion(), parametroDeBusqueda.getTipo())
-                        .map(dataGuiaDeTramiteGuiaDeTramiteMapper);
-            } else {
-                return repositorio.findAllByTipoContains(parametroDeBusqueda.getTipo())
-                        .map(dataGuiaDeTramiteGuiaDeTramiteMapper);
-            }
-        }
-        return repositorio.findAll().map(dataGuiaDeTramiteGuiaDeTramiteMapper);
+         if (parametroDeBusqueda != null) {
+             if( parametroDeBusqueda.getDescripcion() != null && parametroDeBusqueda.getTitulo() != null) {
+                 return repositorio.findAllByTituloContainsOrDescripcionContainsOrTipoContains(
+                         parametroDeBusqueda.getTitulo(), parametroDeBusqueda.getDescripcion(), parametroDeBusqueda.getTipo())
+                         .map(dataGuiaDeTramiteGuiaDeTramiteMapper);
+             } else {
+                 return repositorio.findAllByTipoContains(parametroDeBusqueda.getTipo())
+                         .map(dataGuiaDeTramiteGuiaDeTramiteMapper);
+             }
+         }
+         return repositorio.findAll().map(dataGuiaDeTramiteGuiaDeTramiteMapper);
     }
 
     @Override

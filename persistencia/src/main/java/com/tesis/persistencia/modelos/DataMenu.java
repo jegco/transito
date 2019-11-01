@@ -19,6 +19,10 @@ public class DataMenu {
         this.opciones = opciones;
     }
 
+    public DataMenu() {
+
+    }
+
     public String getId() {
         return id;
     }

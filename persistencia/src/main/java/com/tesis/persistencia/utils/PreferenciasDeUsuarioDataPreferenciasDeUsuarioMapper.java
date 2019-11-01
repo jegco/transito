@@ -23,12 +23,12 @@ public class PreferenciasDeUsuarioDataPreferenciasDeUsuarioMapper implements
     public DataPreferenciasDeUsuario apply(PreferenciasDeUsuario preferenciasDeUsuario) {
         if (preferenciasDeUsuario.getId() != null && !preferenciasDeUsuario.getId().isEmpty()) {
             return new DataPreferenciasDeUsuario(preferenciasDeUsuario.getId(),
-                    preferenciasDeUsuario.getColorPrimario(), preferenciasDeUsuario.getColorSeoundario(),
+                    preferenciasDeUsuario.getColorPrimario(), preferenciasDeUsuario.getColorSecundario(),
                     documentoMapper.apply(preferenciasDeUsuario.getIcono()),
                     mapper.apply(preferenciasDeUsuario.getMenuDeNav()));
         }
         return new DataPreferenciasDeUsuario(
-                preferenciasDeUsuario.getColorPrimario(), preferenciasDeUsuario.getColorSeoundario(),
+                preferenciasDeUsuario.getColorPrimario(), preferenciasDeUsuario.getColorSecundario(),
                 documentoMapper.apply(preferenciasDeUsuario.getIcono()),
                 mapper.apply(preferenciasDeUsuario.getMenuDeNav()));
     }

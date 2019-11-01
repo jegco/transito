@@ -29,6 +29,10 @@ public class DataGuiaDeTramite {
         this.dataPasos = dataPasos;
     }
 
+    public DataGuiaDeTramite() {
+
+    }
+
     public String getId() {
         return id;
     }

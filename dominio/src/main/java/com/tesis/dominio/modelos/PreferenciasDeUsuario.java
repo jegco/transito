@@ -4,14 +4,14 @@ public class PreferenciasDeUsuario {
 
     private String id;
     private String colorPrimario;
-    private String colorSeoundario;
+    private String colorSecundario;
     private Documento icono;
     private Menu menuDeNav;
 
-    public PreferenciasDeUsuario(String id, String colorPrimario, String colorSeoundario, Documento icono, Menu menuDeNav) {
+    public PreferenciasDeUsuario(String id, String colorPrimario, String colorSecundario, Documento icono, Menu menuDeNav) {
         this.id = id;
         this.colorPrimario = colorPrimario;
-        this.colorSeoundario = colorSeoundario;
+        this.colorSecundario = colorSecundario;
         this.icono = icono;
         this.menuDeNav = menuDeNav;
     }
@@ -32,12 +32,12 @@ public class PreferenciasDeUsuario {
         this.colorPrimario = colorPrimario;
     }
 
-    public String getColorSeoundario() {
-        return colorSeoundario;
+    public String getColorSecundario() {
+        return colorSecundario;
     }
 
-    public void setColorSeoundario(String colorSeoundario) {
-        this.colorSeoundario = colorSeoundario;
+    public void setColorSecundario(String colorSecundario) {
+        this.colorSecundario = colorSecundario;
     }
 
     public Documento getIcono() {

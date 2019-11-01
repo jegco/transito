@@ -19,6 +19,10 @@ public class Documento {
         this.rutaDeDescarga = rutaDeDescarga;
     }
 
+    public Documento() {
+
+    }
+
     public String getRutaDeDescarga() {
         return rutaDeDescarga;
     }

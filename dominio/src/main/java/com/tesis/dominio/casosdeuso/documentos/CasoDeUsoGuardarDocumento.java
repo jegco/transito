@@ -30,8 +30,8 @@ public class CasoDeUsoGuardarDocumento extends CasoDeUsoImpl<ArchivoParam, Docum
                                 new Documento(null,
                                         archivoParam.getNombre(),
                                         direccionArchivo,
-                                        new Date("dd/MM/yyyy HH:MM"),
-                                        new Date("dd/MM/yyyy HH:MM"),
+                                        new Date(),
+                                        new Date(),
                                         direccionArchivo))));
     }
 }

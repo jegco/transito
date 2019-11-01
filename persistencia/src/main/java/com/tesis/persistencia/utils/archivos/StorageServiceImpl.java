@@ -126,7 +126,7 @@ public class StorageServiceImpl implements StorageService {
                 } catch (IOException ignored) {
                 }
                 // take last, map to a status string
-            }).last().map(dataBuffer -> file.getPath() + " " + (errorFlag.get() ? "error" : "uploaded"));
+            }).last().map(dataBuffer -> file.getPath() + " " + (errorFlag.get() ? "error" : ""));
         } catch (IOException e) {
             // unable to open the file channel, return an error
 

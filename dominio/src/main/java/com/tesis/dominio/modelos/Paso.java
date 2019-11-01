@@ -13,6 +13,10 @@ public class Paso {
         this.anexos = anexos;
     }
 
+    public Paso() {
+
+    }
+
     public String getTitulo() {
         return titulo;
     }

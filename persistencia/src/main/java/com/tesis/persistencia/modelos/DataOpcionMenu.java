@@ -22,6 +22,10 @@ public class DataOpcionMenu {
         this.titulo = titulo;
     }
 
+    public DataOpcionMenu() {
+
+    }
+
     public String getId() {
         return id;
     }

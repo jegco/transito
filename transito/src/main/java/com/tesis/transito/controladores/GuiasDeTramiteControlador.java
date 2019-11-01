@@ -8,6 +8,7 @@ import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/guias")
+@CrossOrigin(value = { "http://localhost:4200", "http://localhost:4220" })
 public class GuiasDeTramiteControlador {
 
     private final CasoDeUso<GuiaDeTramiteParams, GuiaDeTramite> casoDeUsoBuscarGuiaDeTramite;

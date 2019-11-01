@@ -13,6 +13,10 @@ public class DataPaso {
         this.anexos = anexos;
     }
 
+    public DataPaso() {
+
+    }
+
     public String getTitulo() {
         return titulo;
     }
