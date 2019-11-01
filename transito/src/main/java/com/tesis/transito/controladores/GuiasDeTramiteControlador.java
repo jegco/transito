@@ -5,10 +5,11 @@ import com.tesis.dominio.casosdeuso.params.GuiaDeTramiteParams;
 import com.tesis.dominio.modelos.GuiaDeTramite;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/guias")
-@CrossOrigin(value = { "http://localhost:4200", "http://localhost:4220" })
+@CrossOrigin(value = {"http://localhost:4200", "http://localhost:4220"})
 public class GuiasDeTramiteControlador {
 
     private final CasoDeUso<GuiaDeTramiteParams, GuiaDeTramite> casoDeUsoBuscarGuiaDeTramite;
@@ -35,6 +36,11 @@ public class GuiasDeTramiteControlador {
     @GetMapping
     public Flux<GuiaDeTramite> buscarGuiasDeTramite() {
         return casoDeUsoBuscarGuiaDeTramite.ejecutar(null);
+    }
+
+    @GetMapping("/titulo/{titulo}")
+    public Mono<GuiaDeTramite> buscarGuiasDeTramitePorTitulo(@PathVariable String titulo) {
+        return Mono.from(casoDeUsoBuscarGuiaDeTramite.ejecutar(new GuiaDeTramiteParams(titulo, null, null)));
     }
 
     @PostMapping
