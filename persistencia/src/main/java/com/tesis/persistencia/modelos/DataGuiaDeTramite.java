@@ -20,6 +20,7 @@ public class DataGuiaDeTramite {
         this.descripcion = descripcion;
         this.formularios = formularios;
         this.dataPasos = dataPasos;
+        this.tipo = tipo;
     }
 
     public DataGuiaDeTramite(String titulo, String descripcion, List<DataDocumento> formularios, List<DataPaso> dataPasos, String tipo) {
@@ -27,6 +28,7 @@ public class DataGuiaDeTramite {
         this.descripcion = descripcion;
         this.formularios = formularios;
         this.dataPasos = dataPasos;
+        this.tipo = tipo;
     }
 
     public DataGuiaDeTramite() {

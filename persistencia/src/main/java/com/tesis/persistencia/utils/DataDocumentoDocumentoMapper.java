@@ -11,8 +11,8 @@ public class DataDocumentoDocumentoMapper implements Function<DataDocumento, Doc
 
     @Override
     public Documento apply(DataDocumento dataDocumento) {
-        return new Documento(dataDocumento.getNombre(),
-                dataDocumento.getId(),
+        return new Documento(dataDocumento.getId(),
+                dataDocumento.getNombre(),
                 dataDocumento.getNombre(),
                 dataDocumento.getFechaCreacion(),
                 dataDocumento.getFechaActualizacion(),

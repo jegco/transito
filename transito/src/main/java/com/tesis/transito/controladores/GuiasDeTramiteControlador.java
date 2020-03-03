@@ -3,6 +3,7 @@ package com.tesis.transito.controladores;
 import com.tesis.dominio.casosdeuso.base.CasoDeUso;
 import com.tesis.dominio.casosdeuso.params.GuiaDeTramiteParams;
 import com.tesis.dominio.modelos.GuiaDeTramite;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -14,11 +15,15 @@ public class GuiasDeTramiteControlador {
 
     private final CasoDeUso<GuiaDeTramiteParams, GuiaDeTramite> casoDeUsoBuscarGuiaDeTramite;
     private final CasoDeUso<GuiaDeTramite, GuiaDeTramite> casoDeUsoCrearGuiasDetramite;
+    private final CasoDeUso<GuiaDeTramite, Void> casoDeUsoEliminarGuiaDeTramite;
 
     public GuiasDeTramiteControlador(CasoDeUso<GuiaDeTramiteParams, GuiaDeTramite> casoDeUsoBuscarGuiaDeTramite,
-                                     CasoDeUso<GuiaDeTramite, GuiaDeTramite> casoDeUsoCrearGuiasDetramite) {
+                                     CasoDeUso<GuiaDeTramite, GuiaDeTramite> casoDeUsoCrearGuiasDetramite,
+                                     CasoDeUso<GuiaDeTramite, Void> casoDeUsoEliminarGuiaDeTramite) {
         this.casoDeUsoBuscarGuiaDeTramite = casoDeUsoBuscarGuiaDeTramite;
         this.casoDeUsoCrearGuiasDetramite = casoDeUsoCrearGuiasDetramite;
+        this.casoDeUsoEliminarGuiaDeTramite = casoDeUsoEliminarGuiaDeTramite;
+
     }
 
     @GetMapping("/{tipo}")
@@ -46,5 +51,10 @@ public class GuiasDeTramiteControlador {
     @PostMapping
     public Flux<GuiaDeTramite> crearGuiaDeTramite(@RequestBody GuiaDeTramite guiaDeTramite) {
         return casoDeUsoCrearGuiasDetramite.ejecutar(guiaDeTramite);
+    }
+
+    @DeleteMapping()
+    public Mono<Void> eliminarGuiaDeTramite(@RequestBody GuiaDeTramite guiaDeTramite) {
+        return Mono.from(casoDeUsoEliminarGuiaDeTramite.ejecutar(guiaDeTramite));
     }
 }
