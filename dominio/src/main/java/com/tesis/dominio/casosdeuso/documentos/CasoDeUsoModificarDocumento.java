@@ -1,7 +1,7 @@
 package com.tesis.dominio.casosdeuso.documentos;
 
 import com.tesis.dominio.casosdeuso.base.CasoDeUsoImpl;
-import com.tesis.dominio.casosdeuso.params.ArchivoParam;
+import com.tesis.dominio.casosdeuso.params.ActualizarArchivoParam;
 import com.tesis.dominio.delegado.Delegado;
 import com.tesis.dominio.modelos.Documento;
 import com.tesis.dominio.utils.StorageService;
@@ -11,7 +11,7 @@ import reactor.core.publisher.Flux;
 import java.util.Date;
 
 @Service
-public class CasoDeUsoModificarDocumento extends CasoDeUsoImpl<ArchivoParam, Documento> {
+public class CasoDeUsoModificarDocumento extends CasoDeUsoImpl<ActualizarArchivoParam, Documento> {
 
     private final StorageService servicioDeAlmacenamiento;
     private final Delegado<String, Documento> delegado;
@@ -22,7 +22,7 @@ public class CasoDeUsoModificarDocumento extends CasoDeUsoImpl<ArchivoParam, Doc
     }
 
     @Override
-    protected Flux<Documento> construirCasoDeUso(ArchivoParam archivoParam) {
+    protected Flux<Documento> construirCasoDeUso(ActualizarArchivoParam archivoParam) {
         return Flux.from(servicioDeAlmacenamiento.
                 guardarDocumento(archivoParam.getArchivo(), archivoParam.getNombre())
                 .flatMap(direccionArchivo ->

@@ -9,5 +9,4 @@ public interface Delegado<DynamicSearchParam, Entity> {
     Mono<Entity> actualizar(Entity entidad);
     Flux<Entity> buscar(DynamicSearchParam param);
     Mono<Void> eliminar(Entity entidad);
-
 }

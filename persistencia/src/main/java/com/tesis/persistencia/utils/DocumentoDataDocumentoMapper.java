@@ -11,7 +11,7 @@ public class DocumentoDataDocumentoMapper implements Function<Documento, DataDoc
 
     @Override
     public DataDocumento apply(Documento documento) {
-        if (documento.getId() != null && documento.getId().isEmpty()) {
+        if (documento.getId() != null && !documento.getId().isEmpty()) {
             return new DataDocumento(
                     documento.getId(),
                     documento.getNombre(),

@@ -4,8 +4,8 @@ import org.springframework.core.io.buffer.DataBuffer;
 import reactor.core.publisher.Flux;
 
 public class ArchivoParam {
-    private String nombre;
-    private Flux<DataBuffer> archivo;
+    protected String nombre;
+    protected Flux<DataBuffer> archivo;
 
     public ArchivoParam(String nombre, Flux<DataBuffer> archivo) {
         this.nombre = nombre;

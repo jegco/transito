@@ -6,6 +6,8 @@ import com.tesis.persistencia.repositorios.DocumentoRepositorio;
 import com.tesis.persistencia.utils.DataDocumentoDocumentoMapper;
 import com.tesis.persistencia.utils.DocumentoDataDocumentoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -38,8 +40,8 @@ public class DocumentoDelegado implements Delegado<String, Documento> {
 
     @Override
     public Flux<Documento> buscar(String param) {
-        return repositorio.findDataDocumentoByNombreContains(param)
-                .map(dataDocumentoDocumentoMapper);
+        return param != null ? repositorio.findDataDocumentoByNombreContains(param)
+                .map(dataDocumentoDocumentoMapper) : repositorio.findAll().map(dataDocumentoDocumentoMapper);
     }
 
     @Override

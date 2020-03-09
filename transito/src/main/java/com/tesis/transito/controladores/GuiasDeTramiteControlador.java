@@ -39,8 +39,11 @@ public class GuiasDeTramiteControlador {
     }
 
     @GetMapping
-    public Flux<GuiaDeTramite> buscarGuiasDeTramite() {
-        return casoDeUsoBuscarGuiaDeTramite.ejecutar(null);
+    public Flux<GuiaDeTramite> buscarGuiasDeTramite(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "6") int size
+    ) {
+        return casoDeUsoBuscarGuiaDeTramite.ejecutar(null).skip(page*size).limitRate(size);
     }
 
     @GetMapping("/titulo/{titulo}")

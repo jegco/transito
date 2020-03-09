@@ -4,7 +4,6 @@ import com.tesis.dominio.utils.StorageService;
 import com.tesis.persistencia.utils.archivos.excepciones.FileNotFoundException;
 import com.tesis.persistencia.utils.archivos.excepciones.FileStorageException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -21,10 +20,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousFileChannel;
 import java.nio.channels.CompletionHandler;
 import java.nio.file.*;
-import java.nio.file.attribute.FileAttribute;
-import java.nio.file.attribute.PosixFilePermission;
-import java.nio.file.attribute.PosixFilePermissions;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -49,7 +44,7 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public Mono<String> guardarDocumento(Flux<DataBuffer> archivo, String nombreOriginalArchivo) {
         final String filename = nombreOriginalArchivo;
-        File file = new File(fileStorageLocation.toString()+ "/" + filename);
+        File file = new File(fileStorageLocation.toString() + "/" + filename);
         if (file.exists())
             file.delete();
         try {
@@ -136,19 +131,30 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public Mono<Resource> cargarDocumento(String nombre) {
-        return Mono.just(cargar(nombre));
+        return Mono.just(cargar(nombre)).handle((archivo, sink) -> {
+            if (archivo == null) {
+                sink.error(new Exception("El archivo no pudo ser encontrado"));
+            } else {
+                sink.next(archivo);
+            }
+        });
     }
 
     @Override
-    public Mono<Void> eliminarArchivo(File archivo) {
-        return null;
+    public Mono<Boolean> eliminarArchivo(String nombreArchivo) {
+        return Mono.just(eliminar(nombreArchivo)).handle((eliminado, sink) -> {
+        if (!eliminado) {
+            sink.error(new Exception("el archivo no pudo ser eliminado"));
+        } else {
+            sink.next(eliminado);
+        }});
     }
 
     private String guardar(InputStream archivo, String nombreOriginalArchivo) {
         String fileName = StringUtils.cleanPath(nombreOriginalArchivo);
 
         try {
-            if(fileName.contains("..")) {
+            if (fileName.contains("..")) {
                 throw new FileStorageException("El archivo no contiene un nombre apropiado " + fileName);
             }
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
@@ -156,7 +162,7 @@ public class StorageServiceImpl implements StorageService {
 
             return fileName;
         } catch (IOException ex) {
-            throw new FileStorageException("No se pudo guardar el archivo con el nombre " + fileName, ex);
+            return null;
         }
     }
 
@@ -164,13 +170,31 @@ public class StorageServiceImpl implements StorageService {
         try {
             Path filePath = this.fileStorageLocation.resolve(nombre).normalize();
             Resource resource = new UrlResource(filePath.toUri());
-            if(resource.exists()) {
+            if (resource.exists()) {
                 return resource;
             } else {
-                throw new FileNotFoundException("Archivo no encontrado " + nombre);
+                return null;
             }
         } catch (MalformedURLException ex) {
-            throw new FileNotFoundException("Arcchivo no encontrado " + nombre, ex);
+            return null;
+        }
+    }
+
+    private boolean eliminar(String nombre){
+        try {
+            Path filePath = this.fileStorageLocation.resolve(nombre).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists()) {
+                try {
+                    return resource.getFile().delete();
+                } catch (IOException e) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (MalformedURLException ex) {
+            return false;
         }
     }
 
