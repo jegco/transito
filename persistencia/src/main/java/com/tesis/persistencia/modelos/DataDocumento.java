@@ -1,9 +1,11 @@
 package com.tesis.persistencia.modelos;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
+@Document(collection = "documentos")
 public class DataDocumento {
     @Id
     private String id;

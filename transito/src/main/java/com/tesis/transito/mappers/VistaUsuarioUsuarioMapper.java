@@ -12,9 +12,11 @@ public class VistaUsuarioUsuarioMapper implements Function<VistaUsuario, Usuario
     @Override
     public Usuario apply(VistaUsuario usuario) {
         return new Usuario(usuario.getId(),
-                usuario.getUsername(),
+                usuario.getNombreDeUsuario(),
                 usuario.getPassword(),
                 usuario.getCorreoElectronico(),
-                usuario.getNumeroDeTelefono());
+                usuario.getNumeroDeTelefono(),
+                usuario.getRole(),
+                usuario.isActive());
     }
 }

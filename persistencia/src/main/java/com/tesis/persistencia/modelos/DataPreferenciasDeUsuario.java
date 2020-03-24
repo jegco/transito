@@ -10,20 +10,25 @@ public class DataPreferenciasDeUsuario {
     private String colorSeoundario;
     private DataDocumento icono;
     private DataMenu dataMenuDeNav;
+    private String animacion;
 
-    public DataPreferenciasDeUsuario(String colorPrimario, String colorSeoundario, DataDocumento icono, DataMenu dataMenuDeNav) {
+    public DataPreferenciasDeUsuario(String colorPrimario, String colorSeoundario, DataDocumento icono,
+                                     DataMenu dataMenuDeNav, String animacion) {
         this.colorPrimario = colorPrimario;
         this.colorSeoundario = colorSeoundario;
         this.icono = icono;
         this.dataMenuDeNav = dataMenuDeNav;
+        this.animacion = animacion;
     }
 
-    public DataPreferenciasDeUsuario(String id, String colorPrimario, String colorSeoundario, DataDocumento icono, DataMenu dataMenuDeNav) {
+    public DataPreferenciasDeUsuario(String id, String colorPrimario, String colorSeoundario, DataDocumento icono,
+                                     DataMenu dataMenuDeNav, String animacion) {
         this.id = id;
         this.colorPrimario = colorPrimario;
         this.colorSeoundario = colorSeoundario;
         this.icono = icono;
         this.dataMenuDeNav = dataMenuDeNav;
+        this.animacion = animacion;
     }
 
     public DataPreferenciasDeUsuario() {
@@ -34,39 +39,23 @@ public class DataPreferenciasDeUsuario {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getColorPrimario() {
         return colorPrimario;
-    }
-
-    public void setColorPrimario(String colorPrimario) {
-        this.colorPrimario = colorPrimario;
     }
 
     public String getColorSeoundario() {
         return colorSeoundario;
     }
 
-    public void setColorSeoundario(String colorSeoundario) {
-        this.colorSeoundario = colorSeoundario;
-    }
-
     public DataDocumento getIcono() {
         return icono;
-    }
-
-    public void setIcono(DataDocumento icono) {
-        this.icono = icono;
     }
 
     public DataMenu getDataMenuDeNav() {
         return dataMenuDeNav;
     }
 
-    public void setDataMenuDeNav(DataMenu dataMenuDeNav) {
-        this.dataMenuDeNav = dataMenuDeNav;
+    public String getAnimacion() {
+        return animacion;
     }
 }

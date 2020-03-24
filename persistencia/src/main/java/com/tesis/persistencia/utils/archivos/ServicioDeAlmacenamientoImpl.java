@@ -1,7 +1,6 @@
 package com.tesis.persistencia.utils.archivos;
 
-import com.tesis.dominio.utils.StorageService;
-import com.tesis.persistencia.utils.archivos.excepciones.FileNotFoundException;
+import com.tesis.dominio.utils.ServicioDeAlmacenamiento;
 import com.tesis.persistencia.utils.archivos.excepciones.FileStorageException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -24,12 +23,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
-public class StorageServiceImpl implements StorageService {
+public class ServicioDeAlmacenamientoImpl implements ServicioDeAlmacenamiento {
 
     private final Path fileStorageLocation;
 
     @Autowired
-    public StorageServiceImpl(FileStorageProperties fileStorageProperties) {
+    public ServicioDeAlmacenamientoImpl(FileStorageProperties fileStorageProperties) {
 
         try {
             this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
@@ -148,22 +147,6 @@ public class StorageServiceImpl implements StorageService {
         } else {
             sink.next(eliminado);
         }});
-    }
-
-    private String guardar(InputStream archivo, String nombreOriginalArchivo) {
-        String fileName = StringUtils.cleanPath(nombreOriginalArchivo);
-
-        try {
-            if (fileName.contains("..")) {
-                throw new FileStorageException("El archivo no contiene un nombre apropiado " + fileName);
-            }
-            Path targetLocation = this.fileStorageLocation.resolve(fileName);
-            Files.copy(archivo, targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
-            return fileName;
-        } catch (IOException ex) {
-            return null;
-        }
     }
 
     private Resource cargar(String nombre) {

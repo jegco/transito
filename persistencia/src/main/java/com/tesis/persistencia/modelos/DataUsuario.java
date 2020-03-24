@@ -12,23 +12,30 @@ public class DataUsuario {
     private String password;
     private String correoElectronico;
     private String numeroDeTelefono;
+    private String rol;
+    private boolean active;
 
     public DataUsuario() {
     }
 
-    public DataUsuario(String id, String nombre, String password, String correoElectronico, String numeroDeTelefono) {
+    public DataUsuario(String id, String nombre, String password, String correoElectronico, String numeroDeTelefono, String rol,
+                       boolean active) {
         this.id = id;
         this.nombre = nombre;
         this.password = password;
         this.correoElectronico = correoElectronico;
         this.numeroDeTelefono = numeroDeTelefono;
+        this.rol = rol;
+        this.active = active;
     }
 
-    public DataUsuario(String nombre, String password, String correoElectronico, String numeroDeTelefono) {
+    public DataUsuario(String nombre, String password, String correoElectronico, String numeroDeTelefono, String rol) {
         this.nombre = nombre;
         this.password = password;
         this.correoElectronico = correoElectronico;
         this.numeroDeTelefono = numeroDeTelefono;
+        this.rol = rol;
+        this.active = false;
     }
 
     public String getId() {
@@ -69,5 +76,13 @@ public class DataUsuario {
 
     public void setNumeroDeTelefono(String numeroDeTelefono) {
         this.numeroDeTelefono = numeroDeTelefono;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

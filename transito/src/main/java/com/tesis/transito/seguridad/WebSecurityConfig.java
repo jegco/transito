@@ -29,15 +29,9 @@ public class WebSecurityConfig {
     public SecurityWebFilterChain securitygWebFilterChain(ServerHttpSecurity http) {
         return http
                 .exceptionHandling()
-                .authenticationEntryPoint((swe, e) -> {
-                    return Mono.fromRunnable(() -> {
-                        swe.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                    });
-                }).accessDeniedHandler((swe, e) -> {
-                    return Mono.fromRunnable(() -> {
-                        swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
-                    });
-                }).and()
+                .authenticationEntryPoint((swe, e) -> Mono.fromRunnable(() ->
+                        swe.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED))).accessDeniedHandler((swe, e) ->
+                        Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN))).and()
                 .csrf().disable()
                 .formLogin().disable()
                 .httpBasic().disable()
@@ -47,6 +41,11 @@ public class WebSecurityConfig {
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
                 .pathMatchers("/usuarios").permitAll()
                 .pathMatchers("/usuarios/login").permitAll()
+                .pathMatchers("/usuarios/email").permitAll()
+                .pathMatchers(HttpMethod.GET, "/documentos/**").permitAll()
+                .pathMatchers(HttpMethod.POST, "/documentos").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                .pathMatchers(HttpMethod.DELETE, "/usuarios").hasRole("SUPER_ADMIN")
+                .pathMatchers(HttpMethod.PUT, "/usuarios").hasRole("SUPER_ADMIN")
                 .pathMatchers(HttpMethod.GET, "/guias/**").permitAll()
                 .anyExchange().authenticated()
                 .and().build();

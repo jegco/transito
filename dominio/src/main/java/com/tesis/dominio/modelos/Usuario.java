@@ -6,13 +6,19 @@ public class Usuario {
     private String contraseña;
     private String correoElectronico;
     private String numeroDeTelefono;
+    private String rol;
+    private boolean active;
 
-    public Usuario(String id, String nombreDeUsuario, String contraseña, String correoElectronico, String numeroDeTelefono) {
+    public Usuario(String id, String nombreDeUsuario, String contraseña,
+                   String correoElectronico, String numeroDeTelefono,
+                   String rol, boolean active) {
         this.id = id;
         this.nombreDeUsuario = nombreDeUsuario;
         this.contraseña = contraseña;
         this.correoElectronico = correoElectronico;
         this.numeroDeTelefono = numeroDeTelefono;
+        this.rol = rol;
+        this.active = active;
     }
 
     public String getId() {
@@ -53,5 +59,13 @@ public class Usuario {
 
     public void setNumeroDeTelefono(String numeroDeTelefono) {
         this.numeroDeTelefono = numeroDeTelefono;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

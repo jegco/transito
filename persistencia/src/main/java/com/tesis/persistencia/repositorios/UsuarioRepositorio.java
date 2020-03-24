@@ -8,5 +8,9 @@ import reactor.core.publisher.Flux;
 @Repository
 public interface UsuarioRepositorio extends ReactiveMongoRepository<DataUsuario, String> {
 
-    Flux<DataUsuario> findDataUsuarioByNombreAndAndPassword(String nombre, String password);
+    Flux<DataUsuario> findDataUsuarioByNombreAndPasswordAndActive(String nombre, String password, boolean active);
+
+    Flux<DataUsuario> findDataUsuarioByActiveAndRol(boolean active, String rol);
+
+    Flux<DataUsuario> findDataUsuarioByActive(boolean active);
 }

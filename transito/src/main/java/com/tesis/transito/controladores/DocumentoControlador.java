@@ -41,7 +41,7 @@ public class DocumentoControlador {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.OK)
-    public Mono<Documento> guardarArchivos(@RequestBody Flux<Part> archivos) throws IOException {
+    public Mono<Documento> guardarDocumento(@RequestBody Flux<Part> archivos) throws IOException {
         return Mono.from(archivos
                 .filter(archivo -> archivo instanceof FilePart)
                 .ofType(FilePart.class)
@@ -50,13 +50,13 @@ public class DocumentoControlador {
     }
 
     @GetMapping("/resource/{nombre}")
-    public Flux<Resource> buscarDocumentos(@PathVariable String nombre) {
+    public Flux<Resource> buscarDocumento(@PathVariable String nombre) {
         return casoDeUsoBuscarDocumentos.
                 ejecutar(nombre);
     }
 
     @GetMapping("/{nombre}")
-    public Flux<Documento> buscarDocumentoGuardadoPorNombre(@PathVariable String nombre) {
+    public Flux<Documento> buscarDocumentosGuardado(@PathVariable String nombre) {
         return casoDeUsoBuscarDocumentosGuardados.ejecutar(nombre);
     }
 
@@ -72,7 +72,7 @@ public class DocumentoControlador {
 
     @DeleteMapping()
     @ResponseStatus(HttpStatus.OK)
-    public Flux<Void> eliminarDocument(@RequestBody Documento documento) {
+    public Flux<Void> eliminarDocumento(@RequestBody Documento documento) {
         return casoDeUsoEliminarDocumento.ejecutar(documento).doOnError(error -> System.out.println(error.getMessage()));
     }
 }

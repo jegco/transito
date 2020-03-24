@@ -23,6 +23,7 @@ public class DataPreferenciasDeUsuarioPreferenciasDeUsuarioMapper
         return new PreferenciasDeUsuario(dataPreferenciasDeUsuario.getId(),
                 dataPreferenciasDeUsuario.getColorPrimario(),
                 dataPreferenciasDeUsuario.getColorSeoundario(),
+                dataPreferenciasDeUsuario.getAnimacion(),
                 documentoMapper.apply(dataPreferenciasDeUsuario.getIcono()),
                 mapper.apply(dataPreferenciasDeUsuario.getDataMenuDeNav()));
     }

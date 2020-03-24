@@ -25,11 +25,13 @@ public class PreferenciasDeUsuarioDataPreferenciasDeUsuarioMapper implements
             return new DataPreferenciasDeUsuario(preferenciasDeUsuario.getId(),
                     preferenciasDeUsuario.getColorPrimario(), preferenciasDeUsuario.getColorSecundario(),
                     documentoMapper.apply(preferenciasDeUsuario.getIcono()),
-                    mapper.apply(preferenciasDeUsuario.getMenuDeNav()));
+                    mapper.apply(preferenciasDeUsuario.getMenuDeNav()),
+                    preferenciasDeUsuario.getAnimacion());
         }
         return new DataPreferenciasDeUsuario(
                 preferenciasDeUsuario.getColorPrimario(), preferenciasDeUsuario.getColorSecundario(),
                 documentoMapper.apply(preferenciasDeUsuario.getIcono()),
-                mapper.apply(preferenciasDeUsuario.getMenuDeNav()));
+                mapper.apply(preferenciasDeUsuario.getMenuDeNav()),
+                preferenciasDeUsuario.getAnimacion());
     }
 }

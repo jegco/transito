@@ -5,7 +5,7 @@ import org.springframework.core.io.buffer.DataBuffer;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public interface StorageService {
+public interface ServicioDeAlmacenamiento {
 
     Mono<String> guardarDocumento(Flux<DataBuffer> archivo, String nombreOriginalArchivo);
 

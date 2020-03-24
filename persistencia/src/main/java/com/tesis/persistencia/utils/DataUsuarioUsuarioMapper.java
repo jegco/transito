@@ -15,6 +15,8 @@ public class DataUsuarioUsuarioMapper implements Function<DataUsuario, Usuario> 
                 dataUsuario.getNombre(),
                 dataUsuario.getPassword(),
                 dataUsuario.getCorreoElectronico(),
-                dataUsuario.getNumeroDeTelefono());
+                dataUsuario.getNumeroDeTelefono(),
+                dataUsuario.getRol(),
+                dataUsuario.isActive());
     }
 }

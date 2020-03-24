@@ -1,18 +1,17 @@
 package com.tesis.persistencia.delegados;
 
-import com.tesis.dominio.casosdeuso.params.LoginParam;
+import com.tesis.dominio.casosdeuso.params.UsuarioParams;
 import com.tesis.dominio.delegado.Delegado;
 import com.tesis.dominio.modelos.Usuario;
 import com.tesis.persistencia.repositorios.UsuarioRepositorio;
 import com.tesis.persistencia.utils.DataUsuarioUsuarioMapper;
 import com.tesis.persistencia.utils.UsuarioDataUsuarioMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-public class UsuarioDelegado implements Delegado<LoginParam, Usuario> {
+public class UsuarioDelegado implements Delegado<UsuarioParams, Usuario> {
 
     private UsuarioRepositorio repositorio;
     private DataUsuarioUsuarioMapper dataUsuarioUsuarioMapper;
@@ -34,14 +33,28 @@ public class UsuarioDelegado implements Delegado<LoginParam, Usuario> {
 
     @Override
     public Mono<Usuario> actualizar(Usuario entidad) {
-        return repositorio.save(usuarioDataUsuarioMapper.apply(entidad)).map(dataUsuarioUsuarioMapper);
+        return repositorio.findById(entidad.getId()).flatMap(usuario -> {
+                entidad.setContraseña(usuario.getPassword());
+                return repositorio.save(usuarioDataUsuarioMapper.apply(entidad)).map(dataUsuarioUsuarioMapper);
+        });
     }
 
     @Override
-    public Flux<Usuario> buscar(LoginParam param) {
-        return param == null ? repositorio.findAll().map(dataUsuarioUsuarioMapper) :
-                repositorio.findDataUsuarioByNombreAndAndPassword(param.getNombreUsuario(), param.getPassword())
+    public Flux<Usuario> buscar(UsuarioParams param) {
+        if (param != null) {
+            if (param.getRol() == null) {
+                return repositorio.findDataUsuarioByNombreAndPasswordAndActive(
+                        param.getNombreUsuario(),
+                        param.getPassword(),
+                        param.isActive()).map(dataUsuarioUsuarioMapper);
+            } else if (!param.getRol().isEmpty()) {
+                return repositorio.findDataUsuarioByActiveAndRol(param.isActive(), param.getRol())
                         .map(dataUsuarioUsuarioMapper);
+            } else {
+                return repositorio.findDataUsuarioByActive(param.isActive()).map(dataUsuarioUsuarioMapper);
+            }
+        }
+        return repositorio.findAll().map(dataUsuarioUsuarioMapper);
     }
 
     @Override

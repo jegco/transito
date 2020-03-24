@@ -9,30 +9,35 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class VistaUsuario implements UserDetails {
 
     private String id;
-    private String nombreUsuario;
+    private String nombreDeUsuario;
     private String password;
     private String correoElectronico;
     private String numeroDeTelefono;
-    private List<Role> roles;
-    private Boolean enabled;
+    private String role;
+    private boolean active;
 
     public VistaUsuario() {
 
     }
 
-    public VistaUsuario(String id, String nombreUsuario, String password, String correoElectronico, String numeroDeTelefono) {
+    public VistaUsuario(String id,
+                        String nombreDeUsuario,
+                        String password,
+                        String correoElectronico,
+                        String numeroDeTelefono,
+                        String role,
+                        boolean active) {
         this.id = id;
-        this.nombreUsuario = nombreUsuario;
+        this.nombreDeUsuario = nombreDeUsuario;
         this.password = password;
         this.correoElectronico = correoElectronico;
         this.numeroDeTelefono = numeroDeTelefono;
-        this.enabled = true;
-        this.roles = new ArrayList<>();
+        this.active = active;
+        this.role = role;
     }
 
     public String getId() {
@@ -60,7 +65,15 @@ public class VistaUsuario implements UserDetails {
     }
 
     public String getUsername() {
-        return nombreUsuario;
+        return nombreDeUsuario;
+    }
+
+    public String getNombreDeUsuario() {
+        return nombreDeUsuario;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     @Override
@@ -80,12 +93,14 @@ public class VistaUsuario implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.enabled;
+        return this.active;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream().map(authority -> new SimpleGrantedAuthority(authority.name())).collect(Collectors.toList());
+        List<GrantedAuthority> autorities = new ArrayList<>();
+        autorities.add(new SimpleGrantedAuthority(role));
+        return autorities;
     }
 
     @JsonIgnore
@@ -99,15 +114,19 @@ public class VistaUsuario implements UserDetails {
         this.password = password;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setNombreDeUsuario(String nombreDeUsuario) {
+        this.nombreDeUsuario = nombreDeUsuario;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

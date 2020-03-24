@@ -47,7 +47,7 @@ public class GuiasDeTramiteControlador {
     }
 
     @GetMapping("/titulo/{titulo}")
-    public Mono<GuiaDeTramite> buscarGuiasDeTramitePorTitulo(@PathVariable String titulo) {
+    public Mono<GuiaDeTramite> buscarGuiasDeTramite(@PathVariable String titulo) {
         return Mono.from(casoDeUsoBuscarGuiaDeTramite.ejecutar(new GuiaDeTramiteParams(titulo, null, null)));
     }
 

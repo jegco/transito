@@ -4,7 +4,7 @@ import com.tesis.dominio.casosdeuso.base.CasoDeUsoImpl;
 import com.tesis.dominio.casosdeuso.params.ArchivoParam;
 import com.tesis.dominio.delegado.Delegado;
 import com.tesis.dominio.modelos.Documento;
-import com.tesis.dominio.utils.StorageService;
+import com.tesis.dominio.utils.ServicioDeAlmacenamiento;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
@@ -13,10 +13,10 @@ import java.util.Date;
 @Service
 public class CasoDeUsoGuardarDocumento extends CasoDeUsoImpl<ArchivoParam, Documento> {
 
-    private final StorageService servicioDeAlmacenamiento;
+    private final ServicioDeAlmacenamiento servicioDeAlmacenamiento;
     private final Delegado<String, Documento> delegado;
 
-    public CasoDeUsoGuardarDocumento(StorageService servicioDeAlmacenamiento, Delegado<String, Documento> delegado) {
+    public CasoDeUsoGuardarDocumento(ServicioDeAlmacenamiento servicioDeAlmacenamiento, Delegado<String, Documento> delegado) {
         this.servicioDeAlmacenamiento = servicioDeAlmacenamiento;
         this.delegado = delegado;
     }
