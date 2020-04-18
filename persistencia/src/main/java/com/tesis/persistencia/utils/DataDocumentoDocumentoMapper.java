@@ -14,6 +14,7 @@ public class DataDocumentoDocumentoMapper implements Function<DataDocumento, Doc
         return new Documento(dataDocumento.getId(),
                 dataDocumento.getNombre(),
                 dataDocumento.getNombre(),
+                dataDocumento.getExtension(),
                 dataDocumento.getFechaCreacion(),
                 dataDocumento.getFechaActualizacion(),
                 dataDocumento.getRutaDeDescarga());

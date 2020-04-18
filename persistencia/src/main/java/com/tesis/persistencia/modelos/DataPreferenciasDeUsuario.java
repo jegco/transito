@@ -1,7 +1,13 @@
 package com.tesis.persistencia.modelos;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 public class DataPreferenciasDeUsuario {
 
     @Id
@@ -19,43 +25,5 @@ public class DataPreferenciasDeUsuario {
         this.icono = icono;
         this.dataMenuDeNav = dataMenuDeNav;
         this.animacion = animacion;
-    }
-
-    public DataPreferenciasDeUsuario(String id, String colorPrimario, String colorSeoundario, DataDocumento icono,
-                                     DataMenu dataMenuDeNav, String animacion) {
-        this.id = id;
-        this.colorPrimario = colorPrimario;
-        this.colorSeoundario = colorSeoundario;
-        this.icono = icono;
-        this.dataMenuDeNav = dataMenuDeNav;
-        this.animacion = animacion;
-    }
-
-    public DataPreferenciasDeUsuario() {
-
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getColorPrimario() {
-        return colorPrimario;
-    }
-
-    public String getColorSeoundario() {
-        return colorSeoundario;
-    }
-
-    public DataDocumento getIcono() {
-        return icono;
-    }
-
-    public DataMenu getDataMenuDeNav() {
-        return dataMenuDeNav;
-    }
-
-    public String getAnimacion() {
-        return animacion;
     }
 }

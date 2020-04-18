@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class GuiasDeTramiteDelegado implements Delegado<GuiaDeTramiteParams, GuiaDeTramite> {
 
@@ -26,13 +29,21 @@ public class GuiasDeTramiteDelegado implements Delegado<GuiaDeTramiteParams, Gui
     @Override
     public Mono<GuiaDeTramite> crear(GuiaDeTramite entidad) {
         return repositorio.save(guiaDeTramiteDataGuiaDeTramiteMapper.apply(entidad))
-                .map(dataGuiaDeTramiteGuiaDeTramiteMapper);
+                .flatMap(dataGuiaDeTramiteGuiaDeTramiteMapper);
+    }
+
+    @Override
+    public Flux<GuiaDeTramite> crear(List<GuiaDeTramite> entidades) {
+        return repositorio.insert(entidades
+                .stream()
+                .map(guiaDeTramiteDataGuiaDeTramiteMapper)
+                .collect(Collectors.toList())).flatMap(dataGuiaDeTramiteGuiaDeTramiteMapper);
     }
 
     @Override
     public Mono<GuiaDeTramite> actualizar(GuiaDeTramite entidad) {
         return repositorio.save(guiaDeTramiteDataGuiaDeTramiteMapper.apply(entidad))
-                .map(dataGuiaDeTramiteGuiaDeTramiteMapper);
+                .flatMap(dataGuiaDeTramiteGuiaDeTramiteMapper);
     }
 
     @Override
@@ -41,17 +52,17 @@ public class GuiasDeTramiteDelegado implements Delegado<GuiaDeTramiteParams, Gui
             if (parametroDeBusqueda.getDescripcion() != null && parametroDeBusqueda.getTitulo() != null) {
                 return repositorio.findAllByTituloContainsOrDescripcionContainsOrTipoContains(
                         parametroDeBusqueda.getTitulo(), parametroDeBusqueda.getDescripcion(), parametroDeBusqueda.getTipo())
-                        .map(dataGuiaDeTramiteGuiaDeTramiteMapper);
+                        .flatMap(dataGuiaDeTramiteGuiaDeTramiteMapper);
             } else if (parametroDeBusqueda.getTitulo() != null) {
                 return repositorio.findDataGuiaDeTramiteByTitulo(
                         parametroDeBusqueda.getTitulo())
-                        .map(dataGuiaDeTramiteGuiaDeTramiteMapper);
+                        .flatMap(dataGuiaDeTramiteGuiaDeTramiteMapper);
             } else {
                 return repositorio.findAllByTipoContains(parametroDeBusqueda.getTipo())
-                        .map(dataGuiaDeTramiteGuiaDeTramiteMapper);
+                        .flatMap(dataGuiaDeTramiteGuiaDeTramiteMapper);
             }
         }
-        return repositorio.findAll().map(dataGuiaDeTramiteGuiaDeTramiteMapper);
+        return repositorio.findAll().flatMap(dataGuiaDeTramiteGuiaDeTramiteMapper);
     }
 
     @Override

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.tesis</groupId>
 	<artifactId>persistencia</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>persistencia</name>
 	<description>Capa de persistencia de guia de tramites del transito</description>
 
@@ -23,6 +23,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.12</version>
+			<scope>provided</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -44,7 +53,7 @@
 		<dependency>
             <groupId>com.tesis</groupId>
             <artifactId>dominio</artifactId> 
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.projectreactor/reactor-core -->

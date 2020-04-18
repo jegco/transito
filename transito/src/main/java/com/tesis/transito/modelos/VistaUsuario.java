@@ -98,9 +98,9 @@ public class VistaUsuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> autorities = new ArrayList<>();
-        autorities.add(new SimpleGrantedAuthority(role));
-        return autorities;
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(role));
+        return authorities;
     }
 
     @JsonIgnore

@@ -7,6 +7,7 @@ import com.tesis.dominio.modelos.Usuario;
 import com.tesis.dominio.utils.exceptions.UnAuthorizedException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class CasoDeUsoLogin extends CasoDeUsoImpl<UsuarioParams, Usuario> {
@@ -20,6 +21,6 @@ public class CasoDeUsoLogin extends CasoDeUsoImpl<UsuarioParams, Usuario> {
     @Override
     protected Flux<Usuario> construirCasoDeUso(UsuarioParams param) {
         return delegado.buscar(param)
-                .switchIfEmpty(Flux.error(new UnAuthorizedException("Usuario no registrado")));
+                .switchIfEmpty(Mono.error(new UnAuthorizedException("Usuario no registrado")));
     }
 }

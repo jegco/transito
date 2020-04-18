@@ -11,7 +11,9 @@ import com.tesis.transito.modelos.VistaUsuario;
 import com.tesis.transito.seguridad.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.CorePublisher;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -45,32 +47,32 @@ public class UsuarioControlador {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Flux<AuthResponse> login(@RequestBody UsuarioParams param) {
-        return casoDeUsoLogin.ejecutar(param)
+    public Mono<AuthResponse> login(@RequestBody UsuarioParams param) {
+        return Mono.from(casoDeUsoLogin.ejecutar(param))
                 .map(usuarioVistaUsuarioMapper)
-                .map(usuario -> new AuthResponse(jwtUtil.generateToken(usuario), usuario.getRole()));
+                .map(usuario ->
+                        new AuthResponse(jwtUtil.generateToken(usuario), usuario.getRole()));
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Flux<VistaUsuario> registrarUsuario(@RequestBody VistaUsuario usuario) {
-        return casoDeUsoRegistrarUsuario.ejecutar(vistaUsuarioUsuarioMapper.apply(usuario))
+    public Mono<VistaUsuario> registrarUsuario(@RequestBody VistaUsuario usuario) {
+        return Mono.from(casoDeUsoRegistrarUsuario.ejecutar(vistaUsuarioUsuarioMapper.apply(usuario)))
                 .map(usuarioVistaUsuarioMapper);
     }
 
     @DeleteMapping
-    public Flux<Void> eliminarUsuario(@RequestBody VistaUsuario usuario) {
+    public CorePublisher<Void> eliminarUsuario(@RequestBody VistaUsuario usuario) {
         return casoDeUsoEliminarUsuario.ejecutar(vistaUsuarioUsuarioMapper.apply(usuario));
     }
 
     @GetMapping()
     public Flux<VistaUsuario> buscarUsuarios() {
-        return casoDeUsoLogin.ejecutar(null)
+        return Flux.from(casoDeUsoLogin.ejecutar(null))
                 .map(usuarioVistaUsuarioMapper);
     }
 
     @PutMapping()
-    public Flux<VistaUsuario> actviarUsuario(@RequestBody VistaUsuario usuario) {
-        return casoDeUsoActivarUsuario.ejecutar(vistaUsuarioUsuarioMapper.apply(usuario))
-                .map(confirmacion -> usuario);
+    public CorePublisher<Boolean> actviarUsuario(@RequestBody VistaUsuario usuario) {
+        return casoDeUsoActivarUsuario.ejecutar(vistaUsuarioUsuarioMapper.apply(usuario));
     }
 }

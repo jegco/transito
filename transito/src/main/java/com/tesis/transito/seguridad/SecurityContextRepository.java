@@ -1,6 +1,5 @@
 package com.tesis.transito.seguridad;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,14 +11,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-/**
- * @author ard333
- */
 @Component
 public class SecurityContextRepository implements ServerSecurityContextRepository {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+
+    public SecurityContextRepository(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
 
     @Override
     public Mono<Void> save(ServerWebExchange swe, SecurityContext sc) {
@@ -34,9 +33,7 @@ public class SecurityContextRepository implements ServerSecurityContextRepositor
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String authToken = authHeader.substring(7);
             Authentication auth = new UsernamePasswordAuthenticationToken(authToken, authToken);
-            return this.authenticationManager.authenticate(auth).map((authentication) -> {
-                return new SecurityContextImpl(authentication);
-            });
+            return this.authenticationManager.authenticate(auth).map(SecurityContextImpl::new);
         } else {
             return Mono.empty();
         }

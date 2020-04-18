@@ -16,6 +16,7 @@ public class DocumentoDataDocumentoMapper implements Function<Documento, DataDoc
                     documento.getId(),
                     documento.getNombre(),
                     documento.getArchivo(),
+                    documento.getExtension(),
                     documento.getFechaCreacion(),
                     documento.getFechaActualizacion(),
                     documento.getRutaDeDescarga());
@@ -25,6 +26,7 @@ public class DocumentoDataDocumentoMapper implements Function<Documento, DataDoc
                 documento.getArchivo(),
                 documento.getFechaCreacion(),
                 documento.getFechaActualizacion(),
-                documento.getRutaDeDescarga());
+                documento.getRutaDeDescarga(),
+                documento.getExtension());
     }
 }

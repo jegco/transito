@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PreferenciasDeUsuarioDelegado implements Delegado<String, PreferenciasDeUsuario> {
 
@@ -27,6 +30,14 @@ public class PreferenciasDeUsuarioDelegado implements Delegado<String, Preferenc
     @Override
     public Mono<PreferenciasDeUsuario> crear(PreferenciasDeUsuario entidad) {
         return repositorio.save(menuDataMenuMapper.apply(entidad)).map(dataMenuMenuMapper);
+    }
+
+    @Override
+    public Flux<PreferenciasDeUsuario> crear(List<PreferenciasDeUsuario> entidades) {
+        return repositorio.insert(entidades
+                .stream()
+                .map(menuDataMenuMapper)
+                .collect(Collectors.toList())).map(dataMenuMenuMapper);
     }
 
     @Override

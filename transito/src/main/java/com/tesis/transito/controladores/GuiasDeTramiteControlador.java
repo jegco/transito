@@ -3,14 +3,12 @@ package com.tesis.transito.controladores;
 import com.tesis.dominio.casosdeuso.base.CasoDeUso;
 import com.tesis.dominio.casosdeuso.params.GuiaDeTramiteParams;
 import com.tesis.dominio.modelos.GuiaDeTramite;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import reactor.core.CorePublisher;
 
 @RestController
 @RequestMapping("/guias")
-@CrossOrigin(value = {"http://localhost:4200", "http://localhost:4220"})
+@CrossOrigin(value = {"http://localhost:4200", "http://localhost:4300"})
 public class GuiasDeTramiteControlador {
 
     private final CasoDeUso<GuiaDeTramiteParams, GuiaDeTramite> casoDeUsoBuscarGuiaDeTramite;
@@ -27,37 +25,34 @@ public class GuiasDeTramiteControlador {
     }
 
     @GetMapping("/{tipo}")
-    public Flux<GuiaDeTramite> buscarGuiasDeTramitePorTipo(@PathVariable String tipo) {
+    public CorePublisher<GuiaDeTramite> buscarGuiasDeTramitePorTipo(@PathVariable String tipo) {
         return casoDeUsoBuscarGuiaDeTramite.ejecutar(new GuiaDeTramiteParams(tipo));
     }
 
     @GetMapping("/{tipo}/{titulo}/{descripcion}")
-    public Flux<GuiaDeTramite> buscarGuiasDeTramite(@PathVariable String tipo,
-                                                    @PathVariable String titulo,
-                                                    @PathVariable String descripcion) {
+    public CorePublisher<GuiaDeTramite> buscarGuiasDeTramite(@PathVariable String tipo,
+                                                             @PathVariable String titulo,
+                                                             @PathVariable String descripcion) {
         return casoDeUsoBuscarGuiaDeTramite.ejecutar(new GuiaDeTramiteParams(titulo, descripcion, tipo));
     }
 
     @GetMapping
-    public Flux<GuiaDeTramite> buscarGuiasDeTramite(
-            @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "6") int size
-    ) {
-        return casoDeUsoBuscarGuiaDeTramite.ejecutar(null).skip(page*size).limitRate(size);
+    public CorePublisher<GuiaDeTramite> buscarGuiasDeTramite() {
+        return casoDeUsoBuscarGuiaDeTramite.ejecutar(null);
     }
 
     @GetMapping("/titulo/{titulo}")
-    public Mono<GuiaDeTramite> buscarGuiasDeTramite(@PathVariable String titulo) {
-        return Mono.from(casoDeUsoBuscarGuiaDeTramite.ejecutar(new GuiaDeTramiteParams(titulo, null, null)));
+    public CorePublisher<GuiaDeTramite> buscarGuiasDeTramite(@PathVariable String titulo) {
+        return casoDeUsoBuscarGuiaDeTramite.ejecutar(new GuiaDeTramiteParams(titulo, null, null));
     }
 
     @PostMapping
-    public Flux<GuiaDeTramite> crearGuiaDeTramite(@RequestBody GuiaDeTramite guiaDeTramite) {
+    public CorePublisher<GuiaDeTramite> crearGuiaDeTramite(@RequestBody GuiaDeTramite guiaDeTramite) {
         return casoDeUsoCrearGuiasDetramite.ejecutar(guiaDeTramite);
     }
 
     @DeleteMapping()
-    public Mono<Void> eliminarGuiaDeTramite(@RequestBody GuiaDeTramite guiaDeTramite) {
-        return Mono.from(casoDeUsoEliminarGuiaDeTramite.ejecutar(guiaDeTramite));
+    public CorePublisher<Void> eliminarGuiaDeTramite(@RequestBody GuiaDeTramite guiaDeTramite) {
+        return casoDeUsoEliminarGuiaDeTramite.ejecutar(guiaDeTramite);
     }
 }

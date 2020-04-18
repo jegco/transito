@@ -1,38 +1,66 @@
 package com.tesis.persistencia.utils;
 
-import com.tesis.dominio.modelos.Documento;
 import com.tesis.dominio.modelos.GuiaDeTramite;
-import com.tesis.dominio.modelos.Paso;
 import com.tesis.persistencia.modelos.DataGuiaDeTramite;
+import com.tesis.persistencia.repositorios.DocumentoRepositorio;
+import com.tesis.persistencia.repositorios.PuntoDeAtencionRepositorio;
+import com.tesis.persistencia.repositorios.TiposRepositorio;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
-public class DataGuiaDeTramiteGuiaDeTramiteMapper implements Function<DataGuiaDeTramite, GuiaDeTramite> {
+public class DataGuiaDeTramiteGuiaDeTramiteMapper implements Function<DataGuiaDeTramite, Mono<GuiaDeTramite>> {
 
     private final DataDocumentoDocumentoMapper dataDocumentoDocumentoMapper;
-    private final DataPasoPasoMapper pasoDataPasoMapper;
+    private final DataPasoPasoMapper dataPasoPasoMapper;
+    private final DataPuntoDeAtencionPuntoDeAtencionMapper dataPuntoDeAtencionPuntoDeAtencionMapper;
+    private final DataTipoTipoMapper dataTipoTipoMapper;
+    private final DocumentoRepositorio documentoRepositorio;
+    private final TiposRepositorio tiposRepositorio;
+    private final PuntoDeAtencionRepositorio puntoDeAtencionRepositorio;
 
     public DataGuiaDeTramiteGuiaDeTramiteMapper(DataDocumentoDocumentoMapper dataDocumentoDocumentoMapper,
-                                                DataPasoPasoMapper pasoDataPasoMapper) {
+                                                DataPasoPasoMapper dataPasoPasoMapper,
+                                                DataPuntoDeAtencionPuntoDeAtencionMapper dataPuntoDeAtencionPuntoDeAtencionMapper, DataTipoTipoMapper dataTipoTipoMapper, DocumentoRepositorio documentoRepositorio, TiposRepositorio tiposRepositorio, PuntoDeAtencionRepositorio puntoDeAtencionRepositorio) {
         this.dataDocumentoDocumentoMapper = dataDocumentoDocumentoMapper;
-        this.pasoDataPasoMapper = pasoDataPasoMapper;
+        this.dataPasoPasoMapper = dataPasoPasoMapper;
+        this.dataPuntoDeAtencionPuntoDeAtencionMapper = dataPuntoDeAtencionPuntoDeAtencionMapper;
+        this.dataTipoTipoMapper = dataTipoTipoMapper;
+        this.documentoRepositorio = documentoRepositorio;
+        this.tiposRepositorio = tiposRepositorio;
+        this.puntoDeAtencionRepositorio = puntoDeAtencionRepositorio;
     }
 
     @Override
-    public GuiaDeTramite apply(DataGuiaDeTramite dataGuiaDeTramite) {
-        List<Documento> documentos = new ArrayList<>();
-        List<Paso> pasos = new ArrayList<>();
-        dataGuiaDeTramite.getDataPasos().forEach(paso -> pasos.add(pasoDataPasoMapper.apply(paso)));
-        dataGuiaDeTramite.getFormularios().forEach(dataDocumento -> documentos.add(dataDocumentoDocumentoMapper.apply(dataDocumento)));
-        return new GuiaDeTramite(dataGuiaDeTramite.getId(),
-                dataGuiaDeTramite.getTitulo(),
-                dataGuiaDeTramite.getDescripcion(),
-                documentos,
-                pasos,
-                dataGuiaDeTramite.getTipo());
+    public Mono<GuiaDeTramite> apply(DataGuiaDeTramite dataGuiaDeTramite) {
+
+        return dataPasoPasoMapper.apply(dataGuiaDeTramite.getDataPasos())
+                .map(pasos -> new GuiaDeTramite(dataGuiaDeTramite.getId(),
+                        dataGuiaDeTramite.getTitulo(),
+                        dataGuiaDeTramite.getDescripcion(),
+                        pasos,
+                        dataGuiaDeTramite.getSoporteLegal()))
+                .flatMap(guia -> tiposRepositorio.findById(dataGuiaDeTramite.getTipo())
+                        .flatMap(dataTipoTipoMapper)
+                        .map(tipo -> {
+                            guia.setTipo(tipo);
+                            return guia;
+                        }))
+                .zipWith(documentoRepositorio.findAllById(dataGuiaDeTramite.getFormularios()).collectList(),
+                        (g, docs) -> {
+                            g.setFormularios(
+                                    docs.stream().map(dataDocumentoDocumentoMapper).collect(Collectors.toList()));
+                            return g;
+                        })
+                .zipWith(puntoDeAtencionRepositorio.findAllById(dataGuiaDeTramite.getPuntosDeAtencion()).collectList(),
+                        (g, pts) -> {
+                            g.setPuntosDeAtencion(
+                                    pts.stream().map(dataPuntoDeAtencionPuntoDeAtencionMapper).collect(Collectors.toList())
+                            );
+                            return g;
+                        });
     }
 }

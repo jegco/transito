@@ -6,6 +6,7 @@ import com.tesis.dominio.modelos.Documento;
 import com.tesis.dominio.utils.ServicioDeAlmacenamiento;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class CasoDeUsoEliminarDocumento extends CasoDeUsoImpl<Documento, Void> {
@@ -19,8 +20,8 @@ public class CasoDeUsoEliminarDocumento extends CasoDeUsoImpl<Documento, Void> {
     }
 
     @Override
-    protected Flux<Void> construirCasoDeUso(Documento documento) {
-        return Flux.from(servicioDeAlmacenamiento.eliminarArchivo(documento.getArchivo())
-                .flatMap(eliminado -> delegado.eliminar(documento)));
+    protected Mono<Void> construirCasoDeUso(Documento documento) {
+        return servicioDeAlmacenamiento.eliminarArchivo(documento.getArchivo())
+                .flatMap(eliminado -> delegado.eliminar(documento));
     }
 }

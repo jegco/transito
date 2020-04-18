@@ -8,6 +8,7 @@ import com.tesis.dominio.modelos.Usuario;
 import com.tesis.dominio.utils.ServicioDeNotification;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class CasoDeUsoActivarUsuario extends CasoDeUsoImpl<Usuario, Boolean> {
@@ -22,9 +23,9 @@ public class CasoDeUsoActivarUsuario extends CasoDeUsoImpl<Usuario, Boolean> {
     }
 
     @Override
-    protected Flux<Boolean> construirCasoDeUso(Usuario usuario) {
-        return Flux.from(usuarioDelegado.actualizar(usuario))
-                .switchMap(usuarioActivado -> servicioDeNotification
+    protected Mono<Boolean> construirCasoDeUso(Usuario usuario) {
+        return usuarioDelegado.actualizar(usuario)
+                .flatMap(usuarioActivado -> servicioDeNotification
                         .enviarNotificacionAlUsuario(
                                 new Notificacion(usuario, "registro exitosa", "registro autorizado por el administrador")));
     }

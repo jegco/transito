@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.net.InetAddress;
 import java.util.HashMap;
@@ -31,9 +32,9 @@ public class ServicioDeNotificacionPorCorreo implements ServicioDeNotification {
     }
 
     @Override
-    public Flux<Usuario> enviarNotificacionAlAdmin(Notificacion notificacion) {
-        return enviarAlAdmin(notificacion) != null ? Flux.just(notificacion.getPara())
-                : Flux.error(new NotificationNotFoundException("Hubo un inconveniente enviando la notificacion, intente de nuevo"));
+    public Mono<Usuario> enviarNotificacionAlAdmin(Notificacion notificacion) {
+        return enviarAlAdmin(notificacion) != null ? Mono.just(notificacion.getPara())
+                : Mono.error(new NotificationNotFoundException("Hubo un inconveniente enviando la notificacion, intente de nuevo"));
     }
 
     private Usuario enviarAlAdmin(Notificacion notificacion) {
@@ -63,9 +64,9 @@ public class ServicioDeNotificacionPorCorreo implements ServicioDeNotification {
     }
 
     @Override
-    public Flux<Boolean> enviarNotificacionAlUsuario(Notificacion notificacion) {
-        return enviarAlUsuario(notificacion) ? Flux.just(true) :
-                Flux.error(new NotificationNotFoundException("Sucedio un problema con la notificacion"));
+    public Mono<Boolean> enviarNotificacionAlUsuario(Notificacion notificacion) {
+        return enviarAlUsuario(notificacion) ? Mono.just(true) :
+                Mono.error(new NotificationNotFoundException("Sucedio un problema con la notificacion"));
     }
 
     private boolean enviarAlUsuario(Notificacion notificacion) {

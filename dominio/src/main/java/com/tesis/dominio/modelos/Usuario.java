@@ -1,5 +1,14 @@
 package com.tesis.dominio.modelos;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class Usuario {
     private String id;
     private String nombreDeUsuario;
@@ -9,63 +18,4 @@ public class Usuario {
     private String rol;
     private boolean active;
 
-    public Usuario(String id, String nombreDeUsuario, String contraseña,
-                   String correoElectronico, String numeroDeTelefono,
-                   String rol, boolean active) {
-        this.id = id;
-        this.nombreDeUsuario = nombreDeUsuario;
-        this.contraseña = contraseña;
-        this.correoElectronico = correoElectronico;
-        this.numeroDeTelefono = numeroDeTelefono;
-        this.rol = rol;
-        this.active = active;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getNombreDeUsuario() {
-        return nombreDeUsuario;
-    }
-
-    public void setNombreDeUsuario(String nombreDeUsuario) {
-        this.nombreDeUsuario = nombreDeUsuario;
-    }
-
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
-
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
-
-    public String getNumeroDeTelefono() {
-        return numeroDeTelefono;
-    }
-
-    public void setNumeroDeTelefono(String numeroDeTelefono) {
-        this.numeroDeTelefono = numeroDeTelefono;
-    }
-
-    public String getRol() {
-        return rol;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
 }

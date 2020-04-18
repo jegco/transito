@@ -1,87 +1,38 @@
 package com.tesis.persistencia.modelos;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 @Document(collection = "guias")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class DataGuiaDeTramite {
 
     @Id
     private String id;
     private String titulo;
     private String descripcion;
-    private List<DataDocumento> formularios;
-    private List<DataPaso> dataPasos;
+    private List<String> formularios;
     private String tipo;
+    private String soporteLegal;
+    private List<String> puntosDeAtencion;
+    private List<DataPaso> dataPasos;
 
-    public DataGuiaDeTramite(String id, String titulo, String descripcion, List<DataDocumento> formularios, List<DataPaso> dataPasos, String tipo) {
-        this.id = id;
+    public DataGuiaDeTramite(String titulo, String descripcion, List<String> formularios,
+                             List<DataPaso> dataPasos, String tipo, String soporteLegal,
+                             List<String> puntosDeAtencion) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.formularios = formularios;
         this.dataPasos = dataPasos;
         this.tipo = tipo;
-    }
-
-    public DataGuiaDeTramite(String titulo, String descripcion, List<DataDocumento> formularios, List<DataPaso> dataPasos, String tipo) {
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.formularios = formularios;
-        this.dataPasos = dataPasos;
-        this.tipo = tipo;
-    }
-
-    public DataGuiaDeTramite() {
-
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public List<DataDocumento> getFormularios() {
-        return formularios;
-    }
-
-    public void setFormularios(List<DataDocumento> formularios) {
-        this.formularios = formularios;
-    }
-
-    public List<DataPaso> getDataPasos() {
-        return dataPasos;
-    }
-
-    public void setDataPasos(List<DataPaso> dataPasos) {
-        this.dataPasos = dataPasos;
+        this.soporteLegal = soporteLegal;
+        this.puntosDeAtencion = puntosDeAtencion;
     }
 }

@@ -2,15 +2,17 @@ package com.tesis.transito.seguridad;
 
 import com.tesis.transito.modelos.Role;
 import io.jsonwebtoken.Claims;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,8 +22,11 @@ import java.util.stream.Collectors;
 @Component
 public class AuthenticationManager implements ReactiveAuthenticationManager {
 
-    @Autowired
-    private JWTUtil jwtUtil;
+    private final JWTUtil jwtUtil;
+
+    public AuthenticationManager(JWTUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
     @Override
     @SuppressWarnings("unchecked")
@@ -36,10 +41,15 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
         }
         if (username != null && jwtUtil.validateToken(authToken)) {
             Claims claims = jwtUtil.getAllClaimsFromToken(authToken);
+            List<Role> roles = new ArrayList<>();
+
+            roles.add(Role.valueOf((String)claims
+                    .get("authorities")));
+
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                     username,
-                    null,
-                    null
+                    claims,
+                    roles.stream().map(authority -> new SimpleGrantedAuthority(authority.name())).collect(Collectors.toList())
             );
             return Mono.just(auth);
         } else {

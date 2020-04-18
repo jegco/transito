@@ -2,14 +2,13 @@ package com.tesis.transito.controladores;
 
 import com.tesis.dominio.casosdeuso.base.CasoDeUso;
 import com.tesis.dominio.modelos.PreferenciasDeUsuario;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/preferencias")
+@CrossOrigin(value = {"http://localhost:4200"})
+
 public class PreferenciasDeUsuarioControlador {
 
     private final CasoDeUso<String, PreferenciasDeUsuario> casoDeUsoBuscarPreferenciasDeUsuario;

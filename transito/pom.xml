@@ -11,7 +11,7 @@
 	<groupId>com.tesis</groupId>
 	<artifactId>transito</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>transitp</name>
+	<name>transito</name>
 	<description>Guia de tramites del transito</description>
 
 	<properties>
@@ -49,12 +49,12 @@
 		<dependency>
 			<groupId>com.tesis</groupId>
 			<artifactId>dominio</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.tesis</groupId>
 			<artifactId>persistencia</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

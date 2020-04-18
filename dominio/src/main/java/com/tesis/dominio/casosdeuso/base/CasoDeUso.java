@@ -1,7 +1,7 @@
 package com.tesis.dominio.casosdeuso.base;
 
-import reactor.core.publisher.Flux;
+import reactor.core.CorePublisher;
 
 public interface CasoDeUso<Params, Resp> {
-    Flux<Resp> ejecutar(Params params);
+    CorePublisher<Resp> ejecutar(Params params);
 }

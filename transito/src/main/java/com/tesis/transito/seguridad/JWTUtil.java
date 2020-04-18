@@ -20,12 +20,14 @@ import java.util.Map;
 public class JWTUtil implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Value("${springbootwebfluxjjwt.jjwt.secret}")
     private String secret;
-
-    @Value("${springbootwebfluxjjwt.jjwt.expiration}")
     private String expirationTime;
+
+    public JWTUtil(@Value("${springbootwebfluxjjwt.jjwt.secret}") String secret,
+                   @Value("${springbootwebfluxjjwt.jjwt.expiration}") String expirationTime) {
+        this.secret = secret;
+        this.expirationTime = expirationTime;
+    }
 
     public Claims getAllClaimsFromToken(String token) {
         return Jwts.parser().setSigningKey(Base64.getEncoder().encodeToString(secret.getBytes())).parseClaimsJws(token).getBody();
@@ -49,11 +51,13 @@ public class JWTUtil implements Serializable {
         claims.put("numeroDeTelefono", user.getNumeroDeTelefono());
         claims.put("correoElectronico", user.getCorreoElectronico());
         claims.put("id", user.getId());
+        claims.put("authorities", user.getRole());
+        claims.put("role", user.getRole());
         return doGenerateToken(claims, user.getUsername());
     }
 
     private String doGenerateToken(Map<String, Object> claims, String username) {
-        Long expirationTimeLong = Long.parseLong(expirationTime); //in second
+        long expirationTimeLong = Long.parseLong(expirationTime); //in second
 
         final Date createdDate = new Date();
         final Date expirationDate = new Date(createdDate.getTime() + expirationTimeLong * 1000);

@@ -5,7 +5,7 @@ import com.tesis.dominio.casosdeuso.params.UsuarioParams;
 import com.tesis.dominio.delegado.Delegado;
 import com.tesis.dominio.modelos.Usuario;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class CasoDeUsoEliminarUsuario extends CasoDeUsoImpl<Usuario, Void> {
@@ -17,7 +17,7 @@ public class CasoDeUsoEliminarUsuario extends CasoDeUsoImpl<Usuario, Void> {
     }
 
     @Override
-    protected Flux<Void> construirCasoDeUso(Usuario usuario) {
-        return Flux.from(delegado.eliminar(usuario));
+    protected Mono<Void> construirCasoDeUso(Usuario usuario) {
+        return delegado.eliminar(usuario);
     }
 }

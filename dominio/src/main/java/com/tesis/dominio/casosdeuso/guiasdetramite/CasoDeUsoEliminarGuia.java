@@ -7,6 +7,7 @@ import com.tesis.dominio.modelos.GuiaDeTramite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class CasoDeUsoEliminarGuia extends CasoDeUsoImpl<GuiaDeTramite, Void> {
@@ -19,7 +20,7 @@ public class CasoDeUsoEliminarGuia extends CasoDeUsoImpl<GuiaDeTramite, Void> {
     }
 
     @Override
-    protected Flux<Void> construirCasoDeUso(GuiaDeTramite guiaDeTramite) {
-        return Flux.from(delegado.eliminar(guiaDeTramite));
+    protected Mono<Void> construirCasoDeUso(GuiaDeTramite guiaDeTramite) {
+        return delegado.eliminar(guiaDeTramite);
     }
 }

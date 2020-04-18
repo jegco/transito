@@ -6,11 +6,12 @@ import com.tesis.persistencia.repositorios.DocumentoRepositorio;
 import com.tesis.persistencia.utils.DataDocumentoDocumentoMapper;
 import com.tesis.persistencia.utils.DocumentoDataDocumentoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DocumentoDelegado implements Delegado<String, Documento> {
@@ -31,6 +32,14 @@ public class DocumentoDelegado implements Delegado<String, Documento> {
     @Override
     public Mono<Documento> crear(Documento entidad) {
         return repositorio.insert(documentoDataDocumentoMapper.apply(entidad)).map(dataDocumentoDocumentoMapper);
+    }
+
+    @Override
+    public Flux<Documento> crear(List<Documento> entidades) {
+        return repositorio.insert(entidades
+                .stream()
+                .map(documentoDataDocumentoMapper)
+                .collect(Collectors.toList())).map(dataDocumentoDocumentoMapper);
     }
 
     @Override

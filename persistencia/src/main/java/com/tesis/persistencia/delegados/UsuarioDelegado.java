@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UsuarioDelegado implements Delegado<UsuarioParams, Usuario> {
 
@@ -28,6 +31,14 @@ public class UsuarioDelegado implements Delegado<UsuarioParams, Usuario> {
     @Override
     public Mono<Usuario> crear(Usuario entidad) {
         return repositorio.insert(usuarioDataUsuarioMapper.apply(entidad))
+                .map(dataUsuarioUsuarioMapper);
+    }
+
+    @Override
+    public Flux<Usuario> crear(List<Usuario> entidades) {
+        return repositorio.insert(entidades
+                .stream()
+                .map(usuarioDataUsuarioMapper).collect(Collectors.toList()))
                 .map(dataUsuarioUsuarioMapper);
     }
 

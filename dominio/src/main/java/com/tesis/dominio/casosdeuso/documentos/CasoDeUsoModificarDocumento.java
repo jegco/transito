@@ -5,9 +5,13 @@ import com.tesis.dominio.casosdeuso.params.ActualizarArchivoParam;
 import com.tesis.dominio.delegado.Delegado;
 import com.tesis.dominio.modelos.Documento;
 import com.tesis.dominio.utils.ServicioDeAlmacenamiento;
+import javafx.util.Pair;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Service
@@ -22,16 +26,18 @@ public class CasoDeUsoModificarDocumento extends CasoDeUsoImpl<ActualizarArchivo
     }
 
     @Override
-    protected Flux<Documento> construirCasoDeUso(ActualizarArchivoParam archivoParam) {
-        return Flux.from(servicioDeAlmacenamiento.
+    protected Mono<Documento> construirCasoDeUso(ActualizarArchivoParam archivoParam) {
+        return servicioDeAlmacenamiento.
                 guardarDocumento(archivoParam.getArchivo(), archivoParam.getNombre())
-                .flatMap(direccionArchivo ->
+                .map(rutaArchivo -> new Pair<>(rutaArchivo, rutaArchivo.substring(rutaArchivo.lastIndexOf(".") + 1)))
+                .flatMap(descripcionArchivo ->
                         delegado.crear(
                                 new Documento(null,
                                         archivoParam.getNombre(),
-                                        direccionArchivo,
-                                        new Date("dd/MM/yyyy HH:MM"),
-                                        new Date("dd/MM/yyyy HH:MM"),
-                                        direccionArchivo))));
+                                        descripcionArchivo.getKey(),
+                                        descripcionArchivo.getValue(),
+                                        LocalDate.now(),
+                                        LocalDate.now(),
+                                        descripcionArchivo.getValue())));
     }
 }

@@ -19,11 +19,14 @@ import reactor.core.publisher.Mono;
 @EnableReactiveMethodSecurity
 public class WebSecurityConfig {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private SecurityContextRepository securityContextRepository;
+    private final SecurityContextRepository securityContextRepository;
+
+    public WebSecurityConfig(AuthenticationManager authenticationManager, SecurityContextRepository securityContextRepository) {
+        this.authenticationManager = authenticationManager;
+        this.securityContextRepository = securityContextRepository;
+    }
 
     @Bean
     public SecurityWebFilterChain securitygWebFilterChain(ServerHttpSecurity http) {
@@ -43,10 +46,8 @@ public class WebSecurityConfig {
                 .pathMatchers("/usuarios/login").permitAll()
                 .pathMatchers("/usuarios/email").permitAll()
                 .pathMatchers(HttpMethod.GET, "/documentos/**").permitAll()
-                .pathMatchers(HttpMethod.POST, "/documentos").hasAnyRole("ADMIN", "SUPER_ADMIN")
-                .pathMatchers(HttpMethod.DELETE, "/usuarios").hasRole("SUPER_ADMIN")
-                .pathMatchers(HttpMethod.PUT, "/usuarios").hasRole("SUPER_ADMIN")
                 .pathMatchers(HttpMethod.GET, "/guias/**").permitAll()
+                .pathMatchers(HttpMethod.GET, "/tipos").permitAll()
                 .anyExchange().authenticated()
                 .and().build();
     }

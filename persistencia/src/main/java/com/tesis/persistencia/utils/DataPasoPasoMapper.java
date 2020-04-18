@@ -1,27 +1,35 @@
 package com.tesis.persistencia.utils;
 
-import com.tesis.dominio.modelos.Documento;
 import com.tesis.dominio.modelos.Paso;
 import com.tesis.persistencia.modelos.DataPaso;
+import com.tesis.persistencia.repositorios.DocumentoRepositorio;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
-public class DataPasoPasoMapper implements Function<DataPaso, Paso> {
+public class DataPasoPasoMapper implements Function<List<DataPaso>, Mono<List<Paso>>> {
 
-    final DataDocumentoDocumentoMapper mapper;
+    private final DataDocumentoDocumentoMapper mapper;
+    private final DocumentoRepositorio repositorio;
 
-    public DataPasoPasoMapper(DataDocumentoDocumentoMapper mapper) {
+    public DataPasoPasoMapper(DataDocumentoDocumentoMapper mapper, DocumentoRepositorio repositorio) {
         this.mapper = mapper;
+        this.repositorio = repositorio;
     }
 
     @Override
-    public Paso apply(DataPaso dataPaso) {
-        List<Documento> documentos = new ArrayList<>();
-        dataPaso.getAnexos().forEach(documento -> documentos.add(mapper.apply(documento)));
-        return new Paso(dataPaso.getTitulo(), dataPaso.getDescripcion(), documentos);
+    public Mono<List<Paso>> apply(List<DataPaso> dataPaso) {
+        return Flux.fromIterable(dataPaso)
+                .flatMap(paso -> repositorio.findAllById(paso.getAnexos()).collectList()
+                        .map(v -> {
+                            Paso p = new Paso(paso.getTitulo(), paso.getDescripcion());
+                            p.setAnexos(v.stream().map(mapper).collect(Collectors.toList()));
+                            return p;
+                        })).collectList();
     }
 }

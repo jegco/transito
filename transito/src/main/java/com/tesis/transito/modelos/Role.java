@@ -1,5 +1,5 @@
 package com.tesis.transito.modelos;
 
 public enum Role {
-    ROLE_USER, ROLE_ADMIN
+    ADMIN, SUPER_ADMIN
 }

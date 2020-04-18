@@ -6,6 +6,7 @@ import com.tesis.dominio.delegado.Delegado;
 import com.tesis.dominio.modelos.GuiaDeTramite;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class CasoDeUsoCrearGuiasDeTramite extends CasoDeUsoImpl<GuiaDeTramite, GuiaDeTramite> {
@@ -17,7 +18,7 @@ public class CasoDeUsoCrearGuiasDeTramite extends CasoDeUsoImpl<GuiaDeTramite, G
     }
 
     @Override
-    protected Flux<GuiaDeTramite> construirCasoDeUso(GuiaDeTramite guiaDeTramite) {
-        return Flux.from(delegado.crear(guiaDeTramite));
+    protected Mono<GuiaDeTramite> construirCasoDeUso(GuiaDeTramite guiaDeTramite) {
+        return delegado.crear(guiaDeTramite);
     }
 }

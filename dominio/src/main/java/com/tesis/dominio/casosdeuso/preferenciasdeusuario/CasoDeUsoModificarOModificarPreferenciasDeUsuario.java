@@ -4,7 +4,7 @@ import com.tesis.dominio.casosdeuso.base.CasoDeUsoImpl;
 import com.tesis.dominio.delegado.Delegado;
 import com.tesis.dominio.modelos.PreferenciasDeUsuario;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class CasoDeUsoModificarOModificarPreferenciasDeUsuario
@@ -17,7 +17,7 @@ public class CasoDeUsoModificarOModificarPreferenciasDeUsuario
     }
 
     @Override
-    protected Flux<PreferenciasDeUsuario> construirCasoDeUso(PreferenciasDeUsuario entidad) {
-        return Flux.from(delegado.actualizar(entidad));
+    protected Mono<PreferenciasDeUsuario> construirCasoDeUso(PreferenciasDeUsuario entidad) {
+        return delegado.actualizar(entidad);
     }
 }
