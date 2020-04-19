@@ -5,11 +5,8 @@ import com.tesis.transito.dominio.casosdeuso.params.ActualizarArchivoParam;
 import com.tesis.transito.dominio.delegado.Delegado;
 import com.tesis.transito.dominio.modelos.Documento;
 import com.tesis.transito.dominio.utils.ServicioDeAlmacenamiento;
-import javafx.util.Pair;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-
-import java.time.LocalDate;
 
 @Service
 public class CasoDeUsoModificarDocumento extends CasoDeUsoImpl<ActualizarArchivoParam, Documento> {
