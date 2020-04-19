@@ -26,15 +26,6 @@ public class CasoDeUsoModificarDocumento extends CasoDeUsoImpl<ActualizarArchivo
     protected Mono<Documento> construirCasoDeUso(ActualizarArchivoParam archivoParam) {
         return servicioDeAlmacenamiento.
                 guardarDocumento(archivoParam.getArchivo(), archivoParam.getNombre())
-                .map(rutaArchivo -> new Pair<>(rutaArchivo, rutaArchivo.substring(rutaArchivo.lastIndexOf(".") + 1)))
-                .flatMap(descripcionArchivo ->
-                        delegado.crear(
-                                new Documento(null,
-                                        archivoParam.getNombre(),
-                                        descripcionArchivo.getKey(),
-                                        descripcionArchivo.getValue(),
-                                        LocalDate.now(),
-                                        LocalDate.now(),
-                                        descripcionArchivo.getValue())));
+                .flatMap(delegado::crear);
     }
 }

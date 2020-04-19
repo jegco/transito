@@ -30,16 +30,6 @@ public class CasoDeUsoGuardarDocumento extends CasoDeUsoImpl<ArchivoParam, Docum
     protected Flux<Documento> construirCasoDeUso(ArchivoParam archivoParam) {
         return Flux.from(servicioDeAlmacenamiento.
                 guardarDocumento(archivoParam.getArchivo(), archivoParam.getNombre())
-                .map(rutaArchivo -> new Pair<>(rutaArchivo, rutaArchivo.substring(rutaArchivo.lastIndexOf(".") + 1)))
-                .flatMap(descripcionArchivo ->
-                        delegado.crear(
-                                new Documento(null,
-                                        archivoParam.getNombre(),
-                                        descripcionArchivo.getKey(),
-                                        descripcionArchivo.getValue(),
-                                        LocalDate.now(),
-                                        LocalDate.now(),
-                                        InetAddress.getLoopbackAddress().getHostName() + ":" +
-                                                environment.getProperty("server.port") + "/documentos/resource/" + archivoParam.getNombre()))));
+                .flatMap(delegado::crear));
     }
 }

@@ -1,5 +1,6 @@
 package com.tesis.transito.persistencia.utils.archivos;
 
+import com.tesis.transito.dominio.modelos.Documento;
 import com.tesis.transito.dominio.utils.ServicioDeAlmacenamiento;
 import com.tesis.transito.persistencia.utils.archivos.excepciones.FileStorageException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -42,7 +44,7 @@ public class ServicioDeAlmacenamientoImpl implements ServicioDeAlmacenamiento {
 
 
     @Override
-    public Mono<String> guardarDocumento(Flux<DataBuffer> archivo, String nombreOriginalArchivo) {
+    public Mono<Documento> guardarDocumento(Flux<DataBuffer> archivo, String nombreOriginalArchivo) {
         final String filename = nombreOriginalArchivo;
         File file = new File(fileStorageLocation.toString() + "/" + filename);
         if (file.exists())
@@ -121,7 +123,13 @@ public class ServicioDeAlmacenamientoImpl implements ServicioDeAlmacenamiento {
                 } catch (IOException ignored) {
                 }
                 // take last, map to a status string
-            }).last().map(dataBuffer -> file.getPath() + " " + (errorFlag.get() ? "error" : ""));
+            }).last().map(dataBuffer -> new Documento(null,
+                    file.getPath(),
+                    file.getName(),
+                    file.getPath().substring(file.getPath().lastIndexOf(".") + 1),
+                    LocalDate.now(),
+                    LocalDate.now(),
+                    file.getPath().substring(file.getPath().lastIndexOf(".") + 1)));
         } catch (IOException e) {
             // unable to open the file channel, return an error
 
