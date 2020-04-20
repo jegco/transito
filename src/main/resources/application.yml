@@ -1,0 +1,54 @@
+
+## MULTIPART (MultipartProperties)
+# Enable multipart uploads
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+
+  data:
+    mongodb:
+      uri: mongodb://jegco:qwerty555@transito-cluster-shard-00-00-indg3.mongodb.net:27017,transito-cluster-shard-00-01-indg3.mongodb.net:27017,transito-cluster-shard-00-02-indg3.mongodb.net:27017/transito?ssl=true&replicaSet=transito-cluster-shard-0&authSource=admin&retryWrites=true&w=majority
+
+  main:
+    allow-bean-definition-overriding: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  freemarker:
+    suffix: .ftlh
+
+
+server:
+  port: 8081
+
+file:
+  upload-dir: /files/
+
+springbootwebfluxjjwt:
+  password:
+    enconder:
+      secret: mysecret
+      iteration: 33
+      keylength: 256
+
+  jjwt:
+    secret: ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave512bitsKeySize
+    expiration: 28800
+
+amazonProperties:
+  endpointUrl: https://s3.us-east-2.amazonaws.com
+  accessKey: AKIA465J23FPST6J5C4D
+  secretKey: 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
+  bucketName: files-transito

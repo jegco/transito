@@ -14,16 +14,16 @@ import java.util.Base64;
  *
  * @author ard333
  */
-@Component
+//@Component
 public class PBKDF2Encoder implements PasswordEncoder {
 	
-	@Value("${springbootwebfluxjjwt.password.encoder.secret}")
+	//@Value("${springbootwebfluxjjwt.password.encoder.secret}")
 	private String secret;
 
-	@Value("${springbootwebfluxjjwt.password.encoder.iteration}")
+	//@Value("${springbootwebfluxjjwt.password.encoder.iteration}")
 	private Integer iteration;
 
-	@Value("${springbootwebfluxjjwt.password.encoder.keylength}")
+	//@Value("${springbootwebfluxjjwt.password.encoder.keylength}")
 	private Integer keylength;
 	
 	/**
