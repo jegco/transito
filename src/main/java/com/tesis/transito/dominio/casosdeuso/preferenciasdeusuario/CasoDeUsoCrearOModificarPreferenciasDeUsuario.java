@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
-public class CasoDeUsoModificarOModificarPreferenciasDeUsuario
+public class CasoDeUsoCrearOModificarPreferenciasDeUsuario
         extends CasoDeUsoImpl<PreferenciasDeUsuario, PreferenciasDeUsuario> {
 
     private final Delegado<String, PreferenciasDeUsuario> delegado;
 
-    public CasoDeUsoModificarOModificarPreferenciasDeUsuario(Delegado<String, PreferenciasDeUsuario> delegado) {
+    public CasoDeUsoCrearOModificarPreferenciasDeUsuario(Delegado<String, PreferenciasDeUsuario> delegado) {
         this.delegado = delegado;
     }
 

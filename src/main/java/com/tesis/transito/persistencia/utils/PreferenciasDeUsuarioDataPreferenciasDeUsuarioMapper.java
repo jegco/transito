@@ -10,13 +10,10 @@ import java.util.function.Function;
 public class PreferenciasDeUsuarioDataPreferenciasDeUsuarioMapper implements
         Function<PreferenciasDeUsuario, DataPreferenciasDeUsuario> {
 
-    private final MenuDataMenuMapper mapper;
-    private final DocumentoDataDocumentoMapper documentoMapper;
+    private final AnimacionDataAnimacionMapper mapper;
 
-    public PreferenciasDeUsuarioDataPreferenciasDeUsuarioMapper(MenuDataMenuMapper mapper,
-                                                                DocumentoDataDocumentoMapper documentoMapper) {
+    public PreferenciasDeUsuarioDataPreferenciasDeUsuarioMapper(AnimacionDataAnimacionMapper mapper) {
         this.mapper = mapper;
-        this.documentoMapper = documentoMapper;
     }
 
     @Override
@@ -24,14 +21,10 @@ public class PreferenciasDeUsuarioDataPreferenciasDeUsuarioMapper implements
         if (preferenciasDeUsuario.getId() != null && !preferenciasDeUsuario.getId().isEmpty()) {
             return new DataPreferenciasDeUsuario(preferenciasDeUsuario.getId(),
                     preferenciasDeUsuario.getColorPrimario(), preferenciasDeUsuario.getColorSecundario(),
-                    documentoMapper.apply(preferenciasDeUsuario.getIcono()),
-                    mapper.apply(preferenciasDeUsuario.getMenuDeNav()),
-                    preferenciasDeUsuario.getAnimacion());
+                    mapper.apply(preferenciasDeUsuario.getAnimacion()));
         }
         return new DataPreferenciasDeUsuario(
                 preferenciasDeUsuario.getColorPrimario(), preferenciasDeUsuario.getColorSecundario(),
-                documentoMapper.apply(preferenciasDeUsuario.getIcono()),
-                mapper.apply(preferenciasDeUsuario.getMenuDeNav()),
-                preferenciasDeUsuario.getAnimacion());
+                mapper.apply(preferenciasDeUsuario.getAnimacion()));
     }
 }

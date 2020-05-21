@@ -10,12 +10,10 @@ import java.util.function.Function;
 public class DataPreferenciasDeUsuarioPreferenciasDeUsuarioMapper
         implements Function<DataPreferenciasDeUsuario, PreferenciasDeUsuario> {
 
-    private final DataMenuMenuMapper mapper;
-    private final DataDocumentoDocumentoMapper documentoMapper;
+    private final DataAnimacionAnimacionMapper mapper;
 
-    public DataPreferenciasDeUsuarioPreferenciasDeUsuarioMapper(DataMenuMenuMapper mapper, DataDocumentoDocumentoMapper documentoMapper) {
+    public DataPreferenciasDeUsuarioPreferenciasDeUsuarioMapper(DataAnimacionAnimacionMapper mapper) {
         this.mapper = mapper;
-        this.documentoMapper = documentoMapper;
     }
 
     @Override
@@ -23,8 +21,6 @@ public class DataPreferenciasDeUsuarioPreferenciasDeUsuarioMapper
         return new PreferenciasDeUsuario(dataPreferenciasDeUsuario.getId(),
                 dataPreferenciasDeUsuario.getColorPrimario(),
                 dataPreferenciasDeUsuario.getColorSeoundario(),
-                dataPreferenciasDeUsuario.getAnimacion(),
-                documentoMapper.apply(dataPreferenciasDeUsuario.getIcono()),
-                mapper.apply(dataPreferenciasDeUsuario.getDataMenuDeNav()));
+                mapper.apply(dataPreferenciasDeUsuario.getAnimacion()));
     }
 }

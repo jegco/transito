@@ -13,6 +13,6 @@ public interface ServicioDeAlmacenamiento {
 
     Mono<Resource> cargarDocumento(String nombre);
 
-    Mono<Boolean> eliminarArchivo(String URIArchivo);
+    Mono<Boolean> eliminarArchivo(String nombre);
 
 }

@@ -12,10 +12,14 @@ public class TiposControlador {
 
     private final CasoDeUso<String, Tipo> buscarTiposCasoDeUso;
     private final CasoDeUso<Tipo, Tipo> guardarTiposCasoDeUso;
+    private final CasoDeUso<Tipo, Void> eliminarTiposCasoDeUso;
 
-    public TiposControlador(CasoDeUso<String, Tipo> buscarTiposCasoDeUso, CasoDeUso<Tipo, Tipo> guardarTiposCasoDeUso) {
+    public TiposControlador(CasoDeUso<String, Tipo> buscarTiposCasoDeUso,
+                            CasoDeUso<Tipo, Tipo> guardarTiposCasoDeUso,
+                            CasoDeUso<Tipo, Void> eliminarTiposCasoDeUso) {
         this.buscarTiposCasoDeUso = buscarTiposCasoDeUso;
         this.guardarTiposCasoDeUso = guardarTiposCasoDeUso;
+        this.eliminarTiposCasoDeUso = eliminarTiposCasoDeUso;
     }
 
     @GetMapping()
@@ -31,5 +35,10 @@ public class TiposControlador {
     @PostMapping
     public CorePublisher<Tipo> guardarTipo(@RequestBody Tipo tipo) {
         return guardarTiposCasoDeUso.ejecutar(tipo);
+    }
+
+    @DeleteMapping
+    private CorePublisher<Void> eliminarTipo(@RequestBody Tipo tipo) {
+        return eliminarTiposCasoDeUso.ejecutar(tipo);
     }
 }

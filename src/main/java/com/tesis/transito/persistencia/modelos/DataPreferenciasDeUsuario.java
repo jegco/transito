@@ -14,16 +14,11 @@ public class DataPreferenciasDeUsuario {
     private String id;
     private String colorPrimario;
     private String colorSeoundario;
-    private DataDocumento icono;
-    private DataMenu dataMenuDeNav;
-    private String animacion;
+    private DataAnimacion animacion;
 
-    public DataPreferenciasDeUsuario(String colorPrimario, String colorSeoundario, DataDocumento icono,
-                                     DataMenu dataMenuDeNav, String animacion) {
+    public DataPreferenciasDeUsuario(String colorPrimario, String colorSeoundario, DataAnimacion animacion) {
         this.colorPrimario = colorPrimario;
         this.colorSeoundario = colorSeoundario;
-        this.icono = icono;
-        this.dataMenuDeNav = dataMenuDeNav;
         this.animacion = animacion;
     }
 }

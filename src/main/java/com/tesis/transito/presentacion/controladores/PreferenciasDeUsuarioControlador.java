@@ -27,7 +27,7 @@ public class PreferenciasDeUsuarioControlador {
     }
 
     @PostMapping
-    public Mono<PreferenciasDeUsuario> crearOModificarPreferenciasDeUsuario(PreferenciasDeUsuario preferenciasDeUsuario) {
+    public Mono<PreferenciasDeUsuario> crearOModificarPreferenciasDeUsuario(@RequestBody PreferenciasDeUsuario preferenciasDeUsuario) {
         return Mono.from(casoDeUsoCrearOModificarPreferenciasDeUsuario.ejecutar(preferenciasDeUsuario));
     }
 }

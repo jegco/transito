@@ -1,4 +1,4 @@
-package com.tesis.transito.presentacion.mappers;
+package com.tesis.transito.presentacion.utils.mappers;
 
 import com.tesis.transito.dominio.modelos.Usuario;
 import com.tesis.transito.presentacion.modelos.VistaUsuario;
@@ -7,16 +7,17 @@ import org.springframework.stereotype.Component;
 import java.util.function.Function;
 
 @Component
-public class VistaUsuarioUsuarioMapper implements Function<VistaUsuario, Usuario> {
+public class UsuarioVistaUsuarioMapper implements Function<Usuario, VistaUsuario> {
 
     @Override
-    public Usuario apply(VistaUsuario usuario) {
-        return new Usuario(usuario.getId(),
+    public VistaUsuario apply(Usuario usuario) {
+        return new VistaUsuario(
+                usuario.getId(),
                 usuario.getNombreDeUsuario(),
-                usuario.getPassword(),
+                usuario.getContraseña(),
                 usuario.getCorreoElectronico(),
                 usuario.getNumeroDeTelefono(),
-                usuario.getRole(),
+                usuario.getRol(),
                 usuario.isActive());
     }
 }

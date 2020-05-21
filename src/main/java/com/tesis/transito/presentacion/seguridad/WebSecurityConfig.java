@@ -47,6 +47,7 @@ public class WebSecurityConfig {
                 .pathMatchers(HttpMethod.GET, "/documentos/**").permitAll()
                 .pathMatchers(HttpMethod.GET, "/guias/**").permitAll()
                 .pathMatchers(HttpMethod.GET, "/tipos").permitAll()
+                .pathMatchers(HttpMethod.GET, "/preferencias").permitAll()
                 .anyExchange().authenticated()
                 .and().build();
     }

@@ -10,13 +10,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class DataMenu {
+public class DataAnimacion {
 
     @Id
     private String id;
-    private List<DataOpcionMenu> opciones;
-
-    public DataMenu(List<DataOpcionMenu> opciones) {
-        this.opciones = opciones;
-    }
+    private String nombre;
+    private int tiempoDeEspera;
+    private int tiempoAnimacion;
 }

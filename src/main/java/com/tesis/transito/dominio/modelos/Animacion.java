@@ -6,14 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
+@Getter
 @NoArgsConstructor
 @Setter
-@Getter
-public class PreferenciasDeUsuario {
+public class Animacion {
 
     private String id;
-    private String colorPrimario;
-    private String colorSecundario;
-    private Animacion animacion;
-
+    private String nombre;
+    private int tiempoDeEspera;
+    private int tiempoDeAnimacion;
 }
