@@ -37,7 +37,7 @@ public class DataGuiaDeTramiteGuiaDeTramiteMapper implements Function<DataGuiaDe
     @Override
     public Mono<GuiaDeTramite> apply(DataGuiaDeTramite dataGuiaDeTramite) {
 
-        return dataPasoPasoMapper.apply(dataGuiaDeTramite.getDataPasos())
+        Mono<GuiaDeTramite> guiaDeTramite = dataPasoPasoMapper.apply(dataGuiaDeTramite.getDataPasos())
                 .map(pasos -> new GuiaDeTramite(dataGuiaDeTramite.getId(),
                         dataGuiaDeTramite.getTitulo(),
                         dataGuiaDeTramite.getDescripcion(),
@@ -48,18 +48,21 @@ public class DataGuiaDeTramiteGuiaDeTramiteMapper implements Function<DataGuiaDe
                         .map(tipo -> {
                             guia.setTipo(tipo);
                             return guia;
-                        }))
-                .zipWith(documentoRepositorio.findById(dataGuiaDeTramite.getAnexo() != null ? dataGuiaDeTramite.getAnexo() : ""),
-                        (g, docs) -> {
-                            g.setAnexo(dataDocumentoDocumentoMapper.apply(docs));
-                            return g;
-                        })
-                .zipWith(puntoDeAtencionRepositorio.findAllById(dataGuiaDeTramite.getPuntosDeAtencion()).collectList(),
+                        })).zipWith(puntoDeAtencionRepositorio.findAllById(dataGuiaDeTramite.getPuntosDeAtencion()).collectList(),
                         (g, pts) -> {
                             g.setPuntosDeAtencion(
                                     pts.stream().map(dataPuntoDeAtencionPuntoDeAtencionMapper).collect(Collectors.toList())
                             );
                             return g;
                         });
+        if (dataGuiaDeTramite.getAnexo() != null) {
+            guiaDeTramite = guiaDeTramite.zipWith(documentoRepositorio.findById(dataGuiaDeTramite.getAnexo() != null ? dataGuiaDeTramite.getAnexo() : ""),
+                    (g, docs) -> {
+                        g.setAnexo(dataDocumentoDocumentoMapper.apply(docs));
+                        return g;
+                    });
+        }
+
+        return guiaDeTramite;
     }
 }
