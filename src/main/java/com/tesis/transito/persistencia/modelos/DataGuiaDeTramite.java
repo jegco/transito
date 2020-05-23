@@ -18,18 +18,18 @@ public class DataGuiaDeTramite {
     private String id;
     private String titulo;
     private String descripcion;
-    private List<String> formularios;
+    private String anexo;
     private String tipo;
     private String soporteLegal;
     private List<String> puntosDeAtencion;
     private List<DataPaso> dataPasos;
 
-    public DataGuiaDeTramite(String titulo, String descripcion, List<String> formularios,
+    public DataGuiaDeTramite(String titulo, String descripcion, String anexo,
                              List<DataPaso> dataPasos, String tipo, String soporteLegal,
                              List<String> puntosDeAtencion) {
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.formularios = formularios;
+        this.anexo = anexo;
         this.dataPasos = dataPasos;
         this.tipo = tipo;
         this.soporteLegal = soporteLegal;

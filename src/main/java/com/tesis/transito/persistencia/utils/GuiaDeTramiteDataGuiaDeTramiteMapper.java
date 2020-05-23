@@ -1,6 +1,5 @@
 package com.tesis.transito.persistencia.utils;
 
-import com.tesis.transito.dominio.modelos.Documento;
 import com.tesis.transito.dominio.modelos.GuiaDeTramite;
 import com.tesis.transito.dominio.modelos.PuntoDeAtencion;
 import com.tesis.transito.persistencia.modelos.DataGuiaDeTramite;
@@ -15,19 +14,10 @@ import java.util.stream.Collectors;
 @Component
 public class GuiaDeTramiteDataGuiaDeTramiteMapper implements Function<GuiaDeTramite, DataGuiaDeTramite> {
 
-    private final DocumentoDataDocumentoMapper documentoDataDocumentoMapper;
     private final PasoDataPasoMapper pasoDataPasoMapper;
-    private final PuntoDeAtencionDataPuntoDeAtencionMapper puntoDeAtencionDataPuntoDeAtencionMapper;
-    private final TipoDataTipoMapper tipoDataTipoMapper;
 
-    public GuiaDeTramiteDataGuiaDeTramiteMapper(DocumentoDataDocumentoMapper documentoDataDocumentoMapper,
-                                                PasoDataPasoMapper pasoDataPasoMapper,
-                                                PuntoDeAtencionDataPuntoDeAtencionMapper puntoDeAtencionDataPuntoDeAtencionMapper,
-                                                TipoDataTipoMapper tipoDataTipoMapper) {
-        this.documentoDataDocumentoMapper = documentoDataDocumentoMapper;
+    public GuiaDeTramiteDataGuiaDeTramiteMapper(PasoDataPasoMapper pasoDataPasoMapper) {
         this.pasoDataPasoMapper = pasoDataPasoMapper;
-        this.puntoDeAtencionDataPuntoDeAtencionMapper = puntoDeAtencionDataPuntoDeAtencionMapper;
-        this.tipoDataTipoMapper = tipoDataTipoMapper;
     }
 
     @Override
@@ -39,16 +29,16 @@ public class GuiaDeTramiteDataGuiaDeTramiteMapper implements Function<GuiaDeTram
             return new DataGuiaDeTramite(guiaDeTramite.getId(),
                     guiaDeTramite.getTitulo(),
                     guiaDeTramite.getDescripcion(),
-                    guiaDeTramite.getFormularios().stream().map(Documento::getId).collect(Collectors.toList()),
+                    guiaDeTramite.getAnexo().getId(),
                     guiaDeTramite.getTipo().getId(),
                     guiaDeTramite.getSoporteLegal(),
                     guiaDeTramite.getPuntosDeAtencion().stream().map(PuntoDeAtencion::getId).collect(Collectors.toList()),
                     pasos);
         }
-        return new DataGuiaDeTramite(
+        return new DataGuiaDeTramite(   
                 guiaDeTramite.getTitulo(),
                 guiaDeTramite.getDescripcion(),
-                guiaDeTramite.getFormularios().stream().map(Documento::getId).collect(Collectors.toList()),
+                guiaDeTramite.getAnexo().getId(),
                 pasos,
                 guiaDeTramite.getTipo().getId(),
                 guiaDeTramite.getSoporteLegal(),

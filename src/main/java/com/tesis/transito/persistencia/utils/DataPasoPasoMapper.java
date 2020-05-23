@@ -25,11 +25,11 @@ public class DataPasoPasoMapper implements Function<List<DataPaso>, Mono<List<Pa
     @Override
     public Mono<List<Paso>> apply(List<DataPaso> dataPaso) {
         return Flux.fromIterable(dataPaso)
-                .flatMap(paso -> repositorio.findAllById(paso.getAnexos()).collectList()
-                        .map(v -> {
+                .flatMap(paso -> paso.getAnexo() != null ? repositorio.findById(paso.getAnexo())
+                        .map(documento -> {
                             Paso p = new Paso(paso.getTitulo(), paso.getDescripcion());
-                            p.setAnexos(v.stream().map(mapper).collect(Collectors.toList()));
+                            p.setAnexo(mapper.apply(documento));
                             return p;
-                        })).collectList();
+                        }) :  Mono.just(new Paso(paso.getTitulo(), paso.getDescripcion()))).collectList();
     }
 }

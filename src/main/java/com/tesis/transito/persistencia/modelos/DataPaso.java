@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -14,5 +12,5 @@ import java.util.List;
 public class DataPaso {
     private String titulo;
     private String descripcion;
-    private List<String> anexos;
+    private String anexo;
 }

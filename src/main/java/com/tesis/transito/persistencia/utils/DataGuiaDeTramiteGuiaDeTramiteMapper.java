@@ -49,10 +49,9 @@ public class DataGuiaDeTramiteGuiaDeTramiteMapper implements Function<DataGuiaDe
                             guia.setTipo(tipo);
                             return guia;
                         }))
-                .zipWith(documentoRepositorio.findAllById(dataGuiaDeTramite.getFormularios()).collectList(),
+                .zipWith(documentoRepositorio.findById(dataGuiaDeTramite.getAnexo()),
                         (g, docs) -> {
-                            g.setFormularios(
-                                    docs.stream().map(dataDocumentoDocumentoMapper).collect(Collectors.toList()));
+                            g.setAnexo(dataDocumentoDocumentoMapper.apply(docs));
                             return g;
                         })
                 .zipWith(puntoDeAtencionRepositorio.findAllById(dataGuiaDeTramite.getPuntosDeAtencion()).collectList(),

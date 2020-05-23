@@ -15,7 +15,7 @@ public class GuiaDeTramite {
     private String id;
     private String titulo;
     private String descripcion;
-    private List<Documento> formularios;
+    private Documento anexo;
     private List<Paso> pasos;
     private String soporteLegal;
     private List<PuntoDeAtencion> puntosDeAtencion;
