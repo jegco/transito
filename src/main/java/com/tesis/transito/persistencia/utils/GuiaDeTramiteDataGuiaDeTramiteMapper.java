@@ -29,7 +29,7 @@ public class GuiaDeTramiteDataGuiaDeTramiteMapper implements Function<GuiaDeTram
             return new DataGuiaDeTramite(guiaDeTramite.getId(),
                     guiaDeTramite.getTitulo(),
                     guiaDeTramite.getDescripcion(),
-                    guiaDeTramite.getAnexo().getId(),
+                    guiaDeTramite.getAnexo() != null ? guiaDeTramite.getAnexo().getId() : null,
                     guiaDeTramite.getTipo().getId(),
                     guiaDeTramite.getSoporteLegal(),
                     guiaDeTramite.getPuntosDeAtencion().stream().map(PuntoDeAtencion::getId).collect(Collectors.toList()),
@@ -38,7 +38,7 @@ public class GuiaDeTramiteDataGuiaDeTramiteMapper implements Function<GuiaDeTram
         return new DataGuiaDeTramite(   
                 guiaDeTramite.getTitulo(),
                 guiaDeTramite.getDescripcion(),
-                guiaDeTramite.getAnexo().getId(),
+                guiaDeTramite.getAnexo() != null ? guiaDeTramite.getAnexo().getId() : null,
                 pasos,
                 guiaDeTramite.getTipo().getId(),
                 guiaDeTramite.getSoporteLegal(),

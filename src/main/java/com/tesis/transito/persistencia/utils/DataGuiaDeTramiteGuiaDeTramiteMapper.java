@@ -49,7 +49,7 @@ public class DataGuiaDeTramiteGuiaDeTramiteMapper implements Function<DataGuiaDe
                             guia.setTipo(tipo);
                             return guia;
                         }))
-                .zipWith(documentoRepositorio.findById(dataGuiaDeTramite.getAnexo()),
+                .zipWith(documentoRepositorio.findById(dataGuiaDeTramite.getAnexo() != null ? dataGuiaDeTramite.getAnexo() : ""),
                         (g, docs) -> {
                             g.setAnexo(dataDocumentoDocumentoMapper.apply(docs));
                             return g;
