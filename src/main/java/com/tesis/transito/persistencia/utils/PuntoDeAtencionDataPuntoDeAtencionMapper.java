@@ -13,6 +13,7 @@ public class PuntoDeAtencionDataPuntoDeAtencionMapper implements
     public DataPuntoDeAtencion apply(PuntoDeAtencion puntoDeAtencion) {
         return new DataPuntoDeAtencion(puntoDeAtencion.getId(),
                 puntoDeAtencion.getNombre(),
+                puntoDeAtencion.getDireccion(),
                 puntoDeAtencion.getLatitud(),
                 puntoDeAtencion.getLongitud());
     }
