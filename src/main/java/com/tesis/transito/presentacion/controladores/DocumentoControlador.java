@@ -1,6 +1,7 @@
 package com.tesis.transito.presentacion.controladores;
 
 import com.tesis.transito.dominio.casosdeuso.base.CasoDeUso;
+import com.tesis.transito.dominio.casosdeuso.params.ActualizarArchivoParam;
 import com.tesis.transito.dominio.modelos.Documento;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import reactor.core.publisher.Mono;
 public class DocumentoControlador {
 
     private final CasoDeUso<FilePart, Documento> casoDeUsoGuardarDocumentos;
+    private final CasoDeUso<ActualizarArchivoParam, Documento> casoDeUsoModificarDocumentos;
     private final CasoDeUso<String, Resource> casoDeUsoBuscarDocumentos;
     private final CasoDeUso<String, Documento> casoDeUsoBuscarDocumentosGuardados;
     private final CasoDeUso<Documento, Void> casoDeUsoEliminarDocumento;
@@ -26,11 +28,13 @@ public class DocumentoControlador {
     public DocumentoControlador(CasoDeUso<FilePart, Documento> casoDeUsoGuardarDocumento,
                                 CasoDeUso<String, Resource> casoDeUsoBuscarDocumentos,
                                 CasoDeUso<String, Documento> casoDeUsoBuscarDocumentosGuardados,
+                                CasoDeUso<ActualizarArchivoParam, Documento> casoDeUsoModificarDocumentos,
                                 CasoDeUso<Documento, Void> casoDeUsoEliminarDocumento) {
         this.casoDeUsoGuardarDocumentos = casoDeUsoGuardarDocumento;
         this.casoDeUsoBuscarDocumentos = casoDeUsoBuscarDocumentos;
         this.casoDeUsoBuscarDocumentosGuardados = casoDeUsoBuscarDocumentosGuardados;
         this.casoDeUsoEliminarDocumento = casoDeUsoEliminarDocumento;
+        this.casoDeUsoModificarDocumentos = casoDeUsoModificarDocumentos;
     }
 
     @PostMapping()
@@ -40,6 +44,12 @@ public class DocumentoControlador {
                 .filter(archivo -> archivo instanceof FilePart)
                 .ofType(FilePart.class)
                 .flatMap(casoDeUsoGuardarDocumentos::ejecutar));
+    }
+
+    @PutMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public Mono<Documento> actualizarDocumento(@RequestBody ActualizarArchivoParam documentoParam) {
+        return Mono.from(casoDeUsoModificarDocumentos.ejecutar(documentoParam));
     }
 
     @GetMapping("/resource/{nombre}")

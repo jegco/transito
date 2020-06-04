@@ -6,6 +6,9 @@ import com.tesis.transito.dominio.utils.ServicioDeNotification;
 import com.tesis.transito.dominio.utils.exceptions.NotificationNotFoundException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -14,6 +17,7 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import reactor.core.publisher.Mono;
 
 import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +27,9 @@ public class ServicioDeNotificacionPorCorreo implements ServicioDeNotification {
     private final NotificacionConf notificacionConf;
 
     private Configuration freemarkerConfig;
+
+    @Value("classpath:/DATT.png")
+    Resource logo;
 
     public ServicioDeNotificacionPorCorreo(NotificacionConf notificacionConf, Configuration freemarkerConfig) {
         this.notificacionConf = notificacionConf;
@@ -37,14 +44,18 @@ public class ServicioDeNotificacionPorCorreo implements ServicioDeNotification {
 
     private Usuario enviarAlAdmin(Notificacion notificacion) {
         MimeMessagePreparator messagePreparator = message -> {
-            MimeMessageHelper helper = new MimeMessageHelper(message);
-            Template template = freemarkerConfig.getTemplate("MailAdminTemplate.ftl");
+            MimeMessageHelper helper = new MimeMessageHelper(message,
+                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                    StandardCharsets.UTF_8.name());
 
-            Map<String, Object> model = new HashMap<String, Object>();
-            model.put("nombreDelEmpleado", notificacion.getPara().getNombreDeUsuario());
+            helper.addAttachment("logo.png", new ClassPathResource("DATT.png"));
+            Template template = freemarkerConfig.getTemplate("MailAdminTemplate.ftl");
+            Map<String, Object> model = new HashMap<>();
+            model.put("nombreDelAdmin", notificacion.getPara().getNombreDeUsuario());
+            model.put("nombreDelEmpleado", notificacion.getInvolucrado().getNombreDeUsuario());
+            model.put("logo", new ClassPathResource("DATT.png"));
             model.put("direccionDeConfirmacion",
-                    "hppt://" + InetAddress.getLoopbackAddress().getHostName()
-                            + ":4200/usuarios/confirmarEmail?id=" + notificacion.getInvolucrado().getId());
+                    "https://transito-admin-app.herokuapp.com/dashboard/usuarios");
 
 
             String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);

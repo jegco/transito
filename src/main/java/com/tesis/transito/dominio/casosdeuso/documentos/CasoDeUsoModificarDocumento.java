@@ -5,12 +5,11 @@ import com.tesis.transito.dominio.casosdeuso.params.ActualizarArchivoParam;
 import com.tesis.transito.dominio.delegado.Delegado;
 import com.tesis.transito.dominio.modelos.Documento;
 import com.tesis.transito.dominio.utils.ServicioDeAlmacenamiento;
-import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
-public class CasoDeUsoModificarDocumento extends CasoDeUsoImpl<FilePart, Documento> {
+public class CasoDeUsoModificarDocumento extends CasoDeUsoImpl<ActualizarArchivoParam, Documento> {
 
     private final ServicioDeAlmacenamiento servicioDeAlmacenamiento;
     private final Delegado<String, Documento> delegado;
@@ -21,9 +20,12 @@ public class CasoDeUsoModificarDocumento extends CasoDeUsoImpl<FilePart, Documen
     }
 
     @Override
-    protected Mono<Documento> construirCasoDeUso(FilePart archivoParam) {
+    protected Mono<Documento> construirCasoDeUso(ActualizarArchivoParam archivoParam) {
         return servicioDeAlmacenamiento.
-                guardarDocumento(archivoParam)
-                .flatMap(delegado::crear);
+                guardarDocumento(archivoParam.getArchivo())
+                .flatMap(documentoNuevo -> {
+                    archivoParam.getDocumento().setRutaDeDescarga(documentoNuevo.getRutaDeDescarga());
+                    return delegado.actualizar(archivoParam.getDocumento());
+                });
     }
 }

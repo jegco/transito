@@ -1,23 +1,18 @@
 package com.tesis.transito.dominio.casosdeuso.params;
 
 import com.tesis.transito.dominio.modelos.Documento;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.codec.multipart.FilePart;
 import reactor.core.publisher.Flux;
 
-public class ActualizarArchivoParam extends ArchivoParam {
+@AllArgsConstructor
+@Getter
+@Setter
+public class ActualizarArchivoParam{
 
     private Documento documento;
-
-    public ActualizarArchivoParam(String nombre, Flux<DataBuffer> archivo, Documento documento) {
-        super(nombre, archivo);
-        this.documento = documento;
-    }
-
-    public Documento getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(Documento documento) {
-        this.documento = documento;
-    }
+    private FilePart archivo;
 }
