@@ -53,7 +53,7 @@ public class GuiasDeTramiteDelegado implements Delegado<GuiaDeTramiteParams, Gui
                         parametroDeBusqueda.getTitulo(), parametroDeBusqueda.getDescripcion(), parametroDeBusqueda.getTipo())
                         .flatMap(dataGuiaDeTramiteGuiaDeTramiteMapper);
             } else if (parametroDeBusqueda.getTitulo() != null) {
-                return repositorio.findDataGuiaDeTramiteByTitulo(
+                return repositorio.findDataGuiaDeTramiteByTituloContains(
                         parametroDeBusqueda.getTitulo())
                         .flatMap(dataGuiaDeTramiteGuiaDeTramiteMapper);
             } else {

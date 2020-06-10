@@ -85,7 +85,7 @@ public class ServicioDeNotificacionPorCorreo implements ServicioDeNotification {
 
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("nombreDelAdmin", notificacion.getPara().getNombreDeUsuario());
-            model.put("nombreDelEmpleado", notificacion.getPara().getNombreDeUsuario());
+            model.put("nombreEmpleado", notificacion.getPara().getNombreDeUsuario());
             model.put("direccionDeConfirmacion",
                     "hppt://" + InetAddress.getLoopbackAddress().getHostName()
                             + ":4200/usuarios/confirmarEmail?id=" + notificacion.getPara().getId());

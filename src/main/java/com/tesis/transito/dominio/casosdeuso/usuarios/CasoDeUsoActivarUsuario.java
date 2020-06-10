@@ -26,6 +26,6 @@ public class CasoDeUsoActivarUsuario extends CasoDeUsoImpl<Usuario, Boolean> {
         return usuarioDelegado.actualizar(usuario)
                 .flatMap(usuarioActivado -> servicioDeNotification
                         .enviarNotificacionAlUsuario(
-                                new Notificacion(usuario, "registro exitosa", "registro autorizado por el administrador")));
+                                new Notificacion(usuario, "registro exitoso", "registro autorizado por el administrador")));
     }
 }

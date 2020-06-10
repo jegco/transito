@@ -11,5 +11,5 @@ public interface GuiasDeTramitesRepositorio extends ReactiveMongoRepository<Data
 
     Flux<DataGuiaDeTramite> findAllByTipoContains(String tipo);
 
-    Flux<DataGuiaDeTramite> findDataGuiaDeTramiteByTitulo(String titulo);
+    Flux<DataGuiaDeTramite> findDataGuiaDeTramiteByTituloContains(String titulo);
 }
