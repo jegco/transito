@@ -16,14 +16,14 @@ public class UsuarioDataUsuarioMapper implements Function<Usuario, DataUsuario> 
                     usuario.getContraseña(),
                     usuario.getCorreoElectronico(),
                     usuario.getNumeroDeTelefono(),
-                    usuario.getRol());
+                    usuario.getRole());
         }
         return new DataUsuario(usuario.getId(),
                 usuario.getNombreDeUsuario(),
                 usuario.getContraseña(),
                 usuario.getCorreoElectronico(),
                 usuario.getNumeroDeTelefono(),
-                usuario.getRol(),
+                usuario.getRole(),
                 usuario.isActive());
     }
 

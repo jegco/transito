@@ -1,12 +1,14 @@
 package com.tesis.transito.persistencia.modelos;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @Getter
 public class DataPreferenciasDeUsuario {
 

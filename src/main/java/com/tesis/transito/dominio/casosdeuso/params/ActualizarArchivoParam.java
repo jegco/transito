@@ -2,6 +2,7 @@ package com.tesis.transito.dominio.casosdeuso.params;
 
 import com.tesis.transito.dominio.modelos.Documento;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -10,6 +11,7 @@ import reactor.core.publisher.Flux;
 
 @AllArgsConstructor
 @Getter
+@EqualsAndHashCode
 @Setter
 public class ActualizarArchivoParam{
 

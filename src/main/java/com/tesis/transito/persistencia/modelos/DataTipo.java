@@ -1,9 +1,6 @@
 package com.tesis.transito.persistencia.modelos;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Setter
 @Getter
+@EqualsAndHashCode
 public class DataTipo {
     @Id
     private String id;

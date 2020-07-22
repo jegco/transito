@@ -17,7 +17,7 @@ public class UsuarioVistaUsuarioMapper implements Function<Usuario, VistaUsuario
                 usuario.getContraseña(),
                 usuario.getCorreoElectronico(),
                 usuario.getNumeroDeTelefono(),
-                usuario.getRol(),
+                usuario.getRole(),
                 usuario.isActive());
     }
 }

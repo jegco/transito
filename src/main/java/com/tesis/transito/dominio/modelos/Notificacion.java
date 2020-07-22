@@ -1,9 +1,11 @@
 package com.tesis.transito.dominio.modelos;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @AllArgsConstructor
+@EqualsAndHashCode
 @Getter
 public class Notificacion {
     private Usuario para;

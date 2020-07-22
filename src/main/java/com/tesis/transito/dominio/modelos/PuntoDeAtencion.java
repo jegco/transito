@@ -1,13 +1,12 @@
 package com.tesis.transito.dominio.modelos;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @Getter
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Setter
 public class PuntoDeAtencion {
 

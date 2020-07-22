@@ -9,10 +9,7 @@ import java.util.function.Function;
 @Component
 public class TipoDataTipoMapper implements Function<Tipo, DataTipo> {
 
-    private final DocumentoDataDocumentoMapper mapper;
-
-    public TipoDataTipoMapper(DocumentoDataDocumentoMapper mapper) {
-        this.mapper = mapper;
+    public TipoDataTipoMapper() {
     }
 
     @Override

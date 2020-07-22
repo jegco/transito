@@ -1,13 +1,11 @@
 package com.tesis.transito.persistencia.modelos;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@EqualsAndHashCode
 @Setter
 public class DataPaso {
     private String titulo;

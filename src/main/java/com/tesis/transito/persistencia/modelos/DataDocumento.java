@@ -1,8 +1,6 @@
 package com.tesis.transito.persistencia.modelos;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,7 +9,9 @@ import java.time.LocalDate;
 @Document(collection = "documentos")
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Getter
+@Builder
 public class DataDocumento {
     @Id
     private String id;

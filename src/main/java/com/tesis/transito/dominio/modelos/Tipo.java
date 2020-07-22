@@ -1,14 +1,13 @@
 package com.tesis.transito.dominio.modelos;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor
 @Setter
 @AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Tipo {
 
     private String id;
