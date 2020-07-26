@@ -1,6 +1,5 @@
 package com.tesis.transito.persistencia.delegados;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.modelos.Documento;
 import com.tesis.transito.dominio.modelos.Tipo;
 import com.tesis.transito.persistencia.modelos.DataDocumento;
@@ -24,6 +23,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -61,8 +63,10 @@ class TiposDelegadoTest {
         DataTipo dataTipoConId = new DataTipo("1", "test", "1");
         DataDocumento documento = DataDocumento.builder().id("1").build();
 
-        List<DataTipo> dataTipos = List.of(dataTipo);
-        List<DataTipo> dataTiposConId = List.of(dataTipoConId);
+        List<DataTipo> dataTipos = new ArrayList<>();
+        dataTipos.add(dataTipo);
+        List<DataTipo> dataTiposConId = new ArrayList<>();
+        dataTiposConId.add(dataTipoConId);
 
         when(repositorio.insert(dataTipo)).thenReturn(Mono.just(dataTipo));
         when(repositorio.save(dataTipo)).thenReturn(Mono.just(dataTipo));
@@ -97,8 +101,10 @@ class TiposDelegadoTest {
     void crearVarios() {
         Documento documento = new Documento();
         documento.setId("1");
+        List<Tipo> tipos = new ArrayList<>();
+        tipos.add(new Tipo(null, "test", documento));
         StepVerifier.
-                create(delegado.crear(List.of(new Tipo(null, "test", documento))))
+                create(delegado.crear(tipos))
                 .expectNextMatches(tipo -> tipo.getNombre().equals("test"))
                 .expectComplete()
                 .verify();

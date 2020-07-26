@@ -1,6 +1,5 @@
 package com.tesis.transito.persistencia.delegados;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.modelos.Documento;
 import com.tesis.transito.persistencia.modelos.DataDocumento;
 import com.tesis.transito.persistencia.repositorios.DocumentoRepositorio;
@@ -19,6 +18,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -45,12 +47,14 @@ class DocumentoDelegadoTest {
     void setUp() {
         DataDocumento documento = DataDocumento.builder().rutaDeDescarga("test anexo").nombre("test anexo").build();
         DataDocumento documentoConId = DataDocumento.builder().id("1").rutaDeDescarga("test anexo").nombre("test anexo").build();
-        List<DataDocumento> documentos = List.of(documentoConId);
-
-        when(repositorio.findDataDocumentoByNombreContains("test")).thenReturn(Flux.fromIterable(documentos));
-        when(repositorio.findAll()).thenReturn(Flux.fromIterable(documentos));
+        List<DataDocumento> documentos = new ArrayList<>();
+        documentos.add(documento);
+        List<DataDocumento> documentosConId = new ArrayList<>();
+        documentosConId.add(documentoConId);
+        when(repositorio.findDataDocumentoByNombreContains("test")).thenReturn(Flux.fromIterable(documentosConId));
+        when(repositorio.findAll()).thenReturn(Flux.fromIterable(documentosConId));
         when(repositorio.insert(documento)).thenReturn(Mono.just(documentoConId));
-        when(repositorio.insert(List.of(documento))).thenReturn(Flux.fromIterable(documentos));
+        when(repositorio.insert(documentos)).thenReturn(Flux.fromIterable(documentosConId));
         when(repositorio.save(documentoConId)).thenReturn(Mono.just(documentoConId));
         when(repositorio.delete(documentoConId)).thenReturn(Mono.empty());
 
@@ -76,9 +80,11 @@ class DocumentoDelegadoTest {
     @Test
     void crearVarios() {
         Documento documento = Documento.builder().rutaDeDescarga("test anexo").nombre("test anexo").build();
+        List<Documento> documentos = new ArrayList<Documento>();
+        documentos.add(documento);
 
         StepVerifier.
-                create(delegado.crear(List.of(documento)))
+                create(delegado.crear(documentos))
                 .expectNextMatches(doc -> doc.getId().equals("1"))
                 .expectComplete()
                 .verify();

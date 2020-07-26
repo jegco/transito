@@ -1,6 +1,5 @@
 package com.tesis.transito.persistencia.delegados;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.modelos.PuntoDeAtencion;
 import com.tesis.transito.persistencia.modelos.DataPuntoDeAtencion;
 import com.tesis.transito.persistencia.repositorios.PuntoDeAtencionRepositorio;
@@ -19,6 +18,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -58,8 +60,10 @@ class PuntoDeAtencionDelegadoTest {
                 "test"
         );
 
-        List<DataPuntoDeAtencion> puntosDeAtencionConId = List.of(puntoDeAtencionConId);
-        List<DataPuntoDeAtencion> puntosDeAtencion = List.of(puntoDeAtencion);
+        List<DataPuntoDeAtencion> puntosDeAtencionConId = new ArrayList<>();
+        puntosDeAtencionConId.add(puntoDeAtencionConId);
+        List<DataPuntoDeAtencion> puntosDeAtencion = new ArrayList<>();
+        puntosDeAtencion.add(puntoDeAtencion);
 
         when(repositorio.insert(puntosDeAtencion)).thenReturn(Flux.fromIterable(puntosDeAtencionConId));
         when(repositorio.save(puntoDeAtencionConId)).thenReturn(Mono.just(puntoDeAtencionConId));
@@ -102,7 +106,8 @@ class PuntoDeAtencionDelegadoTest {
                 "test"
         );
 
-        List<PuntoDeAtencion> puntos = List.of(puntoDeAtencion);
+        List<PuntoDeAtencion> puntos = new ArrayList<>();
+        puntos.add(puntoDeAtencion);
         StepVerifier.
                 create(delegado.crear(puntos))
                 .expectNextMatches(punto -> punto.getNombre().equals("test"))

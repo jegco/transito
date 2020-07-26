@@ -1,6 +1,5 @@
 package com.tesis.transito.dominio.casosdeuso.documentos;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.modelos.Documento;
 import com.tesis.transito.persistencia.delegados.DocumentoDelegado;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +11,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -28,7 +30,9 @@ class CasoDeUsoBuscarDocumentosTest {
     @BeforeEach
     void setUp() {
         Documento documento = Documento.builder().id("1").rutaDeDescarga("test anexo").nombre("test anexo").build();
-        when(delegado.buscar(null)).thenReturn(Flux.fromIterable(List.of(documento)));
+        List<Documento> documentos = new ArrayList<>();
+        documentos.add(documento);
+        when(delegado.buscar(null)).thenReturn(Flux.fromIterable(documentos));
         casoDeUso = new CasoDeUsoBuscarDocumentos(delegado);
     }
 

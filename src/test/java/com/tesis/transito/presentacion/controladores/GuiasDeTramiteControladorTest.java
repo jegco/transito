@@ -1,6 +1,5 @@
 package com.tesis.transito.presentacion.controladores;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.casosdeuso.base.CasoDeUso;
 import com.tesis.transito.dominio.casosdeuso.guiasdetramite.CasoDeUsoBuscarGuiasDeTramite;
 import com.tesis.transito.dominio.casosdeuso.guiasdetramite.CasoDeUsoCrearGuiasDeTramite;
@@ -20,6 +19,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
@@ -47,7 +49,8 @@ class GuiasDeTramiteControladorTest {
     @BeforeEach
     void setUp() {
         Documento documento = Documento.builder().id("1").rutaDeDescarga("test anexo").nombre("test anexo").build();
-        List<PuntoDeAtencion> puntosDeAtencion = List.of(new PuntoDeAtencion(
+        List<PuntoDeAtencion> puntosDeAtencion = new ArrayList<>();
+        puntosDeAtencion.add(new PuntoDeAtencion(
                 "1",
                 "test",
                 "test",
@@ -56,13 +59,15 @@ class GuiasDeTramiteControladorTest {
         ));
         Tipo tipo = new Tipo("1", "test", documento);
         Paso paso = new Paso("test titulo", "test descripcion", documento);
+        List<Paso> pasos = new ArrayList<>();
+        pasos.add(paso);
 
         guiaDeTramite = new GuiaDeTramite(
                 null,
                 "test nombre",
                 "test descripcion",
                 documento,
-                List.of(paso),
+                pasos,
                 "test soporte legal",
                 puntosDeAtencion,
                 tipo
@@ -73,7 +78,7 @@ class GuiasDeTramiteControladorTest {
                 "test nombre",
                 "test descripcion",
                 documento,
-                List.of(paso),
+                pasos,
                 "test soporte legal",
                 puntosDeAtencion,
                 tipo

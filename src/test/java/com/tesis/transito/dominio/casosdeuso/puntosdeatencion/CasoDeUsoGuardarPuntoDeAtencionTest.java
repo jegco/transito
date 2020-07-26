@@ -1,6 +1,5 @@
 package com.tesis.transito.dominio.casosdeuso.puntosdeatencion;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.modelos.PuntoDeAtencion;
 import com.tesis.transito.persistencia.delegados.PuntoDeAtencionDelegado;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +11,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -25,25 +27,27 @@ class CasoDeUsoGuardarPuntoDeAtencionTest {
 
     private CasoDeUsoGuardarPuntoDeAtencion casoDeUso;
 
-    PuntoDeAtencion puntoDeAtencion;
+    List<PuntoDeAtencion> puntosDeAtencion;
 
     @BeforeEach
     void setUp() {
-        puntoDeAtencion = new PuntoDeAtencion(
+        PuntoDeAtencion puntoDeAtencion = new PuntoDeAtencion(
                 "1",
                 "test",
                 "test",
                 "test",
                 "test"
         );
-        when(delegado.crear(List.of(puntoDeAtencion))).thenReturn(Flux.fromIterable(List.of(puntoDeAtencion)));
+        puntosDeAtencion = new ArrayList<>();
+        puntosDeAtencion.add(puntoDeAtencion);
+        when(delegado.crear(puntosDeAtencion)).thenReturn(Flux.fromIterable(puntosDeAtencion));
         casoDeUso = new CasoDeUsoGuardarPuntoDeAtencion(delegado);
     }
 
     @Test
     void construirCasoDeUso() {
         StepVerifier.
-                create(casoDeUso.ejecutar(List.of(puntoDeAtencion)))
+                create(casoDeUso.ejecutar(puntosDeAtencion))
                 .expectNextMatches(punto -> punto.getId().equals("1"))
                 .expectComplete()
                 .verify();

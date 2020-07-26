@@ -1,6 +1,5 @@
 package com.tesis.transito.presentacion.controladores;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.casosdeuso.tipos.BuscarTipoCasoDeUso;
 import com.tesis.transito.dominio.casosdeuso.tipos.EliminarTipoCasoDeUso;
 import com.tesis.transito.dominio.casosdeuso.tipos.GuardarTipoCasoDeUso;
@@ -19,6 +18,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
@@ -48,7 +50,8 @@ class TiposControladorTest {
         Tipo tipo = new Tipo(null, "test", new Documento());
         Tipo tipoConId = new Tipo("1", "test", new Documento());
 
-        List<Tipo> tipos = List.of(tipoConId);
+        List<Tipo> tipos = new ArrayList<>();
+        tipos.add(tipo);
 
         when(buscarTiposCasoDeUso.ejecutar(null)).thenReturn(Flux.fromIterable(tipos));
         when(buscarTiposCasoDeUso.ejecutar("jorge")).thenReturn(Flux.fromIterable(tipos));

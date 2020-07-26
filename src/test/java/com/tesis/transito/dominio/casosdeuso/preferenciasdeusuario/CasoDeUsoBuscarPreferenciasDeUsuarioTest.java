@@ -1,6 +1,5 @@
 package com.tesis.transito.dominio.casosdeuso.preferenciasdeusuario;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.modelos.Animacion;
 import com.tesis.transito.dominio.modelos.PreferenciasDeUsuario;
 import com.tesis.transito.persistencia.delegados.PreferenciasDeUsuarioDelegado;
@@ -12,6 +11,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 
@@ -32,7 +34,9 @@ class CasoDeUsoBuscarPreferenciasDeUsuarioTest {
                 "test",
                 new Animacion()
         );
-        when(delegado.buscar(null)).thenReturn(Flux.fromIterable(List.of(preferenciaDeUsuario)));
+        List<PreferenciasDeUsuario> preferenciasDeUsiario = new ArrayList<>();
+        preferenciasDeUsiario.add(preferenciaDeUsuario);
+        when(delegado.buscar(null)).thenReturn(Flux.fromIterable(preferenciasDeUsiario));
         casoDeUso = new CasoDeUsoBuscarPreferenciasDeUsuario(delegado);
     }
 

@@ -1,6 +1,5 @@
 package com.tesis.transito.presentacion.controladores;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.casosdeuso.preferenciasdeusuario.CasoDeUsoBuscarPreferenciasDeUsuario;
 import com.tesis.transito.dominio.casosdeuso.preferenciasdeusuario.CasoDeUsoCrearOModificarPreferenciasDeUsuario;
 import com.tesis.transito.dominio.modelos.Animacion;
@@ -18,6 +17,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
@@ -41,7 +43,8 @@ class PreferenciasDeUsuarioControladorTest {
     @BeforeEach
     void setUp() {
         PreferenciasDeUsuario preferenciasDeUsuario = new PreferenciasDeUsuario("1", "test", "test", new Animacion());
-        List<PreferenciasDeUsuario> preferencias = List.of(preferenciasDeUsuario);
+        List<PreferenciasDeUsuario> preferencias = new ArrayList<>();
+        preferencias.add(preferenciasDeUsuario);
 
         when(casoDeUsoBuscarPreferenciasDeUsuario.ejecutar(null)).thenReturn(Flux.fromIterable(preferencias));
         when(casoDeUsoCrearOModificarPreferenciasDeUsuario.ejecutar(preferenciasDeUsuario)).thenReturn(Mono.just(preferenciasDeUsuario));

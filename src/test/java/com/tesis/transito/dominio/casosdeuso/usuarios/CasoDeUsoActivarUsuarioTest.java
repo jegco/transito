@@ -1,6 +1,5 @@
 package com.tesis.transito.dominio.casosdeuso.usuarios;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.casosdeuso.params.UsuarioParams;
 import com.tesis.transito.dominio.modelos.Notificacion;
 import com.tesis.transito.dominio.modelos.Usuario;

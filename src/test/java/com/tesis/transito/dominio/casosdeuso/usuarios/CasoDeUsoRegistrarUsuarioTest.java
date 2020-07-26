@@ -1,6 +1,5 @@
 package com.tesis.transito.dominio.casosdeuso.usuarios;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.casosdeuso.params.UsuarioParams;
 import com.tesis.transito.dominio.modelos.Notificacion;
 import com.tesis.transito.dominio.modelos.Usuario;
@@ -15,6 +14,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 
@@ -35,9 +37,11 @@ class CasoDeUsoRegistrarUsuarioTest {
     @BeforeEach
     void setUp() {
         usuario = Usuario.builder().id("1").nombreDeUsuario("test").contraseña("test").build();
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarios.add(usuario);
         when(delegado.crear(usuario)).thenReturn(Mono.just(usuario));
         when(delegado.buscar(new UsuarioParams("test", "test"))).thenReturn(Flux.empty());
-        when(delegado.buscar(new UsuarioParams("SUPER_ADMIN", true))).thenReturn(Flux.fromIterable(List.of(usuario)));
+        when(delegado.buscar(new UsuarioParams("SUPER_ADMIN", true))).thenReturn(Flux.fromIterable(usuarios));
         when(servicioDeNotificacionPorCorreo.enviarNotificacionAlAdmin(new Notificacion(usuario,
                 usuario,
                 "Confirmacion de registro de nuevo usuario",

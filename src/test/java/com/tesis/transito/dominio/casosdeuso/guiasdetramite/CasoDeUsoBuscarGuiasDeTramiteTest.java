@@ -1,6 +1,5 @@
 package com.tesis.transito.dominio.casosdeuso.guiasdetramite;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.casosdeuso.params.GuiaDeTramiteParams;
 import com.tesis.transito.dominio.modelos.*;
 import com.tesis.transito.persistencia.delegados.GuiasDeTramiteDelegado;
@@ -12,6 +11,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 
@@ -27,7 +29,8 @@ class CasoDeUsoBuscarGuiasDeTramiteTest {
     @BeforeEach
     void setUp() {
         Documento documento = Documento.builder().id("1").rutaDeDescarga("test anexo").nombre("test anexo").build();
-        List<PuntoDeAtencion> puntosDeAtencion = List.of(new PuntoDeAtencion(
+        List<PuntoDeAtencion> puntosDeAtencion = new ArrayList<>();
+        puntosDeAtencion.add(new PuntoDeAtencion(
                 "1",
                 "test",
                 "test",
@@ -36,18 +39,22 @@ class CasoDeUsoBuscarGuiasDeTramiteTest {
         ));
         Tipo tipo = new Tipo("1", "test", documento);
         Paso paso = new Paso("test titulo", "test descripcion", documento);
-
+        List<Paso> pasos = new ArrayList<>();
+        pasos.add(paso);
         GuiaDeTramite guiaDeTramite = new GuiaDeTramite(
                 "1",
                 "test nombre",
                 "test descripcion",
                 documento,
-                List.of(paso),
+                pasos,
                 "test soporte legal",
                 puntosDeAtencion,
                 tipo
         );
-        when(delegado.buscar(new GuiaDeTramiteParams("test"))).thenReturn(Flux.fromIterable(List.of(guiaDeTramite)));
+
+        List<GuiaDeTramite> guias = new ArrayList<>();
+        guias.add(guiaDeTramite);
+        when(delegado.buscar(new GuiaDeTramiteParams("test"))).thenReturn(Flux.fromIterable(guias));
         casoDeUso = new CasoDeUsoBuscarGuiasDeTramite(delegado);
     }
 

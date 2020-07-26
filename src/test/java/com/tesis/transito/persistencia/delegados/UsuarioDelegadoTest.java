@@ -1,6 +1,5 @@
 package com.tesis.transito.persistencia.delegados;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.casosdeuso.params.UsuarioParams;
 import com.tesis.transito.dominio.modelos.Usuario;
 import com.tesis.transito.persistencia.modelos.DataUsuario;
@@ -20,6 +19,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -59,7 +61,8 @@ class UsuarioDelegadoTest {
                 "3192098062",
                 "SUPER_ADMIN", false);
 
-        List<DataUsuario> dataUsuarios = List.of(dataUsuario);
+        List<DataUsuario> dataUsuarios = new ArrayList<>();
+        dataUsuarios.add(dataUsuario);
 
         when(repositorio.
                 findDataUsuarioByNombreAndPasswordAndActive("jorge", "qwerty", false))
@@ -107,13 +110,15 @@ class UsuarioDelegadoTest {
 
     @Test
     void crearVarios() {
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarios.add(new Usuario(null,
+                "jorge",
+                "qwerty",
+                "jegco13@gmail.com",
+                "3192098062",
+                "SUPER_ADMIN", false));
         StepVerifier.
-                create(delegado.crear(List.of(new Usuario(null,
-                        "jorge",
-                        "qwerty",
-                        "jegco13@gmail.com",
-                        "3192098062",
-                        "SUPER_ADMIN", false))))
+                create(delegado.crear(usuarios))
                 .expectNextMatches(usuario -> usuario.getNombreDeUsuario().equals("jorge"))
                 .expectComplete()
                 .verify();

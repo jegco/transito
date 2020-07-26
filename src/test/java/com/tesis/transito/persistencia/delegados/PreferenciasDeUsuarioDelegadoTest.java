@@ -1,6 +1,5 @@
 package com.tesis.transito.persistencia.delegados;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.modelos.Animacion;
 import com.tesis.transito.dominio.modelos.PreferenciasDeUsuario;
 import com.tesis.transito.persistencia.modelos.DataAnimacion;
@@ -23,6 +22,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -51,27 +53,29 @@ class PreferenciasDeUsuarioDelegadoTest {
 
     @BeforeEach
     void setUp() {
-        DataPreferenciasDeUsuario preferenciaDeUsuario = new DataPreferenciasDeUsuario(
+        DataPreferenciasDeUsuario dataPreferenciaDeUsuario = new DataPreferenciasDeUsuario(
                 "test",
                 "test",
                 new DataAnimacion(null, null, 0, 0)
         );
 
-        DataPreferenciasDeUsuario preferenciaDeUsuarioConId = new DataPreferenciasDeUsuario(
+        DataPreferenciasDeUsuario dataPreferenciaDeUsuarioConId = new DataPreferenciasDeUsuario(
                 "1",
                 "test",
                 "test",
                 new DataAnimacion(null, null, 0, 0)
         );
 
-        List<DataPreferenciasDeUsuario> preferenciasDeUsuario = List.of(preferenciaDeUsuario);
-        List<DataPreferenciasDeUsuario> preferenciasDeUsuarioConId = List.of(preferenciaDeUsuarioConId);
+        List<DataPreferenciasDeUsuario> preferenciasDeUsuario = new ArrayList<>();
+        preferenciasDeUsuario.add(dataPreferenciaDeUsuario);
+        List<DataPreferenciasDeUsuario> preferenciasDeUsuarioConId = new ArrayList<>();
+        preferenciasDeUsuarioConId.add(dataPreferenciaDeUsuarioConId);
 
         when(repositorio.findAll()).thenReturn(Flux.fromIterable(preferenciasDeUsuarioConId));
-        when(repositorio.insert(preferenciaDeUsuario)).thenReturn(Mono.just(preferenciaDeUsuarioConId));
+        when(repositorio.insert(dataPreferenciaDeUsuario)).thenReturn(Mono.just(dataPreferenciaDeUsuarioConId));
         when(repositorio.insert(preferenciasDeUsuario)).thenReturn(Flux.fromIterable(preferenciasDeUsuarioConId));
-        when(repositorio.save(preferenciaDeUsuario)).thenReturn(Mono.just(preferenciaDeUsuarioConId));
-        when(repositorio.delete(preferenciaDeUsuarioConId)).thenReturn(Mono.empty());
+        when(repositorio.save(dataPreferenciaDeUsuario)).thenReturn(Mono.just(dataPreferenciaDeUsuarioConId));
+        when(repositorio.delete(dataPreferenciaDeUsuarioConId)).thenReturn(Mono.empty());
 
         delegado = new PreferenciasDeUsuarioDelegado(repositorio, menuDataMenuMapper, dataMenuMenuMapper);
     }
@@ -106,7 +110,8 @@ class PreferenciasDeUsuarioDelegadoTest {
                 new Animacion()
         );
 
-        List<PreferenciasDeUsuario> prefenciasDeUsuario = List.of(preferenciaDeUsuario);
+        List<PreferenciasDeUsuario> prefenciasDeUsuario = new ArrayList<>();
+        prefenciasDeUsuario.add(preferenciaDeUsuario);
 
         StepVerifier.
                 create(delegado.crear(prefenciasDeUsuario))

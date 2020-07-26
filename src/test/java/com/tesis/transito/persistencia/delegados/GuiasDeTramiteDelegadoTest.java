@@ -1,6 +1,5 @@
 package com.tesis.transito.persistencia.delegados;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.modelos.*;
 import com.tesis.transito.persistencia.modelos.*;
 import com.tesis.transito.persistencia.repositorios.DocumentoRepositorio;
@@ -21,6 +20,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -53,6 +55,8 @@ class GuiasDeTramiteDelegadoTest {
     private PasoDataPasoMapper pasoDataPasoMapper;
 
     private GuiasDeTramiteDelegado delegado;
+    private GuiaDeTramite guiaDeTramiteConId;
+    private GuiaDeTramite guiaDeTramite;
 
     @Captor
     private ArgumentCaptor<DataGuiaDeTramite> dataGuiaDeTramiteCaptor;
@@ -62,52 +66,49 @@ class GuiasDeTramiteDelegadoTest {
 
     @BeforeEach
     void setUp() {
-        List<DataPuntoDeAtencion> puntosDeAtencion = List.of(new DataPuntoDeAtencion(
+        List<DataPuntoDeAtencion> dataPuntosDeAtencion = new ArrayList<>();
+        dataPuntosDeAtencion.add(new DataPuntoDeAtencion(
                 "1",
                 "test",
                 "test",
                 "test",
                 "test"
         ));
-        DataTipo tipo = new DataTipo("1", "test", "1");
-        DataDocumento documento = DataDocumento.builder().id("1").rutaDeDescarga("test anexo").nombre("test anexo").build();
-        DataPaso paso = new DataPaso("test titulo", "test descripcion", "1");
-        DataGuiaDeTramite guiaDeTramiteConId = new DataGuiaDeTramite(
+        DataTipo dataTipo = new DataTipo("1", "test", "1");
+        DataDocumento dataDocumento = DataDocumento.builder().id("1").rutaDeDescarga("test anexo").nombre("test anexo").build();
+        DataPaso dataPaso = new DataPaso("test titulo", "test descripcion", "1");
+        List<DataPaso> dataPasos = new ArrayList<>();
+        dataPasos.add(dataPaso);
+        List<String> dataPuntosDeAtencionId = new ArrayList<>();
+        dataPuntosDeAtencionId.add("1");
+        DataGuiaDeTramite dataGuiaDeTramiteConId = new DataGuiaDeTramite(
                 "1",
                 "test nombre",
                 "test descripcion",
                 "1",
-                tipo.getId(),
+                dataTipo.getId(),
                 "test soporte legal",
-                List.of("1"),
-                List.of(paso)
+                dataPuntosDeAtencionId,
+                dataPasos
         );
-        DataGuiaDeTramite guiaDeTramite = new DataGuiaDeTramite(
+        DataGuiaDeTramite dataGuiaDeTramite = new DataGuiaDeTramite(
                 null,
                 "test nombre",
                 "test descripcion",
                 "1",
-                tipo.getId(),
+                dataTipo.getId(),
                 "test soporte legal",
-                List.of("1"),
-                List.of(paso)
+                dataPuntosDeAtencionId,
+                dataPasos
         );
+        List<DataGuiaDeTramite> guiasDeTramiteConId = new ArrayList<>();
+        guiasDeTramiteConId.add(dataGuiaDeTramiteConId);
+        List<DataGuiaDeTramite> guiasDeTramite = new ArrayList<>();
+        guiasDeTramite.add(dataGuiaDeTramite);
 
-        when(tiposRepositorio.findById("1")).thenReturn(Mono.just(tipo));
-        when(puntoDeAtencionRepositorio.findAllById(List.of("1"))).thenReturn(Flux.fromIterable(puntosDeAtencion));
-        when(documentoRepositorio.findById("1")).thenReturn(Mono.just(documento));
-        when(repositorio.findAll()).thenReturn(Flux.fromIterable(List.of(guiaDeTramiteConId)));
-        when(repositorio.insert(List.of(guiaDeTramite))).thenReturn(Flux.fromIterable(List.of(guiaDeTramiteConId)));
-        when(repositorio.save(guiaDeTramite)).thenReturn(Mono.just(guiaDeTramiteConId));
-        when(repositorio.delete(guiaDeTramiteConId)).thenReturn(Mono.empty());
-
-        delegado = new GuiasDeTramiteDelegado(repositorio, dataGuiaDeTramiteGuiaDeTramiteMapper, guiaDeTramiteDataGuiaDeTramiteMapper);
-    }
-
-    @Test
-    void crear() {
         Documento documento = Documento.builder().id("1").rutaDeDescarga("test anexo").nombre("test anexo").build();
-        List<PuntoDeAtencion> puntosDeAtencion = List.of(new PuntoDeAtencion(
+        List<PuntoDeAtencion> puntosDeAtencion = new ArrayList<>();
+        puntosDeAtencion.add(new PuntoDeAtencion(
                 "1",
                 "test",
                 "test",
@@ -116,18 +117,44 @@ class GuiasDeTramiteDelegadoTest {
         ));
         Tipo tipo = new Tipo("1", "test", documento);
         Paso paso = new Paso("test titulo", "test descripcion", documento);
+        List<Paso> pasos = new ArrayList<>();
+        pasos.add(paso);
 
-        GuiaDeTramite guiaDeTramite = new GuiaDeTramite(
+        guiaDeTramite = new GuiaDeTramite(
                 null,
                 "test nombre",
                 "test descripcion",
                 documento,
-                List.of(paso),
+                pasos,
                 "test soporte legal",
                 puntosDeAtencion,
                 tipo
         );
 
+        guiaDeTramiteConId = new GuiaDeTramite(
+                "1",
+                "test nombre",
+                "test descripcion",
+                documento,
+                pasos,
+                "test soporte legal",
+                puntosDeAtencion,
+                tipo
+        );
+
+        when(tiposRepositorio.findById("1")).thenReturn(Mono.just(dataTipo));
+        when(puntoDeAtencionRepositorio.findAllById(dataPuntosDeAtencionId)).thenReturn(Flux.fromIterable(dataPuntosDeAtencion));
+        when(documentoRepositorio.findById("1")).thenReturn(Mono.just(dataDocumento));
+        when(repositorio.findAll()).thenReturn(Flux.fromIterable(guiasDeTramiteConId));
+        when(repositorio.insert(guiasDeTramite)).thenReturn(Flux.fromIterable(guiasDeTramiteConId));
+        when(repositorio.save(dataGuiaDeTramite)).thenReturn(Mono.just(dataGuiaDeTramiteConId));
+        when(repositorio.delete(dataGuiaDeTramiteConId)).thenReturn(Mono.empty());
+
+        delegado = new GuiasDeTramiteDelegado(repositorio, dataGuiaDeTramiteGuiaDeTramiteMapper, guiaDeTramiteDataGuiaDeTramiteMapper);
+    }
+
+    @Test
+    void crear() {
         StepVerifier
                 .create(delegado.crear(guiaDeTramite))
                 .expectNextMatches(guia -> guia.getId().equals("1"))
@@ -142,30 +169,10 @@ class GuiasDeTramiteDelegadoTest {
 
     @Test
     void crearVarios() {
-        Documento documento = Documento.builder().id("1").rutaDeDescarga("test anexo").nombre("test anexo").build();
-        List<PuntoDeAtencion> puntosDeAtencion = List.of(new PuntoDeAtencion(
-                "1",
-                "test",
-                "test",
-                "test",
-                "test"
-        ));
-        Tipo tipo = new Tipo("1", "test", documento);
-        Paso paso = new Paso("test titulo", "test descripcion", documento);
-
-        GuiaDeTramite guiaDeTramite = new GuiaDeTramite(
-                null,
-                "test nombre",
-                "test descripcion",
-                documento,
-                List.of(paso),
-                "test soporte legal",
-                puntosDeAtencion,
-                tipo
-        );
-
+        List<GuiaDeTramite> guiasDeTramite = new ArrayList<>();
+        guiasDeTramite.add(guiaDeTramite);
         StepVerifier
-                .create(delegado.crear(List.of(guiaDeTramite)))
+                .create(delegado.crear(guiasDeTramite))
                 .expectNextMatches(guia -> guia.getId().equals("1"))
                 .expectComplete()
                 .verify();
@@ -178,28 +185,6 @@ class GuiasDeTramiteDelegadoTest {
 
     @Test
     void actualizar() {
-        Documento documento = Documento.builder().id("1").rutaDeDescarga("test anexo").nombre("test anexo").build();
-        List<PuntoDeAtencion> puntosDeAtencion = List.of(new PuntoDeAtencion(
-                "1",
-                "test",
-                "test",
-                "test",
-                "test"
-        ));
-        Tipo tipo = new Tipo("1", "test", documento);
-        Paso paso = new Paso("test titulo", "test descripcion", documento);
-
-        GuiaDeTramite guiaDeTramite = new GuiaDeTramite(
-                null,
-                "test nombre",
-                "test descripcion",
-                documento,
-                List.of(paso),
-                "test soporte legal",
-                puntosDeAtencion,
-                tipo
-        );
-
         StepVerifier
                 .create(delegado.actualizar(guiaDeTramite))
                 .expectNextMatches(guia -> guia.getId().equals("1"))
@@ -226,30 +211,8 @@ class GuiasDeTramiteDelegadoTest {
 
     @Test
     void eliminar() {
-        Documento documento = Documento.builder().id("1").rutaDeDescarga("test anexo").nombre("test anexo").build();
-        List<PuntoDeAtencion> puntosDeAtencion = List.of(new PuntoDeAtencion(
-                "1",
-                "test",
-                "test",
-                "test",
-                "test"
-        ));
-        Tipo tipo = new Tipo("1", "test", documento);
-        Paso paso = new Paso("test titulo", "test descripcion", documento);
-
-        GuiaDeTramite guiaDeTramite = new GuiaDeTramite(
-                "1",
-                "test nombre",
-                "test descripcion",
-                documento,
-                List.of(paso),
-                "test soporte legal",
-                puntosDeAtencion,
-                tipo
-        );
-
         StepVerifier
-                .create(delegado.eliminar(guiaDeTramite))
+                .create(delegado.eliminar(guiaDeTramiteConId))
                 .expectComplete()
                 .verify();
 

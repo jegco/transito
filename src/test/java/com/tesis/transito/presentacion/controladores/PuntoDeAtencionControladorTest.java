@@ -1,6 +1,5 @@
 package com.tesis.transito.presentacion.controladores;
 
-import com.sun.tools.javac.util.List;
 import com.tesis.transito.dominio.casosdeuso.puntosdeatencion.CasoDeUsoBuscarPuntosDeAtencion;
 import com.tesis.transito.dominio.casosdeuso.puntosdeatencion.CasoDeUsoEliminarPuntosDeAtencion;
 import com.tesis.transito.dominio.casosdeuso.puntosdeatencion.CasoDeUsoGuardarPuntoDeAtencion;
@@ -21,6 +20,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
@@ -45,7 +45,8 @@ class PuntoDeAtencionControladorTest {
     @BeforeEach
     void setUp() {
         PuntoDeAtencion puntoDeAtencionConId = new PuntoDeAtencion("1", "test", "test", "test", "test");
-        List<PuntoDeAtencion> puntosDeAtencion = List.of(puntoDeAtencionConId);
+        List<PuntoDeAtencion> puntosDeAtencion = new ArrayList<>();
+        puntosDeAtencion.add(puntoDeAtencionConId);
         when(casoDeUsoBuscarPuntosDeAtencion.ejecutar(null)).thenReturn(Flux.fromIterable(puntosDeAtencion));
         when(casoDeUsoBuscarPuntosDeAtencion.ejecutar("test")).thenReturn(Flux.fromIterable(puntosDeAtencion));
         when(casoDeUsoGuardarPuntoDeAtencion.ejecutar(puntosDeAtencion)).thenReturn(Flux.fromIterable(puntosDeAtencion));
@@ -77,7 +78,8 @@ class PuntoDeAtencionControladorTest {
     @Test
     void guardarPuntoDeAtencion() {
         PuntoDeAtencion puntoDeAtencionConId = new PuntoDeAtencion("1", "test", "test", "test", "test");
-        List<PuntoDeAtencion> puntosDeAtencion = List.of(puntoDeAtencionConId);
+        List<PuntoDeAtencion> puntosDeAtencion = new ArrayList<>();
+        puntosDeAtencion.add(puntoDeAtencionConId);
 
         webTestClient
                 .mutateWith(csrf())
