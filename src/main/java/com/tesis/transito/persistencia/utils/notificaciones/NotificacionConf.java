@@ -15,7 +15,7 @@ public class NotificacionConf {
         mailSender.setPort(587);
 
         mailSender.setUsername("transito.app.tesis@gmail.com");
-        mailSender.setPassword("transito2019");
+        mailSender.setPassword("aktlixmmrkxwlksj");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
