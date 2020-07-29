@@ -87,8 +87,7 @@ public class ServicioDeNotificacionPorCorreo implements ServicioDeNotification {
             model.put("nombreDelAdmin", notificacion.getPara().getNombreDeUsuario());
             model.put("nombreEmpleado", notificacion.getPara().getNombreDeUsuario());
             model.put("direccionDeConfirmacion",
-                    "hppt://" + InetAddress.getLoopbackAddress().getHostName()
-                            + ":4200/usuarios/confirmarEmail?id=" + notificacion.getPara().getId());
+                    "https://transito-admin-app.herokuapp.com/dashboard/");
 
             String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
             helper.setTo(notificacion.getPara().getCorreoElectronico());
