@@ -13,14 +13,14 @@ public class UsuarioDataUsuarioMapper implements Function<Usuario, DataUsuario> 
     public DataUsuario apply(Usuario usuario) {
         if (usuario.getId() == null || usuario.getId().isEmpty()) {
             return new DataUsuario(usuario.getNombreDeUsuario(),
-                    usuario.getContraseña(),
+                    usuario.getPassword(),
                     usuario.getCorreoElectronico(),
                     usuario.getNumeroDeTelefono(),
                     usuario.getRole());
         }
         return new DataUsuario(usuario.getId(),
                 usuario.getNombreDeUsuario(),
-                usuario.getContraseña(),
+                usuario.getPassword(),
                 usuario.getCorreoElectronico(),
                 usuario.getNumeroDeTelefono(),
                 usuario.getRole(),

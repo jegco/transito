@@ -36,7 +36,7 @@ class CasoDeUsoRegistrarUsuarioTest {
 
     @BeforeEach
     void setUp() {
-        usuario = Usuario.builder().id("1").nombreDeUsuario("test").contraseña("test").build();
+        usuario = Usuario.builder().id("1").nombreDeUsuario("test").password("test").build();
         List<Usuario> usuarios = new ArrayList<>();
         usuarios.add(usuario);
         when(delegado.crear(usuario)).thenReturn(Mono.just(usuario));

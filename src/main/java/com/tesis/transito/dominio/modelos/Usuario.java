@@ -11,7 +11,7 @@ import lombok.*;
 public class Usuario {
     private String id;
     private String nombreDeUsuario;
-    private String contraseña;
+    private String password;
     private String correoElectronico;
     private String numeroDeTelefono;
     private String role;

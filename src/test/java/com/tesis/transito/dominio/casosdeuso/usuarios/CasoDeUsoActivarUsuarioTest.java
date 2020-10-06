@@ -1,6 +1,5 @@
 package com.tesis.transito.dominio.casosdeuso.usuarios;
 
-import com.tesis.transito.dominio.casosdeuso.params.UsuarioParams;
 import com.tesis.transito.dominio.modelos.Notificacion;
 import com.tesis.transito.dominio.modelos.Usuario;
 import com.tesis.transito.persistencia.delegados.UsuarioDelegado;
@@ -11,11 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -34,7 +31,7 @@ class CasoDeUsoActivarUsuarioTest {
 
     @BeforeEach
     void setUp() {
-        usuario = Usuario.builder().id("1").nombreDeUsuario("test").contraseña("test").build();
+        usuario = Usuario.builder().id("1").nombreDeUsuario("test").password("test").build();
         when(delegado.actualizar(usuario)).thenReturn(Mono.just(usuario));
         when(servicioDeNotificacionPorCorreo.enviarNotificacionAlUsuario(new Notificacion(usuario, "registro exitoso", "registro autorizado por el administrador")))
                 .thenReturn(Mono.just(true));

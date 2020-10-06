@@ -123,12 +123,7 @@ class GuiasDeTramiteControladorTest {
         webTestClient
                 .mutateWith(csrf())
                 .get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/guias")
-                        .queryParam("titulo", "test")
-                        .queryParam("tipo", "test")
-                        .queryParam("descripcion", "test")
-                        .build())
+                .uri("/guias/test/test/test")
                 .exchange()
                 .expectStatus().isOk();
     }
@@ -138,10 +133,7 @@ class GuiasDeTramiteControladorTest {
         webTestClient
                 .mutateWith(csrf())
                 .get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/guias")
-                        .queryParam("titulo", "test")
-                        .build())
+                .uri("/guias/titulo/test")
                 .exchange()
                 .expectStatus().isOk();
     }

@@ -23,7 +23,7 @@ public class CasoDeUsoRegistrarUsuario extends CasoDeUsoImpl<Usuario, Usuario> {
 
     @Override
     protected Flux<Usuario> construirCasoDeUso(Usuario usuario) {
-        return usuarioDelegado.buscar(new UsuarioParams(usuario.getNombreDeUsuario(), usuario.getContraseña()))
+        return usuarioDelegado.buscar(new UsuarioParams(usuario.getNombreDeUsuario(), usuario.getPassword()))
                 .switchMap(usuarioRegistrado -> Flux.error(new UserAlreadyExistException("usuario ya registrado")))
                 .switchIfEmpty(Flux.from(usuarioDelegado.crear(usuario)))
                 .switchMap(usuarioNuevo -> usuarioDelegado.buscar(new UsuarioParams("SUPER_ADMIN", true)))

@@ -45,7 +45,7 @@ public class UsuarioDelegado implements Delegado<UsuarioParams, Usuario> {
     @Override
     public Mono<Usuario> actualizar(Usuario entidad) {
         return repositorio.findById(entidad.getId()).flatMap(usuario -> {
-                entidad.setContraseña(usuario.getPassword());
+                entidad.setPassword(usuario.getPassword());
                 return repositorio.save(usuarioDataUsuarioMapper.apply(entidad)).map(dataUsuarioUsuarioMapper);
         });
     }

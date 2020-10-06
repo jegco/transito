@@ -14,7 +14,7 @@ public class UsuarioVistaUsuarioMapper implements Function<Usuario, VistaUsuario
         return new VistaUsuario(
                 usuario.getId(),
                 usuario.getNombreDeUsuario(),
-                usuario.getContraseña(),
+                usuario.getPassword(),
                 usuario.getCorreoElectronico(),
                 usuario.getNumeroDeTelefono(),
                 usuario.getRole(),

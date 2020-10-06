@@ -1,11 +1,19 @@
-package com.tesis.transito.presentacion.controladores;
+package com.tesis.transito.integracion;
 
 import com.tesis.transito.dominio.casosdeuso.params.UsuarioParams;
 import com.tesis.transito.dominio.casosdeuso.usuarios.CasoDeUsoActivarUsuario;
 import com.tesis.transito.dominio.casosdeuso.usuarios.CasoDeUsoEliminarUsuario;
 import com.tesis.transito.dominio.casosdeuso.usuarios.CasoDeUsoLogin;
 import com.tesis.transito.dominio.casosdeuso.usuarios.CasoDeUsoRegistrarUsuario;
+import com.tesis.transito.dominio.modelos.Notificacion;
 import com.tesis.transito.dominio.modelos.Usuario;
+import com.tesis.transito.persistencia.delegados.UsuarioDelegado;
+import com.tesis.transito.persistencia.modelos.DataUsuario;
+import com.tesis.transito.persistencia.repositorios.UsuarioRepositorio;
+import com.tesis.transito.persistencia.utils.DataUsuarioUsuarioMapper;
+import com.tesis.transito.persistencia.utils.UsuarioDataUsuarioMapper;
+import com.tesis.transito.persistencia.utils.notificaciones.ServicioDeNotificacionPorCorreo;
+import com.tesis.transito.presentacion.controladores.UsuarioControlador;
 import com.tesis.transito.presentacion.modelos.AuthResponse;
 import com.tesis.transito.presentacion.seguridad.JWTUtil;
 import com.tesis.transito.presentacion.utils.mappers.UsuarioVistaUsuarioMapper;
@@ -13,6 +21,8 @@ import com.tesis.transito.presentacion.utils.mappers.VistaUsuarioUsuarioMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
@@ -27,6 +37,9 @@ import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
 
@@ -35,18 +48,18 @@ import static org.springframework.security.test.web.reactive.server.SecurityMock
 @EnableAutoConfiguration
 @AutoConfigureDataMongo
 @WithMockUser
-class UsuarioControladorTest {
+public class UsuarioTestIntegracion {
 
     @Autowired
     private WebTestClient webTestClient;
 
-    @MockBean
+    @SpyBean
     private CasoDeUsoLogin casoDeUsoLogin;
-    @MockBean
+    @SpyBean
     private CasoDeUsoRegistrarUsuario casoDeUsoRegistrarUsuario;
-    @MockBean
+    @SpyBean
     private CasoDeUsoEliminarUsuario casoDeUsoEliminarUsuario;
-    @MockBean
+    @SpyBean
     private CasoDeUsoActivarUsuario casoDeUsoActivarUsuario;
     @SpyBean
     private UsuarioVistaUsuarioMapper usuarioVistaUsuarioMapper;
@@ -55,47 +68,82 @@ class UsuarioControladorTest {
     @SpyBean
     private JWTUtil jwtUtil;
 
+    @MockBean
+    private UsuarioRepositorio repositorio;
+    @SpyBean
+    private DataUsuarioUsuarioMapper dataUsuarioUsuarioMapper;
+    @SpyBean
+    private UsuarioDataUsuarioMapper usuarioDataUsuarioMapper;
+
+    @SpyBean
+    private UsuarioDelegado delegado;
+
+    @MockBean
+    ServicioDeNotificacionPorCorreo servicioDeNotificacionPorCorreo;
+
+    @Captor
+    private ArgumentCaptor<DataUsuario> dataUsuarioCaptor;
+
+    @Captor
+    private ArgumentCaptor<Usuario> usuarioCaptor;
+
     @BeforeEach
     void setup() {
-        when(casoDeUsoLogin.
-                ejecutar(new UsuarioParams("jorge", "qwerty", null, false)))
-                .thenReturn(Mono.just(Usuario.builder().nombreDeUsuario("jorge").password("querty").id("1").build()));
+        DataUsuario dataUsuario = new DataUsuario(null,
+                "jorge",
+                "qwerty",
+                "jegco13@gmail.com",
+                "3192098062",
+                "SUPER_ADMIN", false);
 
-        when(casoDeUsoRegistrarUsuario.
-                ejecutar(new Usuario("1",
-                        "jorge",
-                        "qwerty",
-                        "j@q.com",
-                        "12345",
-                        "ADMIN",
-                        false)))
-                .thenReturn(Mono.just(new Usuario("1",
-                        "jorge",
-                        "qwerty",
-                        "j@q.com",
-                        "12345",
-                        "ADMIN",
-                        false)));
+        DataUsuario dataUsuarioConId = new DataUsuario("1",
+                "jorge",
+                "qwerty",
+                "jegco13@gmail.com",
+                "3192098062",
+                "SUPER_ADMIN", false);
 
-        when(casoDeUsoActivarUsuario.
-                ejecutar(new Usuario("1",
-                        "jorge",
-                        null,
-                        "j@q.com",
-                        "12345",
-                        "ADMIN",
-                        false)))
+        List<DataUsuario> dataUsuarios = new ArrayList<>();
+        dataUsuarios.add(dataUsuario);
+
+        when(repositorio.
+                findDataUsuarioByNombreAndPasswordAndActive("jorge", "qwerty", true))
+                .thenReturn(Flux.just(dataUsuario));
+        when(repositorio.findAll()).thenReturn(Flux.just(dataUsuarioConId));
+        when(repositorio.insert(dataUsuario)).thenReturn(Mono.just(dataUsuarioConId));
+        when(repositorio.save(dataUsuarioConId)).thenReturn(Mono.just(dataUsuarioConId));
+        when(repositorio.insert(dataUsuarios)).thenReturn(Flux.fromIterable(dataUsuarios));
+        when(repositorio.findById("1")).thenReturn(Mono.just(dataUsuarioConId));
+        when(repositorio.findDataUsuarioByActiveAndRol( true, "SUPER_ADMIN")).thenReturn(Flux.just(dataUsuarioConId));
+        when(repositorio.
+                findDataUsuarioByNombreAndPasswordAndActive(
+                        dataUsuario.getNombre(),
+                        dataUsuario.getPassword(),
+                        false))
+                .thenReturn(Flux.empty());
+        when(repositorio.delete(dataUsuarioConId)).thenReturn(Mono.empty());
+
+        Usuario usuario = new Usuario(null,
+                "jorge",
+                "qwerty",
+                "jegco13@gmail.com",
+                "3192098062",
+                "SUPER_ADMIN", false);
+
+        Usuario usuarioConId = new Usuario("1",
+                "jorge",
+                "qwerty",
+                "jegco13@gmail.com",
+                "3192098062",
+                "SUPER_ADMIN", false);
+        when(servicioDeNotificacionPorCorreo.enviarNotificacionAlUsuario(new Notificacion(usuarioConId, "registro exitoso", "registro autorizado por el administrador")))
                 .thenReturn(Mono.just(true));
 
-        when(casoDeUsoLogin.
-                ejecutar(null))
-                .thenReturn(Flux.just(new Usuario("1",
-                        "jorge",
-                        null,
-                        "j@q.com",
-                        "12345",
-                        "ADMIN",
-                        false)));
+        when(servicioDeNotificacionPorCorreo.enviarNotificacionAlAdmin(new Notificacion(usuarioConId,
+                usuario,
+                "Confirmacion de registro de nuevo usuario",
+                "por favor haga click en el mensaje para confirmar la entrada del nuevo usuario")))
+                .thenReturn(Mono.just(usuario));
     }
 
     @Test
@@ -105,7 +153,7 @@ class UsuarioControladorTest {
                 .post()
                 .uri("/usuarios/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(new UsuarioParams("jorge", "qwerty")), UsuarioParams.class)
+                .body(Mono.just(new UsuarioParams("jorge", "qwerty", null, true)), UsuarioParams.class)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(AuthResponse.class).consumeWith(
@@ -118,12 +166,12 @@ class UsuarioControladorTest {
     @Test
     void registrarUsuario() {
 
-        Usuario usuario = new Usuario("1",
+        Usuario usuario = new Usuario(null,
                 "jorge",
                 "qwerty",
-                "j@q.com",
-                "12345",
-                "ADMIN",
+                "jegco13@gmail.com",
+                "3192098062",
+                "SUPER_ADMIN",
                 false);
 
         webTestClient
@@ -155,9 +203,9 @@ class UsuarioControladorTest {
         Usuario usuario = new Usuario("1",
                 "jorge",
                 "qwerty",
-                "j@q.com",
-                "12345",
-                "ADMIN",
+                "jegco13@gmail.com",
+        "3192098062",
+                "SUPER_ADMIN",
                 false);
 
         webTestClient

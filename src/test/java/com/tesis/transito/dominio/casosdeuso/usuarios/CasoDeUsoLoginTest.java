@@ -27,7 +27,7 @@ class CasoDeUsoLoginTest {
 
     @BeforeEach
     void setUp() {
-        usuario = Usuario.builder().id("1").nombreDeUsuario("test").contraseña("test").build();
+        usuario = Usuario.builder().id("1").nombreDeUsuario("test").password("test").build();
         when(delegado.buscar(new UsuarioParams("test", "test"))).thenReturn(Flux.just(usuario));
         casoDeUso = new CasoDeUsoLogin(delegado);
     }
