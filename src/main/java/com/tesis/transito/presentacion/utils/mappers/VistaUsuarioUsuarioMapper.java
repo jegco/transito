@@ -1,6 +1,6 @@
 package com.tesis.transito.presentacion.utils.mappers;
 
-import com.tesis.transito.dominio.modelos.Usuario;
+import com.tesis.transito.entidades.Usuario;
 import com.tesis.transito.presentacion.modelos.VistaUsuario;
 import org.springframework.stereotype.Component;
 

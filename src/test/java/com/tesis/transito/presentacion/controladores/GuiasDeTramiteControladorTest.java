@@ -1,11 +1,10 @@
 package com.tesis.transito.presentacion.controladores;
 
-import com.tesis.transito.dominio.casosdeuso.base.CasoDeUso;
 import com.tesis.transito.dominio.casosdeuso.guiasdetramite.CasoDeUsoBuscarGuiasDeTramite;
 import com.tesis.transito.dominio.casosdeuso.guiasdetramite.CasoDeUsoCrearGuiasDeTramite;
 import com.tesis.transito.dominio.casosdeuso.guiasdetramite.CasoDeUsoEliminarGuia;
 import com.tesis.transito.dominio.casosdeuso.params.GuiaDeTramiteParams;
-import com.tesis.transito.dominio.modelos.*;
+import com.tesis.transito.entidades.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

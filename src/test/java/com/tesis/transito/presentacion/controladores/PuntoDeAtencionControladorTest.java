@@ -3,8 +3,7 @@ package com.tesis.transito.presentacion.controladores;
 import com.tesis.transito.dominio.casosdeuso.puntosdeatencion.CasoDeUsoBuscarPuntosDeAtencion;
 import com.tesis.transito.dominio.casosdeuso.puntosdeatencion.CasoDeUsoEliminarPuntosDeAtencion;
 import com.tesis.transito.dominio.casosdeuso.puntosdeatencion.CasoDeUsoGuardarPuntoDeAtencion;
-import com.tesis.transito.dominio.modelos.PuntoDeAtencion;
-import com.tesis.transito.dominio.modelos.Tipo;
+import com.tesis.transito.entidades.PuntoDeAtencion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +16,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.tesis.transito.persistencia.utils;
 
-import com.tesis.transito.dominio.modelos.Animacion;
-import com.tesis.transito.persistencia.modelos.DataAnimacion;
+import com.tesis.transito.entidades.Animacion;
+import com.tesis.transito.entidades.DataAnimacion;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;

@@ -2,7 +2,7 @@ package com.tesis.transito.dominio.casosdeuso.puntosdeatencion;
 
 import com.tesis.transito.dominio.casosdeuso.base.CasoDeUsoImpl;
 import com.tesis.transito.dominio.delegado.Delegado;
-import com.tesis.transito.dominio.modelos.PuntoDeAtencion;
+import com.tesis.transito.entidades.PuntoDeAtencion;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 

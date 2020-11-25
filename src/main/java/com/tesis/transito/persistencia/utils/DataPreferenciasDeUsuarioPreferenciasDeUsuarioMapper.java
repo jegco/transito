@@ -1,7 +1,7 @@
 package com.tesis.transito.persistencia.utils;
 
-import com.tesis.transito.dominio.modelos.PreferenciasDeUsuario;
-import com.tesis.transito.persistencia.modelos.DataPreferenciasDeUsuario;
+import com.tesis.transito.entidades.PreferenciasDeUsuario;
+import com.tesis.transito.entidades.DataPreferenciasDeUsuario;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;

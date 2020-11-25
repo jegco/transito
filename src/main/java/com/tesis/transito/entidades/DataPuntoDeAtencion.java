@@ -1,4 +1,4 @@
-package com.tesis.transito.persistencia.modelos;
+package com.tesis.transito.entidades;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

@@ -1,7 +1,6 @@
 package com.tesis.transito.persistencia.delegados;
 
-import com.tesis.transito.dominio.modelos.*;
-import com.tesis.transito.persistencia.modelos.*;
+import com.tesis.transito.entidades.*;
 import com.tesis.transito.persistencia.repositorios.DocumentoRepositorio;
 import com.tesis.transito.persistencia.repositorios.GuiasDeTramitesRepositorio;
 import com.tesis.transito.persistencia.repositorios.PuntoDeAtencionRepositorio;

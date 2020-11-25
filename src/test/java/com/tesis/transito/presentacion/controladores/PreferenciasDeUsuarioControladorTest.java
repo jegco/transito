@@ -2,8 +2,8 @@ package com.tesis.transito.presentacion.controladores;
 
 import com.tesis.transito.dominio.casosdeuso.preferenciasdeusuario.CasoDeUsoBuscarPreferenciasDeUsuario;
 import com.tesis.transito.dominio.casosdeuso.preferenciasdeusuario.CasoDeUsoCrearOModificarPreferenciasDeUsuario;
-import com.tesis.transito.dominio.modelos.Animacion;
-import com.tesis.transito.dominio.modelos.PreferenciasDeUsuario;
+import com.tesis.transito.entidades.Animacion;
+import com.tesis.transito.entidades.PreferenciasDeUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -3,7 +3,7 @@ package com.tesis.transito.dominio.casosdeuso.documentos;
 import com.tesis.transito.dominio.casosdeuso.base.CasoDeUsoImpl;
 import com.tesis.transito.dominio.casosdeuso.params.ActualizarArchivoParam;
 import com.tesis.transito.dominio.delegado.Delegado;
-import com.tesis.transito.dominio.modelos.Documento;
+import com.tesis.transito.entidades.Documento;
 import com.tesis.transito.dominio.utils.ServicioDeAlmacenamiento;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

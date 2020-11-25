@@ -1,7 +1,7 @@
 package com.tesis.transito.persistencia.utils;
 
-import com.tesis.transito.dominio.modelos.GuiaDeTramite;
-import com.tesis.transito.persistencia.modelos.DataGuiaDeTramite;
+import com.tesis.transito.entidades.GuiaDeTramite;
+import com.tesis.transito.entidades.DataGuiaDeTramite;
 import com.tesis.transito.persistencia.repositorios.DocumentoRepositorio;
 import com.tesis.transito.persistencia.repositorios.PuntoDeAtencionRepositorio;
 import com.tesis.transito.persistencia.repositorios.TiposRepositorio;

@@ -1,9 +1,9 @@
 package com.tesis.transito.persistencia.delegados;
 
-import com.tesis.transito.dominio.modelos.Documento;
-import com.tesis.transito.dominio.modelos.Tipo;
-import com.tesis.transito.persistencia.modelos.DataDocumento;
-import com.tesis.transito.persistencia.modelos.DataTipo;
+import com.tesis.transito.entidades.Documento;
+import com.tesis.transito.entidades.Tipo;
+import com.tesis.transito.entidades.DataDocumento;
+import com.tesis.transito.entidades.DataTipo;
 import com.tesis.transito.persistencia.repositorios.DocumentoRepositorio;
 import com.tesis.transito.persistencia.repositorios.TiposRepositorio;
 import com.tesis.transito.persistencia.utils.DataDocumentoDocumentoMapper;

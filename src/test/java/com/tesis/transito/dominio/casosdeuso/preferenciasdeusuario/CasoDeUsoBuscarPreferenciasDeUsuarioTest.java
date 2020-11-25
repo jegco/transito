@@ -1,7 +1,7 @@
 package com.tesis.transito.dominio.casosdeuso.preferenciasdeusuario;
 
-import com.tesis.transito.dominio.modelos.Animacion;
-import com.tesis.transito.dominio.modelos.PreferenciasDeUsuario;
+import com.tesis.transito.entidades.Animacion;
+import com.tesis.transito.entidades.PreferenciasDeUsuario;
 import com.tesis.transito.persistencia.delegados.PreferenciasDeUsuarioDelegado;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

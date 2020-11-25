@@ -1,6 +1,6 @@
 package com.tesis.transito.dominio.casosdeuso.guiasdetramite;
 
-import com.tesis.transito.dominio.modelos.*;
+import com.tesis.transito.entidades.*;
 import com.tesis.transito.persistencia.delegados.GuiasDeTramiteDelegado;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,6 @@ import reactor.test.StepVerifier;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)

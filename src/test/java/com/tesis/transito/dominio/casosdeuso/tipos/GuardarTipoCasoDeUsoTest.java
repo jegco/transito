@@ -1,9 +1,8 @@
 package com.tesis.transito.dominio.casosdeuso.tipos;
 
-import com.tesis.transito.dominio.modelos.Documento;
-import com.tesis.transito.dominio.modelos.Tipo;
+import com.tesis.transito.entidades.Documento;
+import com.tesis.transito.entidades.Tipo;
 import com.tesis.transito.persistencia.delegados.TiposDelegado;
-import com.tesis.transito.persistencia.utils.archivos.ServicioDeAlmacenamientoImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +12,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)

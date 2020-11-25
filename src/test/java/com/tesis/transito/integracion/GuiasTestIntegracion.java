@@ -4,10 +4,9 @@ import com.tesis.transito.dominio.casosdeuso.guiasdetramite.CasoDeUsoBuscarGuias
 import com.tesis.transito.dominio.casosdeuso.guiasdetramite.CasoDeUsoCrearGuiasDeTramite;
 import com.tesis.transito.dominio.casosdeuso.guiasdetramite.CasoDeUsoEliminarGuia;
 import com.tesis.transito.dominio.casosdeuso.params.GuiaDeTramiteParams;
-import com.tesis.transito.dominio.modelos.*;
 import com.tesis.transito.dominio.utils.exceptions.GuideNotFoundException;
+import com.tesis.transito.entidades.*;
 import com.tesis.transito.persistencia.delegados.GuiasDeTramiteDelegado;
-import com.tesis.transito.persistencia.modelos.*;
 import com.tesis.transito.persistencia.repositorios.DocumentoRepositorio;
 import com.tesis.transito.persistencia.repositorios.GuiasDeTramitesRepositorio;
 import com.tesis.transito.persistencia.repositorios.PuntoDeAtencionRepositorio;

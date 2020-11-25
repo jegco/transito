@@ -1,10 +1,7 @@
 package com.tesis.transito.dominio.casosdeuso.tipos;
 
-import com.tesis.transito.dominio.casosdeuso.puntosdeatencion.CasoDeUsoGuardarPuntoDeAtencion;
-import com.tesis.transito.dominio.modelos.Documento;
-import com.tesis.transito.dominio.modelos.PuntoDeAtencion;
-import com.tesis.transito.dominio.modelos.Tipo;
-import com.tesis.transito.persistencia.delegados.PuntoDeAtencionDelegado;
+import com.tesis.transito.entidades.Documento;
+import com.tesis.transito.entidades.Tipo;
 import com.tesis.transito.persistencia.delegados.TiposDelegado;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +15,6 @@ import reactor.test.StepVerifier;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)

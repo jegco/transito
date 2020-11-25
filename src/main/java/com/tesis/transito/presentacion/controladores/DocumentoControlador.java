@@ -2,7 +2,7 @@ package com.tesis.transito.presentacion.controladores;
 
 import com.tesis.transito.dominio.casosdeuso.base.CasoDeUso;
 import com.tesis.transito.dominio.casosdeuso.params.ActualizarArchivoParam;
-import com.tesis.transito.dominio.modelos.Documento;
+import com.tesis.transito.entidades.Documento;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

@@ -2,7 +2,7 @@ package com.tesis.transito.persistencia.delegados;
 
 import com.tesis.transito.dominio.casosdeuso.params.GuiaDeTramiteParams;
 import com.tesis.transito.dominio.delegado.Delegado;
-import com.tesis.transito.dominio.modelos.GuiaDeTramite;
+import com.tesis.transito.entidades.GuiaDeTramite;
 import com.tesis.transito.persistencia.repositorios.GuiasDeTramitesRepositorio;
 import com.tesis.transito.persistencia.utils.DataGuiaDeTramiteGuiaDeTramiteMapper;
 import com.tesis.transito.persistencia.utils.GuiaDeTramiteDataGuiaDeTramiteMapper;

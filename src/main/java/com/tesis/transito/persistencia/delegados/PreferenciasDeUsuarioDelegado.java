@@ -1,7 +1,7 @@
 package com.tesis.transito.persistencia.delegados;
 
 import com.tesis.transito.dominio.delegado.Delegado;
-import com.tesis.transito.dominio.modelos.PreferenciasDeUsuario;
+import com.tesis.transito.entidades.PreferenciasDeUsuario;
 import com.tesis.transito.persistencia.repositorios.PreferenciasDeUsuarioRepositorio;
 import com.tesis.transito.persistencia.utils.DataPreferenciasDeUsuarioPreferenciasDeUsuarioMapper;
 import com.tesis.transito.persistencia.utils.PreferenciasDeUsuarioDataPreferenciasDeUsuarioMapper;

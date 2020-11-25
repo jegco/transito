@@ -1,8 +1,8 @@
 package com.tesis.transito.persistencia.delegados;
 
 import com.tesis.transito.dominio.delegado.Delegado;
-import com.tesis.transito.dominio.modelos.PuntoDeAtencion;
-import com.tesis.transito.persistencia.modelos.DataPuntoDeAtencion;
+import com.tesis.transito.entidades.PuntoDeAtencion;
+import com.tesis.transito.entidades.DataPuntoDeAtencion;
 import com.tesis.transito.persistencia.repositorios.PuntoDeAtencionRepositorio;
 import com.tesis.transito.persistencia.utils.DataPuntoDeAtencionPuntoDeAtencionMapper;
 import com.tesis.transito.persistencia.utils.PuntoDeAtencionDataPuntoDeAtencionMapper;

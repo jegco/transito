@@ -1,7 +1,7 @@
 package com.tesis.transito.dominio.casosdeuso.guiasdetramite;
 
 import com.tesis.transito.dominio.casosdeuso.params.GuiaDeTramiteParams;
-import com.tesis.transito.dominio.modelos.*;
+import com.tesis.transito.entidades.*;
 import com.tesis.transito.persistencia.delegados.GuiasDeTramiteDelegado;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

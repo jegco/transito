@@ -1,7 +1,7 @@
 package com.tesis.transito.presentacion.controladores;
 
 import com.tesis.transito.dominio.casosdeuso.base.CasoDeUso;
-import com.tesis.transito.dominio.modelos.PuntoDeAtencion;
+import com.tesis.transito.entidades.PuntoDeAtencion;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.CorePublisher;
 

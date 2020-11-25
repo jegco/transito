@@ -1,9 +1,9 @@
 package com.tesis.transito.persistencia.delegados;
 
-import com.tesis.transito.dominio.modelos.Animacion;
-import com.tesis.transito.dominio.modelos.PreferenciasDeUsuario;
-import com.tesis.transito.persistencia.modelos.DataAnimacion;
-import com.tesis.transito.persistencia.modelos.DataPreferenciasDeUsuario;
+import com.tesis.transito.entidades.Animacion;
+import com.tesis.transito.entidades.PreferenciasDeUsuario;
+import com.tesis.transito.entidades.DataAnimacion;
+import com.tesis.transito.entidades.DataPreferenciasDeUsuario;
 import com.tesis.transito.persistencia.repositorios.PreferenciasDeUsuarioRepositorio;
 import com.tesis.transito.persistencia.utils.AnimacionDataAnimacionMapper;
 import com.tesis.transito.persistencia.utils.DataAnimacionAnimacionMapper;

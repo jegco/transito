@@ -1,7 +1,7 @@
 package com.tesis.transito.dominio.casosdeuso.tipos;
 
-import com.tesis.transito.dominio.modelos.Documento;
-import com.tesis.transito.dominio.modelos.Tipo;
+import com.tesis.transito.entidades.Documento;
+import com.tesis.transito.entidades.Tipo;
 import com.tesis.transito.persistencia.delegados.TiposDelegado;
 import com.tesis.transito.persistencia.utils.archivos.ServicioDeAlmacenamientoImpl;
 import org.junit.jupiter.api.BeforeEach;

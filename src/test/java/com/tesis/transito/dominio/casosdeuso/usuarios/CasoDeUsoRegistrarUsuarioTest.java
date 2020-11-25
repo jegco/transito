@@ -1,8 +1,8 @@
 package com.tesis.transito.dominio.casosdeuso.usuarios;
 
 import com.tesis.transito.dominio.casosdeuso.params.UsuarioParams;
-import com.tesis.transito.dominio.modelos.Notificacion;
-import com.tesis.transito.dominio.modelos.Usuario;
+import com.tesis.transito.entidades.Notificacion;
+import com.tesis.transito.entidades.Usuario;
 import com.tesis.transito.persistencia.delegados.UsuarioDelegado;
 import com.tesis.transito.persistencia.utils.notificaciones.ServicioDeNotificacionPorCorreo;
 import org.junit.jupiter.api.BeforeEach;

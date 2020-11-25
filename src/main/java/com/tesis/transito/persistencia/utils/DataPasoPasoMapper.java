@@ -1,7 +1,7 @@
 package com.tesis.transito.persistencia.utils;
 
-import com.tesis.transito.dominio.modelos.Paso;
-import com.tesis.transito.persistencia.modelos.DataPaso;
+import com.tesis.transito.entidades.Paso;
+import com.tesis.transito.entidades.DataPaso;
 import com.tesis.transito.persistencia.repositorios.DocumentoRepositorio;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -9,7 +9,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Component
 public class DataPasoPasoMapper implements Function<List<DataPaso>, Mono<List<Paso>>> {

@@ -1,6 +1,6 @@
 package com.tesis.transito.dominio.casosdeuso.puntosdeatencion;
 
-import com.tesis.transito.dominio.modelos.PuntoDeAtencion;
+import com.tesis.transito.entidades.PuntoDeAtencion;
 import com.tesis.transito.persistencia.delegados.PuntoDeAtencionDelegado;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

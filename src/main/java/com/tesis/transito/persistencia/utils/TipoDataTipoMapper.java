@@ -1,7 +1,7 @@
 package com.tesis.transito.persistencia.utils;
 
-import com.tesis.transito.dominio.modelos.Tipo;
-import com.tesis.transito.persistencia.modelos.DataTipo;
+import com.tesis.transito.entidades.Tipo;
+import com.tesis.transito.entidades.DataTipo;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;

@@ -1,6 +1,6 @@
 package com.tesis.transito.persistencia.repositorios;
 
-import com.tesis.transito.persistencia.modelos.DataPuntoDeAtencion;
+import com.tesis.transito.entidades.DataPuntoDeAtencion;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Flux;
 

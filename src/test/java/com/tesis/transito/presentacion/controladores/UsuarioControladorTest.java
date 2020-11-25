@@ -5,7 +5,7 @@ import com.tesis.transito.dominio.casosdeuso.usuarios.CasoDeUsoActivarUsuario;
 import com.tesis.transito.dominio.casosdeuso.usuarios.CasoDeUsoEliminarUsuario;
 import com.tesis.transito.dominio.casosdeuso.usuarios.CasoDeUsoLogin;
 import com.tesis.transito.dominio.casosdeuso.usuarios.CasoDeUsoRegistrarUsuario;
-import com.tesis.transito.dominio.modelos.Usuario;
+import com.tesis.transito.entidades.Usuario;
 import com.tesis.transito.presentacion.modelos.AuthResponse;
 import com.tesis.transito.presentacion.seguridad.JWTUtil;
 import com.tesis.transito.presentacion.utils.mappers.UsuarioVistaUsuarioMapper;

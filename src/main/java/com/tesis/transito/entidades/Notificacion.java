@@ -1,4 +1,4 @@
-package com.tesis.transito.dominio.modelos;
+package com.tesis.transito.entidades;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

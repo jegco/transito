@@ -1,8 +1,8 @@
 package com.tesis.transito.persistencia.delegados;
 
 import com.tesis.transito.dominio.casosdeuso.params.UsuarioParams;
-import com.tesis.transito.dominio.modelos.Usuario;
-import com.tesis.transito.persistencia.modelos.DataUsuario;
+import com.tesis.transito.entidades.Usuario;
+import com.tesis.transito.entidades.DataUsuario;
 import com.tesis.transito.persistencia.repositorios.UsuarioRepositorio;
 import com.tesis.transito.persistencia.utils.DataUsuarioUsuarioMapper;
 import com.tesis.transito.persistencia.utils.UsuarioDataUsuarioMapper;

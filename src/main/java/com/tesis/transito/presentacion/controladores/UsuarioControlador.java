@@ -2,7 +2,7 @@ package com.tesis.transito.presentacion.controladores;
 
 import com.tesis.transito.dominio.casosdeuso.base.CasoDeUso;
 import com.tesis.transito.dominio.casosdeuso.params.UsuarioParams;
-import com.tesis.transito.dominio.modelos.Usuario;
+import com.tesis.transito.entidades.Usuario;
 import com.tesis.transito.presentacion.utils.mappers.UsuarioVistaUsuarioMapper;
 import com.tesis.transito.presentacion.utils.mappers.VistaUsuarioUsuarioMapper;
 import com.tesis.transito.presentacion.modelos.AuthResponse;

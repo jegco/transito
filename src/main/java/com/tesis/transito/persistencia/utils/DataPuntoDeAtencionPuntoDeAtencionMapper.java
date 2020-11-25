@@ -1,7 +1,7 @@
 package com.tesis.transito.persistencia.utils;
 
-import com.tesis.transito.dominio.modelos.PuntoDeAtencion;
-import com.tesis.transito.persistencia.modelos.DataPuntoDeAtencion;
+import com.tesis.transito.entidades.PuntoDeAtencion;
+import com.tesis.transito.entidades.DataPuntoDeAtencion;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;

@@ -1,7 +1,7 @@
 package com.tesis.transito.persistencia.utils.notificaciones;
 
-import com.tesis.transito.dominio.modelos.Notificacion;
-import com.tesis.transito.dominio.modelos.Usuario;
+import com.tesis.transito.entidades.Notificacion;
+import com.tesis.transito.entidades.Usuario;
 import com.tesis.transito.dominio.utils.ServicioDeNotification;
 import com.tesis.transito.dominio.utils.exceptions.NotificationNotFoundException;
 import freemarker.template.Configuration;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import reactor.core.publisher.Mono;
 
-import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;

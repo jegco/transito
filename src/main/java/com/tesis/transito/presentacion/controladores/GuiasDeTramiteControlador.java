@@ -2,7 +2,7 @@ package com.tesis.transito.presentacion.controladores;
 
 import com.tesis.transito.dominio.casosdeuso.base.CasoDeUso;
 import com.tesis.transito.dominio.casosdeuso.params.GuiaDeTramiteParams;
-import com.tesis.transito.dominio.modelos.GuiaDeTramite;
+import com.tesis.transito.entidades.GuiaDeTramite;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.CorePublisher;
 

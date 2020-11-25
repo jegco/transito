@@ -2,7 +2,7 @@ package com.tesis.transito.dominio.casosdeuso.tipos;
 
 import com.tesis.transito.dominio.casosdeuso.base.CasoDeUsoImpl;
 import com.tesis.transito.dominio.delegado.Delegado;
-import com.tesis.transito.dominio.modelos.Tipo;
+import com.tesis.transito.entidades.Tipo;
 import org.springframework.stereotype.Service;
 import reactor.core.CorePublisher;
 

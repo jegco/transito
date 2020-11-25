@@ -2,7 +2,7 @@ package com.tesis.transito.dominio.casosdeuso.preferenciasdeusuario;
 
 import com.tesis.transito.dominio.casosdeuso.base.CasoDeUsoImpl;
 import com.tesis.transito.dominio.delegado.Delegado;
-import com.tesis.transito.dominio.modelos.PreferenciasDeUsuario;
+import com.tesis.transito.entidades.PreferenciasDeUsuario;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
