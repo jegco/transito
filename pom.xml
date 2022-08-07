@@ -133,9 +133,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>aws-java-sdk</artifactId>
-			<version>1.11.133</version>
+			<groupId>com.dropbox.core</groupId>
+			<artifactId>dropbox-core-sdk</artifactId>
+			<version>5.3.0</version>
 		</dependency>
 
 	</dependencies>

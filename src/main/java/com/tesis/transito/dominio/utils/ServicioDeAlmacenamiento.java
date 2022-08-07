@@ -5,6 +5,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.codec.multipart.FilePart;
 import reactor.core.publisher.Mono;
 
+import java.io.FileNotFoundException;
+
 public interface ServicioDeAlmacenamiento {
 
     Mono<Documento> guardarDocumento(FilePart arcivo);

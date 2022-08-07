@@ -67,7 +67,7 @@ public class DocumentoControlador {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(type)
                 .body(casoDeUsoBuscarDocumentos.
-                        ejecutar(nombre));
+                        ejecutar("/" + nombre));
     }
 
     @GetMapping("/{nombre}")

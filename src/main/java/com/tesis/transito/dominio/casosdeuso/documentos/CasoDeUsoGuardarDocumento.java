@@ -9,6 +9,8 @@ import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.io.FileNotFoundException;
+
 @Service
 public class CasoDeUsoGuardarDocumento extends CasoDeUsoImpl<FilePart, Documento> {
 

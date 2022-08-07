@@ -15,6 +15,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.io.FileNotFoundException;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -34,7 +36,7 @@ class CasoDeUsoModificarDocumentoTest {
     private CasoDeUsoModificarDocumento casoDeUso;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws FileNotFoundException {
         Documento documento = Documento.builder().id("1").rutaDeDescarga("test anexo").nombre("test anexo").build();
         when(delegado.actualizar(documento)).thenReturn(Mono.just(documento));
         when(servicioDeAlmacenamiento.guardarDocumento(any())).thenReturn(Mono.just(documento));

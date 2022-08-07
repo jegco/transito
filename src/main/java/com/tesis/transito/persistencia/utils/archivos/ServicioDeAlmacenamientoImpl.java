@@ -1,13 +1,9 @@
 package com.tesis.transito.persistencia.utils.archivos;
 
-import com.amazonaws.AmazonClientException;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
+import com.dropbox.core.v2.DbxClientV2;
 import com.tesis.transito.entidades.Documento;
 import com.tesis.transito.dominio.utils.ServicioDeAlmacenamiento;
-import org.springframework.beans.factory.annotation.Value;
+import com.tesis.transito.persistencia.utils.archivos.excepciones.FileStorageException;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -15,71 +11,77 @@ import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.InetAddress;
 import java.time.LocalDate;
 
 @Service
 public class ServicioDeAlmacenamientoImpl implements ServicioDeAlmacenamiento {
 
-    private AmazonS3 client;
-    private String endpointUrl;
-    private String bucketName;
-    private String accessKey;
-    private String secretKey;
-    private Environment env;
+    private final DbxClientV2 client;
+    private final Environment env;
 
-    public ServicioDeAlmacenamientoImpl(@Value("${amazonProperties.endpointUrl}") String endpointUrl,
-                                        @Value("${amazonProperties.bucketName}") String bucketName,
-                                        @Value("${amazonProperties.accessKey}") String accessKey,
-                                        @Value("${amazonProperties.secretKey}") String secretKey,
+    public ServicioDeAlmacenamientoImpl(DbxClientV2 client,
                                         Environment env) {
-        this.endpointUrl = endpointUrl;
-        this.bucketName = bucketName;
-        this.accessKey = accessKey;
-        this.secretKey = secretKey;
+        this.client = client;
         this.env = env;
-    }
-
-    @PostConstruct
-    private void initializeAmazon() {
-        AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
-        this.client = new AmazonS3Client(credentials);
     }
 
     @Override
     public Mono<Documento> guardarDocumento(FilePart archivo) {
-        File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + archivo.filename());
-        archivo.transferTo(convFile);
+        try {
+            File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + archivo.filename());
+            archivo.transferTo(convFile);
 
-        String rutaDescarga = "http://" + InetAddress.getLoopbackAddress().getHostName() + (env.getProperty("server.port") != null ? ":" + env.getProperty("server.port") : "") +
-                "/documentos/resource/" +
-                archivo.filename();
 
-        return Mono.just(client.putObject(bucketName, convFile.getName(), convFile))
-                .map(putObjectResult -> new Documento(null,
-                        archivo.filename(),
-                        endpointUrl + "/" + bucketName + "/" + archivo.filename(),
-                        archivo.filename().substring(archivo.filename().lastIndexOf(".") + 1),
-                        LocalDate.now(),
-                        LocalDate.now(),
-                        rutaDescarga));
+            FileInputStream inputStream = new FileInputStream(convFile);
+
+            String rutaDescarga = "http://" + InetAddress.getLoopbackAddress().getHostName() + (env.getProperty("server.port") != null ? ":" + env.getProperty("server.port") : "") +
+                    "/documentos/resource/" +
+                    archivo.filename();
+
+            return Mono.just(handleDropboxAction(() -> client.files().upload("/" + convFile.getName()).uploadAndFinish(inputStream),
+                            String.format("Error subiendo archivo: %s", convFile.getName())))
+                    .map(putObjectResult -> new Documento(null,
+                            archivo.filename(),
+                            archivo.filename(),
+                            archivo.filename().substring(archivo.filename().lastIndexOf(".") + 1),
+                            LocalDate.now(),
+                            LocalDate.now(),
+                            rutaDescarga));
+        } catch (FileNotFoundException e) {
+            throw new com.tesis.transito.persistencia.utils.
+                    archivos.excepciones.
+                    FileNotFoundException(String.format("Error subiendo archivo: %s", archivo.filename()));
+        }
     }
 
     @Override
     public Mono<Resource> cargarDocumento(String nombre) {
-        return Mono.just(client.getObject(bucketName, nombre))
-                .map(s3Object -> new InputStreamResource(s3Object.getObjectContent()));
+        return Mono.just(handleDropboxAction(() -> client.files().download(nombre).getInputStream(),
+                        String.format("Error downloading file: %s", nombre)))
+                .map(InputStreamResource::new);
     }
 
     @Override
     public Mono<Boolean> eliminarArchivo(String nombre) {
         try {
-            client.deleteObject(bucketName, nombre);
+            handleDropboxAction(() -> client.files().deleteV2(nombre), String.format("Error deleting file: %s", nombre));
             return Mono.just(true);
-        }catch ( AmazonClientException e) {
+        }catch ( RuntimeException e) {
             return Mono.just(false);
         }
     }
+
+    private <T> T handleDropboxAction(DropboxActionResolver<T> action, String exceptionMessage) {
+        try {
+            return action.perform();
+        } catch (Exception e) {
+            String messageWithCause = String.format("%s with cause: %s", exceptionMessage, e.getMessage());
+            throw new FileStorageException(messageWithCause, e);
+        }
+    }
+
 }
