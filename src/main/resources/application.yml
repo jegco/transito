@@ -43,14 +43,12 @@ springbootwebfluxjjwt:
       keylength: 256
 
   jjwt:
-    secret: ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave512bitsKeySize
+    secret: put_secret_key_here
     expiration: 28800
 
-amazonProperties:
-  endpointUrl: https://s3.us-east-2.amazonaws.com
-  accessKey: AKIA465J23FPST6J5C4D
-  secretKey: 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
-  bucketName: files-transito
-
 dropbox:
-  accessToken: sl.BM1zGtSKu61GIpVHoeSlcZkhuynBymREQyFHizqHS_g36YC7a3VdfHJHMLhFVnFA_4_MBbeasimuZP-zZtMLt7bhX9S_dOCz4GtGZqQ5RgtCALBPg9MzeNWOjD0U21rThtbB-20n
+  accessToken: put_initial_access_token_generated_by_dropbox_client_here
+  refreshToken: put_refresh_token_generated_by_dropbox_client_here
+  app:
+    key: put_app_key_generated_by_dropbox_client_here
+    secret: put_app_secret_key_generated_by_dropbox_client_here
